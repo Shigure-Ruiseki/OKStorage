@@ -20,7 +20,7 @@ import ruiseki.okstorage.config.ModConfig;
 public class ItemStackUpgrade extends ItemUpgrade<StackUpgradeWrapper> {
 
     @SideOnly(Side.CLIENT)
-    protected IIcon tier1, tier2, tier3, tier4, tierOmega;
+    protected IIcon tier1, tier2, tier3, tier4;
 
     public ItemStackUpgrade() {
         super("stack_upgrade");
@@ -33,7 +33,6 @@ public class ItemStackUpgrade extends ItemUpgrade<StackUpgradeWrapper> {
         list.add(new ItemStack(item, 1, 1));
         list.add(new ItemStack(item, 1, 2));
         list.add(new ItemStack(item, 1, 3));
-        list.add(new ItemStack(item, 1, 4));
     }
 
     @Override
@@ -46,8 +45,6 @@ public class ItemStackUpgrade extends ItemUpgrade<StackUpgradeWrapper> {
                 return super.getUnlocalizedName(stack) + ".diamond";
             case 3:
                 return super.getUnlocalizedName(stack) + ".obsidian";
-            case 4:
-                return super.getUnlocalizedName(stack) + ".omega";
             default:
                 return super.getUnlocalizedName(stack) + ".iron";
         }
@@ -59,7 +56,6 @@ public class ItemStackUpgrade extends ItemUpgrade<StackUpgradeWrapper> {
             case 1 -> tier2;
             case 2 -> tier3;
             case 3 -> tier4;
-            case 4 -> tierOmega;
             default -> tier1;
         };
     }
@@ -71,7 +67,6 @@ public class ItemStackUpgrade extends ItemUpgrade<StackUpgradeWrapper> {
         tier2 = reg.registerIcon(Reference.PREFIX_MOD + "stack_upgrade_tier_2");
         tier3 = reg.registerIcon(Reference.PREFIX_MOD + "stack_upgrade_tier_3");
         tier4 = reg.registerIcon(Reference.PREFIX_MOD + "stack_upgrade_tier_4");
-        tierOmega = reg.registerIcon(Reference.PREFIX_MOD + "stack_upgrade_tier_omega");
     }
 
     @Override
@@ -89,7 +84,6 @@ public class ItemStackUpgrade extends ItemUpgrade<StackUpgradeWrapper> {
             case 1 -> ModConfig.stackUpgradeTier2Mul;
             case 2 -> ModConfig.stackUpgradeTier3Mul;
             case 3 -> ModConfig.stackUpgradeTier4Mul;
-            case 4 -> ModConfig.stackUpgradeTierOmegaMul;
             default -> ModConfig.stackUpgradeTier1Mul;
         };
     }
