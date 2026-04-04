@@ -72,7 +72,7 @@ public class CyclicVariantButtonWidget extends ButtonWidget<CyclicVariantButtonW
 
                 if (!inEffect) {
                     tooltip.addLine(
-                        IKey.lang("gui.backpack.not_in_effect")
+                        IKey.lang("gui.storage.not_in_effect")
                             .style(IKey.RED));
                 }
 

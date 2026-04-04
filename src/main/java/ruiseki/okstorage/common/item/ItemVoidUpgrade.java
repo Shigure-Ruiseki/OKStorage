@@ -30,7 +30,7 @@ public class ItemVoidUpgrade extends ItemUpgrade<VoidUpgradeWrapper> {
 
     @Override
     public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
-        list.add(LangHelpers.localize("tooltip.backpack.void_upgrade"));
+        list.add(LangHelpers.localize("tooltip.storage.void_upgrade"));
     }
 
     @Override

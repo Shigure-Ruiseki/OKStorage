@@ -14,7 +14,7 @@ import ruiseki.okstorage.api.wrapper.IAdvancedFilterable;
 import ruiseki.okstorage.api.wrapper.IBasicFilterable;
 import ruiseki.okstorage.api.wrapper.ICraftingUpgrade;
 import ruiseki.okstorage.client.gui.handler.IndexedInventoryCraftingWrapper;
-import ruiseki.okstorage.common.block.BackpackWrapper;
+import ruiseki.okstorage.common.block.StorageWrapper;
 import ruiseki.okstorage.common.item.wrapper.CraftingUpgradeWrapper;
 import ruiseki.okstorage.common.item.wrapper.UpgradeWrapperBase;
 import ruiseki.okstorage.common.item.wrapper.UpgradeWrapperFactory;
@@ -25,12 +25,12 @@ public class DelegatedCraftingStackHandlerSH extends DelegatedStackHandlerSH {
     public static final int DETECT_CHANGES = 4;
 
     private final Supplier<IStorageContainer<?>> containerProvider;
-    private final BackpackWrapper wrapper;
+    private final StorageWrapper wrapper;
     private final int slotIndex;
 
     private IndexedInventoryCraftingWrapper inventoryCrafting;
 
-    public DelegatedCraftingStackHandlerSH(Supplier<IStorageContainer<?>> containerProvider, BackpackWrapper wrapper,
+    public DelegatedCraftingStackHandlerSH(Supplier<IStorageContainer<?>> containerProvider, StorageWrapper wrapper,
         int slotIndex, int wrappedSlotAmount) {
 
         super(wrapper, slotIndex, wrappedSlotAmount);

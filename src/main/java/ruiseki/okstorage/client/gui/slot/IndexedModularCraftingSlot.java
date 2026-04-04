@@ -45,7 +45,7 @@ public class IndexedModularCraftingSlot extends ModularCraftingSlot {
             ItemStack original = slotStack.copy();
             boolean extractedFromHandler = false;
 
-            if (upgrade != null && upgrade.isUseBackpack()) {
+            if (upgrade != null && upgrade.isUseStorage()) {
                 ItemStack extracted = wrapper.extractItem(slotStack, 1, false);
                 if (extracted != null) {
                     extractedFromHandler = true;

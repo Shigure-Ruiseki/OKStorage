@@ -24,7 +24,7 @@ public class AdvancedMagnetUpgradeWrapper extends AdvancedPickupUpgradeWrapper i
 
     @Override
     public String getSettingLangKey() {
-        return "gui.backpack.advanced_magnet_settings";
+        return "gui.storage.advanced_magnet_settings";
     }
 
     @Override

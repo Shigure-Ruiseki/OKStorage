@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 
 import ruiseki.okcore.helper.LangHelpers;
 import ruiseki.okcore.item.ItemOK;
-import ruiseki.okstorage.OKBCreativeTab;
+import ruiseki.okstorage.OKSCreativeTab;
 import ruiseki.okstorage.Reference;
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.IStorageWrapper;
@@ -24,7 +24,7 @@ public class ItemUpgrade<T extends UpgradeWrapperBase> extends ItemOK
         super(name);
         setNoRepair();
         setTextureName(Reference.PREFIX_MOD + "upgrade_base");
-        this.setCreativeTab(OKBCreativeTab.INSTANCE);
+        this.setCreativeTab(OKSCreativeTab.INSTANCE);
     }
 
     public ItemUpgrade() {
@@ -37,7 +37,7 @@ public class ItemUpgrade<T extends UpgradeWrapperBase> extends ItemOK
 
     @Override
     public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
-        list.add(LangHelpers.localize("tooltip.backpack.upgrade_base"));
+        list.add(LangHelpers.localize("tooltip.storage.upgrade_base"));
     }
 
     @SuppressWarnings("unchecked")

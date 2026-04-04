@@ -16,7 +16,7 @@ public class VoidUpgradeWrapper extends BasicUpgradeWrapper implements IVoidUpgr
 
     @Override
     public String getSettingLangKey() {
-        return "gui.backpack.void_settings";
+        return "gui.storage.void_settings";
     }
 
     @Override

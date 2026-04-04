@@ -43,27 +43,27 @@ import ruiseki.okstorage.client.gui.widget.CyclicVariantButtonWidget;
 public class AdvancedFilterWidget extends ParentWidget<AdvancedFilterWidget> {
 
     private static final CyclicVariantButtonWidget.Variant[] FILTER_TYPE_VARIANTS = new CyclicVariantButtonWidget.Variant[] {
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.whitelist"), OKBGuiTextures.CHECK_ICON),
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.blacklist"), OKBGuiTextures.CROSS_ICON) };
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.whitelist"), OKBGuiTextures.CHECK_ICON),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.blacklist"), OKBGuiTextures.CROSS_ICON) };
 
     private static final CyclicVariantButtonWidget.Variant[] MATCH_TYPE_VARIANTS = new CyclicVariantButtonWidget.Variant[] {
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.match_item"), OKBGuiTextures.BY_ITEM_ICON),
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.match_mod_id"), OKBGuiTextures.BY_MOD_ID_ICON),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.match_item"), OKBGuiTextures.BY_ITEM_ICON),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.match_mod_id"), OKBGuiTextures.BY_MOD_ID_ICON),
         new CyclicVariantButtonWidget.Variant(
-            IKey.lang("gui.backpack.match_ore_dict"),
+            IKey.lang("gui.storage.match_ore_dict"),
             OKBGuiTextures.MATCH_ORE_DICT_ICON) };
 
     private static final CyclicVariantButtonWidget.Variant[] IGNORE_DURABILITY_VARIANTS = new CyclicVariantButtonWidget.Variant[] {
         new CyclicVariantButtonWidget.Variant(
-            IKey.lang("gui.backpack.match_durability"),
+            IKey.lang("gui.storage.match_durability"),
             OKBGuiTextures.MATCH_DURABILITY_ICON),
         new CyclicVariantButtonWidget.Variant(
-            IKey.lang("gui.backpack.ignore_durability"),
+            IKey.lang("gui.storage.ignore_durability"),
             OKBGuiTextures.IGNORE_DURABILITY_ICON) };
 
     private static final CyclicVariantButtonWidget.Variant[] IGNORE_NBT_VARIANTS = new CyclicVariantButtonWidget.Variant[] {
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.match_nbt"), OKBGuiTextures.MATCH_NBT_ICON),
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.ignore_nbt"), OKBGuiTextures.IGNORE_NBT_ICON) };
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.match_nbt"), OKBGuiTextures.MATCH_NBT_ICON),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.ignore_nbt"), OKBGuiTextures.IGNORE_NBT_ICON) };
 
     @Getter
     private final CyclicVariantButtonWidget filterTypeButton;

@@ -2,7 +2,6 @@ package ruiseki.okstorage.api;
 
 import java.util.Map;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -46,8 +45,6 @@ public interface IStorageWrapper
     boolean canReplaceUpgrade(int slot, ItemStack replacement);
 
     boolean tick(World world, BlockPos pos);
-
-    void applyContainerEntity(World world, Entity selfEntity);
 
     <T> Map<Integer, T> gatherCapabilityUpgrades(Class<T> capabilityClass);
 

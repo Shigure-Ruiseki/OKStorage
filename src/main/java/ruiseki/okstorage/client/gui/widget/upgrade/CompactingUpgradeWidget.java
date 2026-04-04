@@ -18,8 +18,8 @@ import ruiseki.okstorage.common.item.wrapper.CompactingUpgradeWrapper;
 public class CompactingUpgradeWidget extends BasicExpandedTabWidget<CompactingUpgradeWrapper> {
 
     private static final List<CyclicVariantButtonWidget.Variant> REVERSIBLE_VARIANTS = Arrays.asList(
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.only_reversible"), OKBGuiTextures.CHECK_ICON),
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.all_recipes"), OKBGuiTextures.CROSS_ICON));
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.only_reversible"), OKBGuiTextures.CHECK_ICON),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.all_recipes"), OKBGuiTextures.CROSS_ICON));
 
     @Getter
     private final CyclicVariantButtonWidget reversibleButton;

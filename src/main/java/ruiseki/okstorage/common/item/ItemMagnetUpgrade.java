@@ -30,7 +30,7 @@ public class ItemMagnetUpgrade extends ItemUpgrade<MagnetUpgradeWrapper> {
 
     @Override
     public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
-        list.add(LangHelpers.localize("tooltip.backpack.magnet_upgrade"));
+        list.add(LangHelpers.localize("tooltip.storage.magnet_upgrade"));
     }
 
     @Override

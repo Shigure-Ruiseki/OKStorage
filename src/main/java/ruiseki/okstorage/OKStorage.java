@@ -128,7 +128,7 @@ public class OKStorage extends ModBase {
 
     @Override
     public CreativeTabs constructDefaultCreativeTab() {
-        return OKBCreativeTab.INSTANCE;
+        return OKSCreativeTab.INSTANCE;
     }
 
     @Override

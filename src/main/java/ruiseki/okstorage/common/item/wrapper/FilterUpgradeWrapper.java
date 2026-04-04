@@ -14,7 +14,7 @@ public class FilterUpgradeWrapper extends BasicUpgradeWrapper implements IFilter
 
     @Override
     public String getSettingLangKey() {
-        return "gui.backpack.filter_settings";
+        return "gui.storage.filter_settings";
     }
 
     @Override

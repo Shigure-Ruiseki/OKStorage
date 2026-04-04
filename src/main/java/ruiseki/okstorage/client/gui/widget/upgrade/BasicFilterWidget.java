@@ -23,8 +23,8 @@ import ruiseki.okstorage.client.gui.widget.CyclicVariantButtonWidget;
 public class BasicFilterWidget extends ParentWidget<BasicFilterWidget> {
 
     private static final List<CyclicVariantButtonWidget.Variant> FILTER_TYPE_VARIANTS = Arrays.asList(
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.whitelist"), OKBGuiTextures.CHECK_ICON),
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.blacklist"), OKBGuiTextures.CROSS_ICON));
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.whitelist"), OKBGuiTextures.CHECK_ICON),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.blacklist"), OKBGuiTextures.CROSS_ICON));
 
     @Getter
     private final CyclicVariantButtonWidget filterTypeButton;

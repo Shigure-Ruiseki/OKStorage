@@ -18,15 +18,15 @@ import ruiseki.okstorage.common.item.wrapper.MagnetUpgradeWrapper;
 public class MagnetUpgradeWidget extends BasicExpandedTabWidget<MagnetUpgradeWrapper> {
 
     private static final List<CyclicVariantButtonWidget.Variant> EXP_VARIANTS = Arrays.asList(
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.exp_magnet"), OKBGuiTextures.EXP_MAGNET_ICON),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.exp_magnet"), OKBGuiTextures.EXP_MAGNET_ICON),
         new CyclicVariantButtonWidget.Variant(
-            IKey.lang("gui.backpack.ignore_exp_magnet"),
+            IKey.lang("gui.storage.ignore_exp_magnet"),
             OKBGuiTextures.IGNORE_EXP_MAGNET_ICON));
 
     private static final List<CyclicVariantButtonWidget.Variant> ITEM_VARIANTS = Arrays.asList(
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.item_magnet"), OKBGuiTextures.ITEM_MAGNET_ICON),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.item_magnet"), OKBGuiTextures.ITEM_MAGNET_ICON),
         new CyclicVariantButtonWidget.Variant(
-            IKey.lang("gui.backpack.ignore_item_magnet"),
+            IKey.lang("gui.storage.ignore_item_magnet"),
             OKBGuiTextures.IGNORE_ITEM_MAGNET_ICON));
 
     @Getter

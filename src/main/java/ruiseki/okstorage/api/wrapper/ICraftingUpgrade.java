@@ -3,18 +3,18 @@ package ruiseki.okstorage.api.wrapper;
 public interface ICraftingUpgrade extends IStorageUpgrade {
 
     String CRAFTING_DEST_TAG = "CraftingDest";
-    String USE_BACKPACK_TAG = "UseBackpack";
+    String USE_STORAGE_TAG = "UseStorage";
 
     CraftingDestination getCraftingDes();
 
     void setCraftingDes(CraftingDestination type);
 
-    boolean isUseBackpack();
+    boolean isUseStorage();
 
-    void setUseBackpack(boolean used);
+    void setUseStorage(boolean used);
 
     enum CraftingDestination {
-        BACKPACK,
+        STORAGE,
         INVENTORY;
     }
 }

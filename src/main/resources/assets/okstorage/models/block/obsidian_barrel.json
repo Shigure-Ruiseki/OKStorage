@@ -1,0 +1,8 @@
+{
+  "parent": "okstorage:block/iron_barrel",
+  "textures": {
+    "upgrade_bottom": "okstorage:block/obsidian_barrel_bottom",
+    "upgrade_side": "okstorage:block/obsidian_barrel_side",
+    "upgrade_top": "okstorage:block/obsidian_barrel_top"
+  }
+}

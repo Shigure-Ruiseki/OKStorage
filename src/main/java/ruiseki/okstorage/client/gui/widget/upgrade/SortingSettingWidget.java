@@ -6,21 +6,21 @@ import com.cleanroommc.modularui.widgets.ButtonWidget;
 import com.cleanroommc.modularui.widgets.layout.Row;
 
 import ruiseki.okstorage.client.gui.OKBGuiTextures;
-import ruiseki.okstorage.client.gui.syncHandler.BackpackSlotSH;
+import ruiseki.okstorage.client.gui.syncHandler.StorageSlotSH;
 import ruiseki.okstorage.client.gui.widget.TabWidget;
 import ruiseki.okstorage.client.gui.widget.TabWidget.ExpandDirection;
-import ruiseki.okstorage.common.block.BackpackPanel;
-import ruiseki.okstorage.common.block.BackpackSettingPanel;
-import ruiseki.okstorage.common.block.BackpackWrapper;
+import ruiseki.okstorage.common.block.StoragePanel;
+import ruiseki.okstorage.common.block.StorageSettingPanel;
+import ruiseki.okstorage.common.block.StorageWrapper;
 
 public class SortingSettingWidget extends ExpandedTabWidget {
 
-    private final BackpackPanel panel;
-    private final BackpackSettingPanel settingPanel;
+    private final StoragePanel panel;
+    private final StorageSettingPanel settingPanel;
     private final TabWidget parentTabWidget;
 
-    public SortingSettingWidget(BackpackPanel panel, BackpackSettingPanel settingPanel, TabWidget parentTabWidget) {
-        super(2, OKBGuiTextures.NO_SORT_ICON, "gui.backpack.sorting_settings", 80, ExpandDirection.RIGHT);
+    public SortingSettingWidget(StoragePanel panel, StorageSettingPanel settingPanel, TabWidget parentTabWidget) {
+        super(2, OKBGuiTextures.NO_SORT_ICON, "gui.storage.sorting_settings", 80, ExpandDirection.RIGHT);
 
         this.panel = panel;
         this.settingPanel = settingPanel;
@@ -35,14 +35,14 @@ public class SortingSettingWidget extends ExpandedTabWidget {
             .overlay(OKBGuiTextures.ALL_FOUR_SLOT_ICON)
             .onMousePressed(button -> {
                 if (button == 0) {
-                    BackpackWrapper wrapper = panel.wrapper;
+                    StorageWrapper wrapper = panel.wrapper;
 
                     for (int i = 0; i < wrapper.getSlots(); i++) {
                         wrapper.setSlotLocked(i, true);
                     }
 
-                    for (BackpackSlotSH syncHandler : panel.backpackSlotSyncHandlers) {
-                        syncHandler.syncToServer(BackpackSlotSH.UPDATE_SET_SLOT_LOCK);
+                    for (StorageSlotSH syncHandler : panel.storageSlotSyncHandlers) {
+                        syncHandler.syncToServer(StorageSlotSH.UPDATE_SET_SLOT_LOCK);
                     }
 
                     return true;
@@ -50,21 +50,21 @@ public class SortingSettingWidget extends ExpandedTabWidget {
                 return false;
             })
             .tooltipStatic(
-                t -> t.addLine(IKey.lang("gui.backpack.lock_all_sort"))
+                t -> t.addLine(IKey.lang("gui.storage.lock_all_sort"))
                     .pos(RichTooltip.Pos.NEXT_TO_MOUSE));
 
         ButtonWidget<?> unlockAllButton = new ButtonWidget<>().size(20)
             .overlay(OKBGuiTextures.NONE_FOUR_SLOT_ICON)
             .onMousePressed(button -> {
                 if (button == 0) {
-                    BackpackWrapper wrapper = panel.wrapper;
+                    StorageWrapper wrapper = panel.wrapper;
 
                     for (int i = 0; i < wrapper.getSlots(); i++) {
                         wrapper.setSlotLocked(i, false);
                     }
 
-                    for (BackpackSlotSH syncHandler : panel.backpackSlotSyncHandlers) {
-                        syncHandler.syncToServer(BackpackSlotSH.UPDATE_UNSET_SLOT_LOCK);
+                    for (StorageSlotSH syncHandler : panel.storageSlotSyncHandlers) {
+                        syncHandler.syncToServer(StorageSlotSH.UPDATE_UNSET_SLOT_LOCK);
                     }
 
                     return true;
@@ -72,7 +72,7 @@ public class SortingSettingWidget extends ExpandedTabWidget {
                 return false;
             })
             .tooltipStatic(
-                t -> t.addLine(IKey.lang("gui.backpack.unlock_all_sort"))
+                t -> t.addLine(IKey.lang("gui.storage.unlock_all_sort"))
                     .pos(RichTooltip.Pos.NEXT_TO_MOUSE));
 
         buttonRow.top(28)

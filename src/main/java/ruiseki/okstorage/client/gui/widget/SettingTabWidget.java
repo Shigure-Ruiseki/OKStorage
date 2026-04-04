@@ -12,7 +12,7 @@ import com.cleanroommc.modularui.theme.WidgetThemeEntry;
 import com.cleanroommc.modularui.widget.Widget;
 
 import ruiseki.okstorage.client.gui.OKBGuiTextures;
-import ruiseki.okstorage.common.block.BackpackPanel;
+import ruiseki.okstorage.common.block.StoragePanel;
 
 public class SettingTabWidget extends Widget<SettingTabWidget> implements Interactable {
 
@@ -24,12 +24,12 @@ public class SettingTabWidget extends Widget<SettingTabWidget> implements Intera
             .background(TAB_TEXTURE.get(-1, false))
             .tooltipAutoUpdate(true)
             .tooltipDynamic(tooltip -> {
-                BackpackPanel panel = (BackpackPanel) getPanel();
+                StoragePanel panel = (StoragePanel) getPanel();
                 if (panel.settingPanel.isPanelOpen()) {
-                    tooltip.addLine(IKey.lang("gui.backpack"))
+                    tooltip.addLine(IKey.lang("gui.storage"))
                         .pos(RichTooltip.Pos.NEXT_TO_MOUSE);
                 } else {
-                    tooltip.addLine(IKey.lang("gui.backpack.settings"))
+                    tooltip.addLine(IKey.lang("gui.storage.settings"))
                         .pos(RichTooltip.Pos.NEXT_TO_MOUSE);
                 }
                 tooltip.pos(RichTooltip.Pos.NEXT_TO_MOUSE);
@@ -46,7 +46,7 @@ public class SettingTabWidget extends Widget<SettingTabWidget> implements Intera
     @Override
     public @NotNull Result onMousePressed(int mouseButton) {
         if (mouseButton == 0) {
-            BackpackPanel panel = (BackpackPanel) getPanel();
+            StoragePanel panel = (StoragePanel) getPanel();
 
             Interactable.playButtonClickSound();
             if (panel.settingPanel.isPanelOpen()) {
@@ -65,7 +65,7 @@ public class SettingTabWidget extends Widget<SettingTabWidget> implements Intera
     @Override
     public void draw(ModularGuiContext context, WidgetThemeEntry<?> widgetTheme) {
         super.draw(context, widgetTheme);
-        BackpackPanel panel = (BackpackPanel) getPanel();
+        StoragePanel panel = (StoragePanel) getPanel();
         if (panel.settingPanel.isPanelOpen()) {
             OKBGuiTextures.BACK_ICON.draw(context, 8, 6, 16, 16, widgetTheme.getTheme());
         } else {

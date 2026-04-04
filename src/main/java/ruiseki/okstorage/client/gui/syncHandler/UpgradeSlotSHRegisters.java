@@ -17,7 +17,7 @@ import ruiseki.okstorage.api.wrapper.IFilterUpgrade;
 import ruiseki.okstorage.api.wrapper.IMagnetUpgrade;
 import ruiseki.okstorage.api.wrapper.IToggleable;
 import ruiseki.okstorage.api.wrapper.IVoidUpgrade;
-import ruiseki.okstorage.common.helpers.BackpackInventoryHelpers;
+import ruiseki.okstorage.common.helpers.StorageInventoryHelpers;
 import ruiseki.okstorage.common.item.wrapper.AdvancedFeedingUpgradeWrapper;
 import ruiseki.okstorage.common.item.wrapper.UpgradeWrapperBase;
 
@@ -101,7 +101,7 @@ public class UpgradeSlotSHRegisters implements IInitListener {
                 UpgradeWrapperBase wrapper = slot.getWrapper();
                 if (!(wrapper instanceof ICraftingUpgrade upgrade)) return;
                 upgrade.setCraftingDes(NetworkUtils.readEnumValue(buf, ICraftingUpgrade.CraftingDestination.class));
-                upgrade.setUseBackpack(buf.readBoolean());
+                upgrade.setUseStorage(buf.readBoolean());
             });
 
             UpgradeSlotSHRegistry.registerServer(UPDATE_VOID, (slot, buf) -> {
@@ -116,7 +116,7 @@ public class UpgradeSlotSHRegisters implements IInitListener {
                 if (!(wrapper instanceof ICraftingUpgrade upgrade)) return;
                 boolean clockwise = buf.readBoolean();
                 ItemStackHandler storage = upgrade.getStorage();
-                BackpackInventoryHelpers.rotated(storage, clockwise);
+                StorageInventoryHelpers.rotated(storage, clockwise);
                 wrapper.markDirty();
             });
 
@@ -125,8 +125,8 @@ public class UpgradeSlotSHRegisters implements IInitListener {
                 if (!(wrapper instanceof ICraftingUpgrade upgrade)) return;
                 boolean balance = buf.readBoolean();
                 ItemStackHandler storage = upgrade.getStorage();
-                if (balance) BackpackInventoryHelpers.balance(storage);
-                else BackpackInventoryHelpers.spread(storage);
+                if (balance) StorageInventoryHelpers.balance(storage);
+                else StorageInventoryHelpers.spread(storage);
                 wrapper.markDirty();
             });
 
@@ -134,7 +134,7 @@ public class UpgradeSlotSHRegisters implements IInitListener {
                 UpgradeWrapperBase wrapper = slot.getWrapper();
                 if (!(wrapper instanceof ICraftingUpgrade upgrade)) return;
                 int ordinal = buf.readInt();
-                BackpackInventoryHelpers.clear(slot.panel, upgrade.getStorage(), ordinal);
+                StorageInventoryHelpers.clear(slot.panel, upgrade.getStorage(), ordinal);
                 slot.panel.getPlayer().inventory.markDirty();
                 wrapper.markDirty();
             });

@@ -8,20 +8,18 @@ import org.apache.logging.log4j.Level;
 
 import ruiseki.okcore.block.IBlock;
 import ruiseki.okstorage.OKStorage;
-import ruiseki.okstorage.common.block.BlockBackpack;
+import ruiseki.okstorage.common.block.barrel.BlockBarrel;
 import ruiseki.okstorage.config.ModConfig;
 
 public enum ModBlocks {
 
     // spotless: off
 
-    BACKPACK_BASE(new BlockBackpack("leather_backpack", ModConfig.leatherBackpackSlots, ModConfig.leatherUpgradeSlots)),
-    BACKPACK_IRON(new BlockBackpack("iron_backpack", ModConfig.ironBackpackSlots, ModConfig.ironUpgradeSlots)),
-    BACKPACK_GOLD(new BlockBackpack("gold_backpack", ModConfig.goldBackpackSlots, ModConfig.goldUpgradeSlots)),
-    BACKPACK_DIAMOND(
-        new BlockBackpack("diamond_backpack", ModConfig.diamondBackpackSlots, ModConfig.diamondUpgradeSlots)),
-    BACKPACK_OBSIDIAN(
-        new BlockBackpack("obsidian_backpack", ModConfig.obsidianBackpackSlots, ModConfig.obsidianUpgradeSlots)),
+    BARREL(new BlockBarrel("barrel", ModConfig.basicStorageSlots, ModConfig.basicUpgradeSlots)),
+    IRON_BARREL(new BlockBarrel("iron_barrel", ModConfig.ironStorageSlots, ModConfig.ironUpgradeSlots)),
+    GOLD_BARREL(new BlockBarrel("gold_barrel", ModConfig.goldStorageSlots, ModConfig.goldUpgradeSlots)),
+    DIAMOND_BARREL(new BlockBarrel("diamond_barrel", ModConfig.diamondStorageSlots, ModConfig.diamondUpgradeSlots)),
+    OBSIDIAN_BARREL(new BlockBarrel("obsidian_barrel", ModConfig.obsidianStorageSlots, ModConfig.obsidianUpgradeSlots)),
 
     ;
 

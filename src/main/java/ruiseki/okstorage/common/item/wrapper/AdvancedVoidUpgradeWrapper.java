@@ -16,7 +16,7 @@ public class AdvancedVoidUpgradeWrapper extends AdvancedUpgradeWrapper implement
 
     @Override
     public String getSettingLangKey() {
-        return "gui.backpack.advanced_void_settings";
+        return "gui.storage.advanced_void_settings";
     }
 
     @Override

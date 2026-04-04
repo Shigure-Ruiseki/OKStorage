@@ -115,9 +115,9 @@ public class OKBGuiTextures {
     public static final IDrawable REMOVE_ICON = icon("remove", 112, 32);
     public static final IDrawable BRAIN_ICON = icon("brain", 128, 32);
 
-    public static final IDrawable BACKPACK_ICON = icon("backpack", 64, 48);
-    public static final IDrawable UNLOCK_BACKPACK_ICON = icon("unlock_backpack", 176, 32);
-    public static final IDrawable LOCK_BACKPACK_ICON = icon("lock_backpack", 192, 32);
+    public static final IDrawable STORAGE_ICON = icon("storage", 64, 48);
+    public static final IDrawable UNLOCK_STORAGE_ICON = icon("unlock_storage", 176, 32);
+    public static final IDrawable LOCK_STORAGE_ICON = icon("lock_storage", 192, 32);
     public static final IDrawable UNLOCK_SEARCH_ICON = icon("unlock_search", 224, 32);
     public static final IDrawable LOCK_SEARCH_ICON = icon("lock_search", 208, 32);
     public static final IDrawable KEEP_TAB_ICON = icon("keep_tab", 80, 80);
@@ -139,10 +139,10 @@ public class OKBGuiTextures {
     public static final UITexture MATCH_ORE_DICT_ICON = icon("consider_ore_dict", 112, 96);
     public static final UITexture IGNORE_ORE_DICT_ICON = icon("ignore_ore_dict", 128, 96);
 
-    public static final UITexture INTO_BACKPACK = icon("into_backpack", 32, 48);
+    public static final UITexture INTO_STORAGE = icon("into_storage", 32, 48);
     public static final UITexture INTO_INVENTORY = icon("small_m", 48, 48);
-    public static final UITexture USED_BACKPACK = icon("into_backpack", 176, 80);
-    public static final UITexture UNUSED_BACKPACK = icon("unused_backpack", 192, 80);
+    public static final UITexture USED_STORAGE = icon("into_storage", 176, 80);
+    public static final UITexture UNUSED_STORAGE = icon("unused_storage", 192, 80);
 
     public static final UITexture VOID_OVERFLOW = icon("void_overflow", 224, 16);
     public static final UITexture VOID_ANY = icon("void_any", 208, 16);
