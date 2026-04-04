@@ -31,7 +31,6 @@ import com.cleanroommc.modularui.widgets.layout.Column;
 import com.cleanroommc.modularui.widgets.layout.Row;
 
 import lombok.Getter;
-import ruiseki.okstorage.Reference;
 import ruiseki.okstorage.api.wrapper.IAdvancedFilterable;
 import ruiseki.okstorage.client.gui.OKBGuiTextures;
 import ruiseki.okstorage.client.gui.drawble.Outline;
@@ -286,7 +285,7 @@ public class AdvancedFilterWidget extends ParentWidget<AdvancedFilterWidget> {
     public static class OreDictRegexListWidget extends ListWidget<OreDictEntryWidget, OreDictRegexListWidget> {
 
         private static final UITexture BACKGROUND_TILE_TEXTURE = UITexture.builder()
-            .location(Reference.MOD_ID, "gui/gui_controls")
+            .location("okcore", "gui/gui_controls")
             .imageSize(256, 256)
             .xy(29, 146, 66, 56)
             .adaptable(1)

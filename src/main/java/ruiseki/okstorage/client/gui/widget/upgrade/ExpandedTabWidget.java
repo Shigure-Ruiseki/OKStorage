@@ -14,13 +14,12 @@ import com.cleanroommc.modularui.widgets.TextWidget;
 import com.cleanroommc.modularui.widgets.layout.Row;
 
 import lombok.Getter;
-import ruiseki.okstorage.Reference;
 import ruiseki.okstorage.client.gui.widget.TabWidget.ExpandDirection;
 
 public abstract class ExpandedTabWidget extends ParentWidget<ExpandedTabWidget> {
 
     public static final UITexture TAB_TEXTURE = UITexture.builder()
-        .location(Reference.MOD_ID, "gui/gui_controls")
+        .location("okcore", "gui/gui_controls")
         .imageSize(256, 256)
         .xy(128, 0, 128, 256)
         .adaptable(4)

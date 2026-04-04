@@ -6,12 +6,10 @@ import com.cleanroommc.modularui.screen.viewport.ModularGuiContext;
 import com.cleanroommc.modularui.theme.WidgetThemeEntry;
 import com.cleanroommc.modularui.widgets.TextWidget;
 
-import ruiseki.okstorage.Reference;
-
 public class TileWidget extends TextWidget<TileWidget> {
 
     public static final AdaptableUITexture TILE_TAB_TEXTURE = (AdaptableUITexture) UITexture.builder()
-        .location(Reference.MOD_ID, "gui/gui_controls")
+        .location("okcore", "gui/gui_controls")
         .imageSize(256, 256)
         .xy(128, 0, 128, 10)
         .adaptable(4)
