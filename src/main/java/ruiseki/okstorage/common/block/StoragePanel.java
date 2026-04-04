@@ -32,7 +32,6 @@ import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 
 import ruiseki.okcore.helper.ItemStackHelpers;
 import ruiseki.okcore.helper.LangHelpers;
-import ruiseki.okstorage.Reference;
 import ruiseki.okstorage.api.IStorageContainer;
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.IStorageWrapper;
@@ -68,7 +67,7 @@ import ruiseki.okstorage.common.item.wrapper.UpgradeWrapperFactory;
 public class StoragePanel extends ModularPanel implements IStoragePanel<StoragePanel> {
 
     public static final AdaptableUITexture LAYERED_TAB_TEXTURE = (AdaptableUITexture) UITexture.builder()
-        .location(Reference.MOD_ID, "gui/gui_controls")
+        .location("okcore", "gui/gui_controls")
         .imageSize(256, 256)
         .xy(132, 0, 124, 256)
         .adaptable(4)

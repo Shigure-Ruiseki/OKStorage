@@ -20,7 +20,6 @@ import com.cleanroommc.modularui.widget.ParentWidget;
 import com.cleanroommc.modularui.widget.Widget;
 
 import lombok.Setter;
-import ruiseki.okstorage.Reference;
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.wrapper.IToggleable;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSH;
@@ -31,19 +30,19 @@ import ruiseki.okstorage.common.item.wrapper.UpgradeWrapperFactory;
 public class UpgradeSlotGroupWidget extends ParentWidget<UpgradeSlotGroupWidget> {
 
     private static final UITexture UPPER_TAB_TEXTURE = UITexture.builder()
-        .location(new ResourceLocation(Reference.MOD_ID, "gui/gui_controls.png"))
+        .location(new ResourceLocation("okcore", "gui/gui_controls.png"))
         .imageSize(256, 256)
         .xy(0, 0, 25, 5)
         .build();
 
     private static final UITexture SLOT_SURROUNDING_TEXTURE = UITexture.builder()
-        .location(new ResourceLocation(Reference.MOD_ID, "gui/gui_controls.png"))
+        .location(new ResourceLocation("okcore", "gui/gui_controls.png"))
         .imageSize(256, 256)
         .xy(0, 6, 25, 18)
         .build();
 
     private static final UITexture LOWER_TAB_TEXTURE = UITexture.builder()
-        .location(new ResourceLocation(Reference.MOD_ID, "gui/gui_controls.png"))
+        .location(new ResourceLocation("okcore", "gui/gui_controls.png"))
         .imageSize(256, 256)
         .xy(0, 199, 25, 5)
         .build();
@@ -101,7 +100,7 @@ public class UpgradeSlotGroupWidget extends ParentWidget<UpgradeSlotGroupWidget>
         private static final int HEIGHT = 18;
 
         private static final UITexture BACKGROUND_TAB_TEXTURE = UITexture.builder()
-            .location(new ResourceLocation(Reference.MOD_ID, "gui/gui_controls.png"))
+            .location(new ResourceLocation("okcore", "gui/gui_controls.png"))
             .imageSize(256, 256)
             .xy(0, 204, WIDTH, HEIGHT)
             .build();
