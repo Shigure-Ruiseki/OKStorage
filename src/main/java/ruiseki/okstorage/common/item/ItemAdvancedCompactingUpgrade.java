@@ -30,7 +30,7 @@ public class ItemAdvancedCompactingUpgrade extends ItemUpgrade<AdvancedCompactin
 
     @Override
     public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
-        list.add(LangHelpers.localize("tooltip.backpack.advanced_compacting_upgrade"));
+        list.add(LangHelpers.localize("tooltip.storage.advanced_compacting_upgrade"));
     }
 
     @Override

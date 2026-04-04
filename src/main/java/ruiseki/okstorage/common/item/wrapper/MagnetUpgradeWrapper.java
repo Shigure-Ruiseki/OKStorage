@@ -24,7 +24,7 @@ public class MagnetUpgradeWrapper extends PickupUpgradeWrapper implements IMagne
 
     @Override
     public String getSettingLangKey() {
-        return "gui.backpack.magnet_settings";
+        return "gui.storage.magnet_settings";
     }
 
     @Override

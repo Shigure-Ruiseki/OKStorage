@@ -29,7 +29,7 @@ public class CraftingUpgradeWrapper extends UpgradeWrapperBase implements ICraft
 
     @Override
     public String getSettingLangKey() {
-        return "gui.backpack.crafting_settings";
+        return "gui.storage.crafting_settings";
     }
 
     @Override

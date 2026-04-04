@@ -16,27 +16,27 @@ public class ModConfig {
 
     @Config.DefaultInt(27)
     @Config.RangeInt(min = 1)
-    public static int leatherBackpackSlots;
+    public static int basicStorageSlots;
 
     @Config.DefaultInt(54)
     @Config.RangeInt(min = 1)
-    public static int ironBackpackSlots;
+    public static int ironStorageSlots;
 
     @Config.DefaultInt(81)
     @Config.RangeInt(min = 1)
-    public static int goldBackpackSlots;
+    public static int goldStorageSlots;
 
     @Config.DefaultInt(108)
     @Config.RangeInt(min = 1)
-    public static int diamondBackpackSlots;
+    public static int diamondStorageSlots;
 
     @Config.DefaultInt(120)
     @Config.RangeInt(min = 1)
-    public static int obsidianBackpackSlots;
+    public static int obsidianStorageSlots;
 
     @Config.DefaultInt(1)
     @Config.RangeInt(min = 1)
-    public static int leatherUpgradeSlots;
+    public static int basicUpgradeSlots;
 
     @Config.DefaultInt(2)
     @Config.RangeInt(min = 1)

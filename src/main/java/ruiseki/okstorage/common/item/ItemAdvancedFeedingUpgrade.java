@@ -30,7 +30,7 @@ public class ItemAdvancedFeedingUpgrade extends ItemUpgrade<AdvancedFeedingUpgra
 
     @Override
     public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
-        list.add(LangHelpers.localize("tooltip.backpack.advanced_feeding_upgrade"));
+        list.add(LangHelpers.localize("tooltip.storage.advanced_feeding_upgrade"));
     }
 
     @Override

@@ -42,7 +42,7 @@ public class FeedingUpgradeWrapper extends BasicUpgradeWrapper implements IFeedi
 
     @Override
     public String getSettingLangKey() {
-        return "gui.backpack.feeding_settings";
+        return "gui.storage.feeding_settings";
     }
 
     @Override

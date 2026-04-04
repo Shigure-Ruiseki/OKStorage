@@ -18,13 +18,13 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.DefaultOverlayHandler;
 import codechicken.nei.recipe.GuiOverlayButton;
 import codechicken.nei.recipe.IRecipeHandler;
-import ruiseki.okstorage.client.gui.container.BackPackContainer;
+import ruiseki.okstorage.client.gui.container.StorageContainer;
 import ruiseki.okstorage.client.gui.slot.CraftingSlotInfo;
 import ruiseki.okstorage.client.gui.slot.IndexedModularCraftingSlot;
 import ruiseki.okstorage.client.gui.slot.ModularFilterSlot;
 import ruiseki.okstorage.client.gui.slot.ModularUpgradeSlot;
-import ruiseki.okstorage.common.block.BackpackPanel;
-import ruiseki.okstorage.common.block.BackpackWrapper;
+import ruiseki.okstorage.common.block.StoragePanel;
+import ruiseki.okstorage.common.block.StorageWrapper;
 
 public class BackpackOverlay extends DefaultOverlayHandler {
 
@@ -43,11 +43,11 @@ public class BackpackOverlay extends DefaultOverlayHandler {
 
         final Set<Slot> slots = new HashSet<>();
 
-        if (!(gui.inventorySlots instanceof BackPackContainer container)) {
+        if (!(gui.inventorySlots instanceof StorageContainer container)) {
             return slots;
         }
 
-        BackpackPanel panel = getPanel(container);
+        StoragePanel panel = getPanel(container);
         if (panel == null) {
             return slots;
         }
@@ -76,11 +76,11 @@ public class BackpackOverlay extends DefaultOverlayHandler {
             recipeSlotList[i] = new Slot[0];
         }
 
-        if (!(gui.inventorySlots instanceof BackPackContainer container)) {
+        if (!(gui.inventorySlots instanceof StorageContainer container)) {
             return recipeSlotList;
         }
 
-        BackpackPanel panel = getPanel(container);
+        StoragePanel panel = getPanel(container);
         if (panel == null) {
             return recipeSlotList;
         }
@@ -126,11 +126,11 @@ public class BackpackOverlay extends DefaultOverlayHandler {
         final List<GuiOverlayButton.ItemOverlayState> itemPresenceSlots = new ArrayList<>();
         final List<PositionedStack> ingredients = recipe.getIngredientStacks(recipeIndex);
 
-        if (!(firstGui.inventorySlots instanceof BackPackContainer container)) {
+        if (!(firstGui.inventorySlots instanceof StorageContainer container)) {
             return itemPresenceSlots;
         }
 
-        BackpackWrapper wrapper = (BackpackWrapper) container.wrapper;
+        StorageWrapper wrapper = (StorageWrapper) container.wrapper;
         EntityPlayer player = container.getPlayer();
 
         final List<ItemStack> invStacks = new ArrayList<>();
@@ -173,11 +173,11 @@ public class BackpackOverlay extends DefaultOverlayHandler {
         return itemPresenceSlots;
     }
 
-    private BackpackPanel getPanel(BackPackContainer container) {
+    private StoragePanel getPanel(StorageContainer container) {
         ModularScreen screen = container.getScreen();
         if (!container.isInitialized() || !(screen.getPanelManager()
-            .getMainPanel() instanceof BackpackPanel)) return null;
-        return (BackpackPanel) screen.getPanelManager()
+            .getMainPanel() instanceof StoragePanel)) return null;
+        return (StoragePanel) screen.getPanelManager()
             .getMainPanel();
     }
 }

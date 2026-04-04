@@ -44,7 +44,7 @@ public class AdvancedFeedingUpgradeWrapper extends AdvancedUpgradeWrapper implem
 
     @Override
     public String getSettingLangKey() {
-        return "gui.backpack.advanced_feeding_settings";
+        return "gui.storage.advanced_feeding_settings";
     }
 
     @Override

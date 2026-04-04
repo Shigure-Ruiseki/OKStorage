@@ -1,0 +1,6 @@
+{
+  "parent": "okstorage:block/gold_barrel",
+  "textures": {
+    "top": "okstorage:block/oak_barrel_top_open"
+  }
+}

@@ -21,19 +21,17 @@ public class AdvancedFeedingUpgradeWidget extends AdvancedExpandedTabWidget<Adva
 
     private static final List<CyclicVariantButtonWidget.Variant> HUNGER_VARIANTS = Arrays.asList(
         new CyclicVariantButtonWidget.Variant(
-            IKey.lang("gui.backpack.complete_hunger"),
+            IKey.lang("gui.storage.complete_hunger"),
             OKBGuiTextures.COMPLETE_HUNGER_ICON),
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.half_hunger"), OKBGuiTextures.HALF_HUNGER_ICON),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.half_hunger"), OKBGuiTextures.HALF_HUNGER_ICON),
         new CyclicVariantButtonWidget.Variant(
-            IKey.lang("gui.backpack.immediate_hunger"),
+            IKey.lang("gui.storage.immediate_hunger"),
             OKBGuiTextures.IMMEDIATE_HUNGER_ICON));
 
     private static final List<CyclicVariantButtonWidget.Variant> HEART_VARIANTS = Arrays.asList(
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.consider_health"), OKBGuiTextures.HALF_HEART_ICON),
         new CyclicVariantButtonWidget.Variant(
-            IKey.lang("gui.backpack.consider_health"),
-            OKBGuiTextures.HALF_HEART_ICON),
-        new CyclicVariantButtonWidget.Variant(
-            IKey.lang("gui.backpack.ignore_health"),
+            IKey.lang("gui.storage.ignore_health"),
             OKBGuiTextures.IGNORE_HALF_HEART_ICON));
 
     @Getter

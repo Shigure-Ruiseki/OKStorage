@@ -19,14 +19,14 @@ import ruiseki.okstorage.common.item.wrapper.AdvancedVoidUpgradeWrapper;
 public class AdvancedVoidUpgradeWidget extends AdvancedExpandedTabWidget<AdvancedVoidUpgradeWrapper> {
 
     private static final List<CyclicVariantButtonWidget.Variant> VOID_INPUT_VARIANTS = Arrays.asList(
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.void_all"), OKBGuiTextures.VOID_ALL),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.void_all"), OKBGuiTextures.VOID_ALL),
         new CyclicVariantButtonWidget.Variant(
-            IKey.lang("gui.backpack.void_automation"),
+            IKey.lang("gui.storage.void_automation"),
             OKBGuiTextures.VOID_AUTOMATION));
 
     private static final List<CyclicVariantButtonWidget.Variant> VOID_TYPE_VARIANTS = Arrays.asList(
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.void_overflow"), OKBGuiTextures.VOID_OVERFLOW),
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.void_any"), OKBGuiTextures.VOID_ANY));
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.void_overflow"), OKBGuiTextures.VOID_OVERFLOW),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.void_any"), OKBGuiTextures.VOID_ANY));
 
     public AdvancedVoidUpgradeWidget(int slotIndex, AdvancedVoidUpgradeWrapper wrapper, ItemStack stack,
         IStoragePanel<?> panel, String titleKey) {

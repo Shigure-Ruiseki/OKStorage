@@ -15,8 +15,8 @@ import ruiseki.okcore.datastructure.BlockPos;
 import ruiseki.okcore.helper.ItemNBTHelpers;
 import ruiseki.okstorage.api.IStorageWrapper;
 import ruiseki.okstorage.api.wrapper.ICompactingUpgrade;
-import ruiseki.okstorage.client.gui.handler.BackpackItemStackHandler;
-import ruiseki.okstorage.common.block.BackpackWrapper;
+import ruiseki.okstorage.client.gui.handler.StorageItemStackHandler;
+import ruiseki.okstorage.common.block.StorageWrapper;
 import ruiseki.okstorage.common.recipe.CompactingRecipeCache;
 import ruiseki.okstorage.common.recipe.CompactingRecipeCache.CompactingResult;
 
@@ -28,7 +28,7 @@ public class AdvancedCompactingUpgradeWrapper extends AdvancedUpgradeWrapper imp
 
     @Override
     public String getSettingLangKey() {
-        return "gui.backpack.advanced_compacting_settings";
+        return "gui.storage.advanced_compacting_settings";
     }
 
     @Override
@@ -54,9 +54,9 @@ public class AdvancedCompactingUpgradeWrapper extends AdvancedUpgradeWrapper imp
 
     private void doCompact() {
         if (!isEnabled()) return;
-        if (!(storage instanceof BackpackWrapper bw)) return;
+        if (!(storage instanceof StorageWrapper bw)) return;
 
-        BackpackItemStackHandler invHandler = bw.backpackHandler;
+        StorageItemStackHandler invHandler = bw.backpackHandler;
         CompactingRecipeCache cache = CompactingRecipeCache.getInstance();
         boolean onlyReversible = isOnlyReversible();
 
@@ -109,7 +109,7 @@ public class AdvancedCompactingUpgradeWrapper extends AdvancedUpgradeWrapper imp
         }
     }
 
-    private void consumeFromSlotsBySlots(BackpackItemStackHandler invHandler, List<Integer> slots, int amount) {
+    private void consumeFromSlotsBySlots(StorageItemStackHandler invHandler, List<Integer> slots, int amount) {
         for (int idx : slots) {
             if (amount <= 0) break;
             ItemStack stack = invHandler.getStackInSlot(idx);
@@ -127,7 +127,7 @@ public class AdvancedCompactingUpgradeWrapper extends AdvancedUpgradeWrapper imp
         }
     }
 
-    private ItemStack tryInsertOutput(ItemStack output, BackpackItemStackHandler invHandler) {
+    private ItemStack tryInsertOutput(ItemStack output, StorageItemStackHandler invHandler) {
         if (output == null) return null;
 
         ItemStack remaining = ItemHandlerHelper.copyStackWithSize(output, output.stackSize);

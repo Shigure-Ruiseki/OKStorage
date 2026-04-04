@@ -30,7 +30,7 @@ public class ItemFilterUpgrade extends ItemUpgrade<FilterUpgradeWrapper> {
 
     @Override
     public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
-        list.add(LangHelpers.localize("tooltip.backpack.filter_upgrade"));
+        list.add(LangHelpers.localize("tooltip.storage.filter_upgrade"));
     }
 
     @Override

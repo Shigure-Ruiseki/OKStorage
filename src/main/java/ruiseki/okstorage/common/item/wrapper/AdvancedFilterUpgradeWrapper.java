@@ -14,7 +14,7 @@ public class AdvancedFilterUpgradeWrapper extends AdvancedUpgradeWrapper impleme
 
     @Override
     public String getSettingLangKey() {
-        return "gui.backpack.advanced_filter_settings";
+        return "gui.storage.advanced_filter_settings";
     }
 
     @Override

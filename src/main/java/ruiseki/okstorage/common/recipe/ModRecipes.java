@@ -6,12 +6,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import ruiseki.okcore.enums.EnumDye;
+import ruiseki.okcore.color.EnumDye;
 import ruiseki.okcore.init.IInitListener;
 import ruiseki.okstorage.common.init.ModBlocks;
 import ruiseki.okstorage.common.init.ModItems;
 import ruiseki.okstorage.compat.Mods;
-import ruiseki.okstorage.config.ModConfig;
 
 public class ModRecipes implements IInitListener {
 
@@ -28,7 +27,7 @@ public class ModRecipes implements IInitListener {
         // Leather Backpack
         GameRegistry.addRecipe(
             new ShapedOreRecipe(
-                ModBlocks.BACKPACK_BASE.newItemStack(),
+                ModBlocks.IRON_BARREL.newItemStack(),
                 "SLS",
                 "SCS",
                 "LLL",
@@ -39,66 +38,8 @@ public class ModRecipes implements IInitListener {
                 'C',
                 Blocks.chest));
 
-        // Iron Backpack
-        GameRegistry.addRecipe(
-            new BackpackUpgradeRecipe(
-                ModBlocks.BACKPACK_IRON.newItemStack(),
-                ModConfig.ironBackpackSlots,
-                ModConfig.ironUpgradeSlots,
-                "CCC",
-                "CBC",
-                "CCC",
-                'C',
-                "ingotIron",
-                'B',
-                ModBlocks.BACKPACK_BASE.getItem()));
-
-        // Gold Backpack
-        GameRegistry.addRecipe(
-            new BackpackUpgradeRecipe(
-                ModBlocks.BACKPACK_GOLD.newItemStack(),
-                ModConfig.goldBackpackSlots,
-                ModConfig.goldUpgradeSlots,
-                "CCC",
-                "CBC",
-                "CCC",
-                'C',
-                "ingotGold",
-                'B',
-                ModBlocks.BACKPACK_IRON.getItem()));
-
-        // Diamond Backpack
-        GameRegistry.addRecipe(
-            new BackpackUpgradeRecipe(
-                ModBlocks.BACKPACK_DIAMOND.newItemStack(),
-                ModConfig.diamondBackpackSlots,
-                ModConfig.diamondUpgradeSlots,
-                "CCC",
-                "CBC",
-                "CCC",
-                'C',
-                "gemDiamond",
-                'B',
-                ModBlocks.BACKPACK_GOLD.getItem()));
-
-        // Obsidian Backpack
-        GameRegistry.addRecipe(
-            new BackpackUpgradeRecipe(
-                ModBlocks.BACKPACK_OBSIDIAN.newItemStack(),
-                ModConfig.obsidianBackpackSlots,
-                ModConfig.obsidianUpgradeSlots,
-                "CSC",
-                "SBS",
-                "CSC",
-                'S',
-                "itemNetherStar",
-                'C',
-                "blockObsidian",
-                'B',
-                ModBlocks.BACKPACK_DIAMOND.getItem()));
-
         // Dye Recipes
-        BackpackDyeRecipes recipes = new BackpackDyeRecipes();
+        StorageDyeRecipes recipes = new StorageDyeRecipes();
 
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 16; j++) {
@@ -112,35 +53,7 @@ public class ModRecipes implements IInitListener {
                     .getColor();
 
                 recipes.registerDyeRecipes(
-                    ModBlocks.BACKPACK_BASE.newItemStack(),
-                    accentOre,
-                    mainOre,
-                    accentColor,
-                    mainColor);
-
-                recipes.registerDyeRecipes(
-                    ModBlocks.BACKPACK_IRON.newItemStack(),
-                    accentOre,
-                    mainOre,
-                    accentColor,
-                    mainColor);
-
-                recipes.registerDyeRecipes(
-                    ModBlocks.BACKPACK_GOLD.newItemStack(),
-                    accentOre,
-                    mainOre,
-                    accentColor,
-                    mainColor);
-
-                recipes.registerDyeRecipes(
-                    ModBlocks.BACKPACK_DIAMOND.newItemStack(),
-                    accentOre,
-                    mainOre,
-                    accentColor,
-                    mainColor);
-
-                recipes.registerDyeRecipes(
-                    ModBlocks.BACKPACK_OBSIDIAN.newItemStack(),
+                    ModBlocks.IRON_BARREL.newItemStack(),
                     accentOre,
                     mainOre,
                     accentColor,

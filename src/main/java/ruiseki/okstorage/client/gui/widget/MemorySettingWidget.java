@@ -9,26 +9,26 @@ import com.cleanroommc.modularui.widgets.ButtonWidget;
 import com.cleanroommc.modularui.widgets.layout.Row;
 
 import ruiseki.okstorage.client.gui.OKBGuiTextures;
-import ruiseki.okstorage.client.gui.syncHandler.BackpackSlotSH;
+import ruiseki.okstorage.client.gui.syncHandler.StorageSlotSH;
 import ruiseki.okstorage.client.gui.widget.TabWidget.ExpandDirection;
 import ruiseki.okstorage.client.gui.widget.upgrade.ExpandedTabWidget;
-import ruiseki.okstorage.common.block.BackpackPanel;
-import ruiseki.okstorage.common.block.BackpackSettingPanel;
+import ruiseki.okstorage.common.block.StoragePanel;
+import ruiseki.okstorage.common.block.StorageSettingPanel;
 
 public class MemorySettingWidget extends ExpandedTabWidget {
 
     private static final List<CyclicVariantButtonWidget.Variant> RESPECT_NBT_VARIANTS = Arrays.asList(
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.ignore_nbt"), OKBGuiTextures.IGNORE_NBT_ICON),
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.match_nbt"), OKBGuiTextures.MATCH_NBT_ICON));
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.ignore_nbt"), OKBGuiTextures.IGNORE_NBT_ICON),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.match_nbt"), OKBGuiTextures.MATCH_NBT_ICON));
 
-    private final BackpackPanel panel;
-    private final BackpackSettingPanel settingPanel;
+    private final StoragePanel panel;
+    private final StorageSettingPanel settingPanel;
     private final TabWidget parentTabWidget;
 
     private final CyclicVariantButtonWidget respectNBTButton;
 
-    public MemorySettingWidget(BackpackPanel panel, BackpackSettingPanel settingPanel, TabWidget parentTabWidget) {
-        super(2, OKBGuiTextures.BRAIN_ICON, "gui.backpack.memory_settings", 80, ExpandDirection.RIGHT);
+    public MemorySettingWidget(StoragePanel panel, StorageSettingPanel settingPanel, TabWidget parentTabWidget) {
+        super(2, OKBGuiTextures.BRAIN_ICON, "gui.storage.memory_settings", 80, ExpandDirection.RIGHT);
 
         this.panel = panel;
         this.settingPanel = settingPanel;
@@ -49,9 +49,9 @@ public class MemorySettingWidget extends ExpandedTabWidget {
                         wrapper.setMemoryStack(i, panel.shouldMemorizeRespectNBT);
                     }
 
-                    for (BackpackSlotSH syncHandler : panel.backpackSlotSyncHandlers) {
+                    for (StorageSlotSH syncHandler : panel.backpackSlotSyncHandlers) {
                         syncHandler.syncToServer(
-                            BackpackSlotSH.UPDATE_SET_MEMORY_STACK,
+                            StorageSlotSH.UPDATE_SET_MEMORY_STACK,
                             buf -> buf.writeBoolean(panel.isMemorySettingTabOpened));
                     }
 
@@ -60,7 +60,7 @@ public class MemorySettingWidget extends ExpandedTabWidget {
                 return false;
             })
             .tooltipStatic(
-                t -> t.addLine(IKey.lang("gui.backpack.memorize_all"))
+                t -> t.addLine(IKey.lang("gui.storage.memorize_all"))
                     .pos(RichTooltip.Pos.NEXT_TO_MOUSE));
 
         ButtonWidget<?> unmemorizeAllButton = new ButtonWidget<>().size(20)
@@ -73,8 +73,8 @@ public class MemorySettingWidget extends ExpandedTabWidget {
                         wrapper.unsetMemoryStack(i);
                     }
 
-                    for (BackpackSlotSH syncHandler : panel.backpackSlotSyncHandlers) {
-                        syncHandler.syncToServer(BackpackSlotSH.UPDATE_UNSET_MEMORY_STACK);
+                    for (StorageSlotSH syncHandler : panel.backpackSlotSyncHandlers) {
+                        syncHandler.syncToServer(StorageSlotSH.UPDATE_UNSET_MEMORY_STACK);
                     }
 
                     return true;
@@ -82,7 +82,7 @@ public class MemorySettingWidget extends ExpandedTabWidget {
                 return false;
             })
             .tooltipStatic(
-                t -> t.addLine(IKey.lang("gui.backpack.unmemorize_all"))
+                t -> t.addLine(IKey.lang("gui.storage.unmemorize_all"))
                     .pos(RichTooltip.Pos.NEXT_TO_MOUSE));
 
         respectNBTButton = new CyclicVariantButtonWidget(

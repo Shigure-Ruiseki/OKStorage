@@ -13,7 +13,7 @@ import ruiseki.okstorage.api.wrapper.IAdvancedFilterable;
 import ruiseki.okstorage.api.wrapper.IBasicFilterable;
 import ruiseki.okstorage.api.wrapper.IStorageUpgrade;
 import ruiseki.okstorage.client.gui.handler.DelegatedItemHandler;
-import ruiseki.okstorage.common.block.BackpackWrapper;
+import ruiseki.okstorage.common.block.StorageWrapper;
 import ruiseki.okstorage.common.item.wrapper.UpgradeWrapperBase;
 import ruiseki.okstorage.common.item.wrapper.UpgradeWrapperFactory;
 
@@ -23,13 +23,13 @@ public class DelegatedStackHandlerSH extends SyncHandler {
     public static final int UPDATE_ORE_DICT = 1;
     public static final int UPDATE_STORAGE = 2;
 
-    private final BackpackWrapper wrapper;
+    private final StorageWrapper wrapper;
     private final int slotIndex;
     private final int wrappedSlotAmount;
 
     public DelegatedItemHandler delegatedStackHandler;
 
-    public DelegatedStackHandlerSH(BackpackWrapper wrapper, int slotIndex, int wrappedSlotAmount) {
+    public DelegatedStackHandlerSH(StorageWrapper wrapper, int slotIndex, int wrappedSlotAmount) {
         this.wrapper = wrapper;
         this.slotIndex = slotIndex;
         this.wrappedSlotAmount = wrappedSlotAmount;

@@ -13,7 +13,7 @@ public class AdvancedPickupUpgradeWrapper extends AdvancedUpgradeWrapper impleme
 
     @Override
     public String getSettingLangKey() {
-        return "gui.backpack.advanced_pickup_settings";
+        return "gui.storage.advanced_pickup_settings";
     }
 
     @Override

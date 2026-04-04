@@ -3,15 +3,15 @@ package ruiseki.okstorage.compat.nei;
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
 import ruiseki.okstorage.Reference;
-import ruiseki.okstorage.client.gui.container.BackpackGuiContainer;
+import ruiseki.okstorage.client.gui.container.StorageGuiContainer;
 import ruiseki.okstorage.common.init.ModItems;
 
 public class NEIConfig implements IConfigureNEI {
 
     @Override
     public void loadConfig() {
-        API.registerGuiOverlay(BackpackGuiContainer.class, "crafting", new BackpackPositioner());
-        API.registerGuiOverlayHandler(BackpackGuiContainer.class, new BackpackOverlay(), "crafting");
+        API.registerGuiOverlay(StorageGuiContainer.class, "crafting", new BackpackPositioner());
+        API.registerGuiOverlayHandler(StorageGuiContainer.class, new BackpackOverlay(), "crafting");
         API.addRecipeCatalyst(ModItems.CRAFTING_UPGRADE.newItemStack(), "crafting");
     }
 

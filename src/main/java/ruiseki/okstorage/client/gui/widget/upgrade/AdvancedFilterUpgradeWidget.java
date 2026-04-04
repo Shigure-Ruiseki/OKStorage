@@ -20,9 +20,9 @@ import ruiseki.okstorage.common.item.wrapper.AdvancedFilterUpgradeWrapper;
 public class AdvancedFilterUpgradeWidget extends AdvancedExpandedTabWidget<AdvancedFilterUpgradeWrapper> {
 
     private static final List<CyclicVariantButtonWidget.Variant> FILTER_VARIANTS = Arrays.asList(
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.input_output"), OKBGuiTextures.IN_OUT_ICON),
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.input"), OKBGuiTextures.IN_ICON),
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.backpack.output"), OKBGuiTextures.OUT_ICON));
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.input_output"), OKBGuiTextures.IN_OUT_ICON),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.input"), OKBGuiTextures.IN_ICON),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.output"), OKBGuiTextures.OUT_ICON));
 
     @Getter
     private final CyclicVariantButtonWidget filterButton;
