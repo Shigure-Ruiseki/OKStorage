@@ -17,7 +17,7 @@ public class StorageSH extends SyncHandler {
 
     public static final int UPDATE_SET_SORT_TYPE = 0;
     public static final int UPDATE_SORT_INV = 1;
-    public static final int UPDATE_TRANSFER_TO_BACKPACK_INV = 2;
+    public static final int UPDATE_TRANSFER_TO_STORAGE_INV = 2;
     public static final int UPDATE_TRANSFER_TO_PLAYER_INV = 3;
     public static final int UPDATE_SETTING = 4;
     public static final int DEPLOY_SLEEPING_BAG = 5;
@@ -43,8 +43,8 @@ public class StorageSH extends SyncHandler {
                 sortInventory(buf);
                 break;
 
-            case UPDATE_TRANSFER_TO_BACKPACK_INV:
-                transferToBackpack(buf);
+            case UPDATE_TRANSFER_TO_STORAGE_INV:
+                transferToStorage(buf);
                 break;
 
             case UPDATE_TRANSFER_TO_PLAYER_INV:
@@ -52,7 +52,7 @@ public class StorageSH extends SyncHandler {
                 break;
 
             case UPDATE_SETTING:
-                updateBackpack(buf);
+                updateStorage(buf);
                 break;
 
             default:
@@ -79,29 +79,29 @@ public class StorageSH extends SyncHandler {
         }
     }
 
-    public void transferToBackpack(boolean transferMatched) {
-        StorageInventoryHelpers.transferPlayerInventoryToBackpack(wrapper, playerInv, transferMatched);
+    public void transferToStorage(boolean transferMatched) {
+        StorageInventoryHelpers.transferPlayerInventoryToStorage(wrapper, playerInv, transferMatched);
     }
 
-    public void transferToBackpack(PacketBuffer buf) {
+    public void transferToStorage(PacketBuffer buf) {
         boolean transferMatched = buf.readBoolean();
-        StorageInventoryHelpers.transferPlayerInventoryToBackpack(wrapper, playerInv, transferMatched);
+        StorageInventoryHelpers.transferPlayerInventoryToStorage(wrapper, playerInv, transferMatched);
     }
 
     public void transferToPlayerInventory(boolean transferMatched) {
-        StorageInventoryHelpers.transferBackpackToPlayerInventory(wrapper, playerInv, transferMatched);
+        StorageInventoryHelpers.transferStorageToPlayerInventory(wrapper, playerInv, transferMatched);
     }
 
     public void transferToPlayerInventory(PacketBuffer buf) {
         boolean transferMatched = buf.readBoolean();
-        StorageInventoryHelpers.transferBackpackToPlayerInventory(wrapper, playerInv, transferMatched);
+        StorageInventoryHelpers.transferStorageToPlayerInventory(wrapper, playerInv, transferMatched);
     }
 
-    public void updateBackpack(PacketBuffer buf) throws IOException {
+    public void updateStorage(PacketBuffer buf) throws IOException {
         boolean lock = buf.readBoolean();
         String playerUuid = buf.readStringFromBuffer(36);
         boolean tab = buf.readBoolean();
-        wrapper.lockBackpack = lock;
+        wrapper.lockStorage = lock;
         wrapper.playerUuid = playerUuid;
         wrapper.keepTab = tab;
     }

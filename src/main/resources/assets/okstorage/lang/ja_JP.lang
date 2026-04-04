@@ -1,11 +1,6 @@
 # General
 creativetab.okStorage=OK Storage
 
-# Config
-config.backpackConfig=バックパックの設定
-config.feedingConfig=自動食事アップグレードの設定
-config.magnetConfig=マグネットアップグレードの設定
-
 # GUI
 gui.storage=バックパック
 gui.storage.settings=設定

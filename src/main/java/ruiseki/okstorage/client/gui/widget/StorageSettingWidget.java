@@ -25,13 +25,13 @@ public class StorageSettingWidget extends ExpandedTabWidget {
         new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.not_keep_tab"), OKBGuiTextures.NOT_KEEP_TAB_ICON));
 
     private static final List<CyclicVariantButtonWidget.Variant> LOCK_VARIANTS = Arrays.asList(
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.lock_storage"), OKBGuiTextures.LOCK_BACKPACK_ICON),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.lock_storage"), OKBGuiTextures.LOCK_STORAGE_ICON),
         new CyclicVariantButtonWidget.Variant(
             IKey.lang("gui.storage.unlock_storage"),
-            OKBGuiTextures.UNLOCK_BACKPACK_ICON));
+            OKBGuiTextures.UNLOCK_STORAGE_ICON));
 
     public StorageSettingWidget(StoragePanel panel, StorageSettingPanel settingPanel, TabWidget parentTabWidget) {
-        super(2, OKBGuiTextures.BACKPACK_ICON, "gui.storage.storage_settings", 80, TabWidget.ExpandDirection.RIGHT);
+        super(2, OKBGuiTextures.STORAGE_ICON, "gui.storage.storage_settings", 80, TabWidget.ExpandDirection.RIGHT);
 
         this.panel = panel;
         this.wrapper = panel.wrapper;
@@ -53,9 +53,9 @@ public class StorageSettingWidget extends ExpandedTabWidget {
 
         CyclicVariantButtonWidget lockButton = new CyclicVariantButtonWidget(
             LOCK_VARIANTS,
-            wrapper.lockBackpack ? 0 : 1,
+            wrapper.lockStorage ? 0 : 1,
             (index) -> {
-                wrapper.lockBackpack = index == 0;
+                wrapper.lockStorage = index == 0;
                 updateWrapper();
             });
 
@@ -80,8 +80,8 @@ public class StorageSettingWidget extends ExpandedTabWidget {
     }
 
     private void updateWrapper() {
-        this.panel.backpackSyncHandler.syncToServer(StorageSH.UPDATE_SETTING, buffer -> {
-            buffer.writeBoolean(wrapper.lockBackpack);
+        this.panel.storageSyncHandler.syncToServer(StorageSH.UPDATE_SETTING, buffer -> {
+            buffer.writeBoolean(wrapper.lockStorage);
             buffer.writeStringToBuffer(
                 panel.player.getUniqueID()
                     .toString());

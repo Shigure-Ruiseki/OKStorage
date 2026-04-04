@@ -42,25 +42,25 @@ public class CraftingUpgradeWrapper extends UpgradeWrapperBase implements ICraft
         int ordinal = ItemNBTHelpers
             .getInt(upgrade, CRAFTING_DEST_TAG, IBasicFilterable.FilterType.WHITELIST.ordinal());
         CraftingDestination[] types = CraftingDestination.values();
-        if (ordinal < 0 || ordinal >= types.length) return CraftingDestination.BACKPACK;
+        if (ordinal < 0 || ordinal >= types.length) return CraftingDestination.STORAGE;
         return types[ordinal];
     }
 
     @Override
     public void setCraftingDes(CraftingDestination type) {
-        if (type == null) type = CraftingDestination.BACKPACK;
+        if (type == null) type = CraftingDestination.STORAGE;
         ItemNBTHelpers.setInt(upgrade, CRAFTING_DEST_TAG, type.ordinal());
         markDirty();
     }
 
     @Override
-    public boolean isUseBackpack() {
-        return ItemNBTHelpers.getBoolean(upgrade, USE_BACKPACK_TAG, false);
+    public boolean isUseStorage() {
+        return ItemNBTHelpers.getBoolean(upgrade, USE_STORAGE_TAG, false);
     }
 
     @Override
-    public void setUseBackpack(boolean used) {
-        ItemNBTHelpers.setBoolean(upgrade, USE_BACKPACK_TAG, used);
+    public void setUseStorage(boolean used) {
+        ItemNBTHelpers.setBoolean(upgrade, USE_STORAGE_TAG, used);
         markDirty();
     }
 

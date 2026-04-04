@@ -10,8 +10,8 @@ public class NEIConfig implements IConfigureNEI {
 
     @Override
     public void loadConfig() {
-        API.registerGuiOverlay(StorageGuiContainer.class, "crafting", new BackpackPositioner());
-        API.registerGuiOverlayHandler(StorageGuiContainer.class, new BackpackOverlay(), "crafting");
+        API.registerGuiOverlay(StorageGuiContainer.class, "crafting", new StoragePositioner());
+        API.registerGuiOverlayHandler(StorageGuiContainer.class, new StorageOverlay(), "crafting");
         API.addRecipeCatalyst(ModItems.CRAFTING_UPGRADE.newItemStack(), "crafting");
     }
 

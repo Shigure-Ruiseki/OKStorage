@@ -9,12 +9,12 @@ import ruiseki.okstorage.common.block.StorageWrapper;
 
 public class StorageUpgradeRecipe extends ShapedOreRecipe {
 
-    private final int backpackSlots;
+    private final int storageSlots;
     private final int upgradeSlots;
 
-    public StorageUpgradeRecipe(ItemStack result, int backpackSlots, int upgradeSlots, Object... recipe) {
+    public StorageUpgradeRecipe(ItemStack result, int storageSlots, int upgradeSlots, Object... recipe) {
         super(result, recipe);
-        this.backpackSlots = backpackSlots;
+        this.storageSlots = storageSlots;
         this.upgradeSlots = upgradeSlots;
     }
 
@@ -24,7 +24,7 @@ public class StorageUpgradeRecipe extends ShapedOreRecipe {
         ItemStack result = super.getCraftingResult(inv);
         if (result == null) return null;
 
-        NBTTagCompound backpackNBT = new NBTTagCompound();
+        NBTTagCompound storage = new NBTTagCompound();
 
         for (int i = 0; i < inv.getSizeInventory(); i++) {
 
@@ -32,21 +32,21 @@ public class StorageUpgradeRecipe extends ShapedOreRecipe {
 
             if (stack != null && stack.hasTagCompound()
                 && stack.getTagCompound()
-                    .hasKey(StorageWrapper.BACKPACK_NBT)) {
+                    .hasKey(StorageWrapper.STORAGE_NBT)) {
 
-                backpackNBT = (NBTTagCompound) stack.getTagCompound()
-                    .getCompoundTag(StorageWrapper.BACKPACK_NBT)
+                storage = (NBTTagCompound) stack.getTagCompound()
+                    .getCompoundTag(StorageWrapper.STORAGE_NBT)
                     .copy();
 
                 break;
             }
         }
 
-        backpackNBT.setInteger(StorageWrapper.BACKPACK_SLOTS, backpackSlots);
-        backpackNBT.setInteger(StorageWrapper.UPGRADE_SLOTS, upgradeSlots);
+        storage.setInteger(StorageWrapper.STORAGE_SLOTS, storageSlots);
+        storage.setInteger(StorageWrapper.UPGRADE_SLOTS, upgradeSlots);
 
         NBTTagCompound root = new NBTTagCompound();
-        root.setTag(StorageWrapper.BACKPACK_NBT, backpackNBT);
+        root.setTag(StorageWrapper.STORAGE_NBT, storage);
 
         result.setTagCompound(root);
 

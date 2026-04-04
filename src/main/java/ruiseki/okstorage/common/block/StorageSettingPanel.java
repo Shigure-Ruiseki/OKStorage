@@ -20,7 +20,7 @@ public class StorageSettingPanel extends ModularPanel {
 
     private final StoragePanel parent;
 
-    private final TabWidget backpackTab;
+    private final TabWidget storageTab;
     private final TabWidget memoryTab;
     private final TabWidget sortTab;
 
@@ -32,12 +32,12 @@ public class StorageSettingPanel extends ModularPanel {
             .top(0)
             .right(0);
 
-        backpackTab = new TabWidget(1, ExpandDirection.RIGHT);
-        backpackTab.tooltipStatic(
+        storageTab = new TabWidget(1, ExpandDirection.RIGHT);
+        storageTab.tooltipStatic(
             tooltip -> tooltip.addLine(IKey.lang("gui.storage.storage_settings"))
                 .pos(RichTooltip.Pos.NEXT_TO_MOUSE));
-        backpackTab.setExpandedWidget(new StorageSettingWidget(parent, this, backpackTab));
-        backpackTab.setTabIcon(OKBGuiTextures.BACKPACK_ICON);
+        storageTab.setExpandedWidget(new StorageSettingWidget(parent, this, storageTab));
+        storageTab.setTabIcon(OKBGuiTextures.STORAGE_ICON);
 
         memoryTab = new TabWidget(2, ExpandDirection.RIGHT);
         memoryTab.tooltipStatic(
@@ -53,12 +53,12 @@ public class StorageSettingPanel extends ModularPanel {
         sortTab.setExpandedWidget(new SortingSettingWidget(parent, this, sortTab));
         sortTab.setTabIcon(OKBGuiTextures.NO_SORT_ICON);
 
-        child(backpackTab).child(memoryTab)
+        child(storageTab).child(memoryTab)
             .child(sortTab);
     }
 
     public void updateTabState(int openIndex) {
-        backpackTab.setEnabled(true);
+        storageTab.setEnabled(true);
         memoryTab.setEnabled(true);
         sortTab.setEnabled(true);
 
@@ -68,18 +68,18 @@ public class StorageSettingPanel extends ModularPanel {
                 sortTab.setShowExpanded(false);
                 parent.isMemorySettingTabOpened = false;
                 parent.isSortingSettingTabOpened = false;
-                memoryTab.setEnabled(!backpackTab.isShowExpanded());
+                memoryTab.setEnabled(!storageTab.isShowExpanded());
                 break;
 
             case 1:
-                backpackTab.setShowExpanded(false);
+                storageTab.setShowExpanded(false);
                 sortTab.setShowExpanded(false);
                 parent.isSortingSettingTabOpened = false;
                 sortTab.setEnabled(!memoryTab.isShowExpanded());
                 break;
 
             case 2:
-                backpackTab.setShowExpanded(false);
+                storageTab.setShowExpanded(false);
                 memoryTab.setShowExpanded(false);
                 parent.isMemorySettingTabOpened = false;
                 break;

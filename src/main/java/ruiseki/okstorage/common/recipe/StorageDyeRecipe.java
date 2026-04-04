@@ -27,36 +27,34 @@ public class StorageDyeRecipe extends ShapedOreRecipe {
         NBTTagCompound root = result.hasTagCompound() ? (NBTTagCompound) result.getTagCompound()
             .copy() : new NBTTagCompound();
 
-        NBTTagCompound backpackNBT = root.hasKey(StorageWrapper.BACKPACK_NBT)
-            ? root.getCompoundTag(StorageWrapper.BACKPACK_NBT)
+        NBTTagCompound storageNBT = root.hasKey(StorageWrapper.STORAGE_NBT)
+            ? root.getCompoundTag(StorageWrapper.STORAGE_NBT)
             : new NBTTagCompound();
 
-        // copy NBT từ input backpack
         for (int i = 0; i < inv.getSizeInventory(); i++) {
 
             ItemStack stack = inv.getStackInSlot(i);
 
             if (stack != null && stack.hasTagCompound()
                 && stack.getTagCompound()
-                    .hasKey(StorageWrapper.BACKPACK_NBT)) {
+                    .hasKey(StorageWrapper.STORAGE_NBT)) {
 
-                backpackNBT = (NBTTagCompound) stack.getTagCompound()
-                    .getCompoundTag(StorageWrapper.BACKPACK_NBT)
+                storageNBT = (NBTTagCompound) stack.getTagCompound()
+                    .getCompoundTag(StorageWrapper.STORAGE_NBT)
                     .copy();
                 break;
             }
         }
 
-        // set màu vào BackpackNBT
         if (mainColor >= 0) {
-            backpackNBT.setInteger(StorageWrapper.MAIN_COLOR, mainColor);
+            storageNBT.setInteger(StorageWrapper.MAIN_COLOR, mainColor);
         }
 
         if (accentColor >= 0) {
-            backpackNBT.setInteger(StorageWrapper.ACCENT_COLOR, accentColor);
+            storageNBT.setInteger(StorageWrapper.ACCENT_COLOR, accentColor);
         }
 
-        root.setTag(StorageWrapper.BACKPACK_NBT, backpackNBT);
+        root.setTag(StorageWrapper.STORAGE_NBT, storageNBT);
         result.setTagCompound(root);
 
         return result;

@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -19,10 +18,8 @@ import com.cleanroommc.modularui.utils.item.ItemHandlerHelper;
 import ruiseki.okcore.datastructure.BlockPos;
 import ruiseki.okcore.helper.LangHelpers;
 import ruiseki.okstorage.api.IStorageWrapper;
-import ruiseki.okstorage.api.wrapper.IEntityApplicable;
 import ruiseki.okstorage.api.wrapper.IFilterUpgrade;
 import ruiseki.okstorage.api.wrapper.IInventoryModifiable;
-import ruiseki.okstorage.api.wrapper.IPickupUpgrade;
 import ruiseki.okstorage.api.wrapper.ISlotModifiable;
 import ruiseki.okstorage.api.wrapper.ITickable;
 import ruiseki.okstorage.api.wrapper.IToggleable;
@@ -37,9 +34,9 @@ public class StorageWrapper implements IStorageWrapper {
 
     public final TileEntity tile;
 
-    public final StorageItemStackHandler backpackHandler;
+    public final StorageItemStackHandler storageHandler;
     public UpgradeItemStackHandler upgradeHandler;
-    public int backpackSlots;
+    public int storageSlots;
     public int upgradeSlots;
 
     public int mainColor;
@@ -47,7 +44,7 @@ public class StorageWrapper implements IStorageWrapper {
 
     public SortType sortType;
 
-    public boolean lockBackpack;
+    public boolean lockStorage;
     public String playerUuid;
     public boolean keepTab;
 
@@ -59,11 +56,11 @@ public class StorageWrapper implements IStorageWrapper {
 
     public String uuid;
 
-    public static final String BACKPACK_NBT = "BackpackNBT";
+    public static final String STORAGE_NBT = "StorageNBT";
 
-    public static final String BACKPACK_INV = "BackpackInv";
+    public static final String STORAGE_INV = "StorageInv";
     public static final String UPGRADE_INV = "UpgradeInv";
-    public static final String BACKPACK_SLOTS = "BackpackSlots";
+    public static final String STORAGE_SLOTS = "StorageSlots";
     public static final String UPGRADE_SLOTS = "UpgradeSlots";
     public static final String MEMORY_STACK_ITEMS_TAG = "MemoryItems";
     public static final String MEMORY_STACK_RESPECT_NBT_TAG = "MemoryRespectNBT";
@@ -76,7 +73,7 @@ public class StorageWrapper implements IStorageWrapper {
 
     public static final String UUID_TAG = "UUID";
 
-    public static final String LOCKED_BACKPACK_TAG = "LockedBackpack";
+    public static final String LOCKED_STORAGE_TAG = "LockedStorage";
     public static final String PLAYER_UUID_TAG = "PlayerUUID";
 
     public static final String KEEP_TAB_TAG = "KeepTab";
@@ -91,28 +88,28 @@ public class StorageWrapper implements IStorageWrapper {
         this(tile, 120, 7);
     }
 
-    public StorageWrapper(int backpackSlots, int upgradeSlots) {
-        this(null, backpackSlots, upgradeSlots);
+    public StorageWrapper(int storageSlots, int upgradeSlots) {
+        this(null, storageSlots, upgradeSlots);
     }
 
     public StorageWrapper(BlockStorage blockStorage, TileEntity tile) {
         this(tile, blockStorage.getSlots(), blockStorage.getUpgradeSlots());
     }
 
-    public StorageWrapper(TileEntity tile, int backpackSlots, int upgradeSlots) {
+    public StorageWrapper(TileEntity tile, int storageSlots, int upgradeSlots) {
         this.tile = tile;
-        this.backpackSlots = backpackSlots;
+        this.storageSlots = storageSlots;
         this.upgradeSlots = upgradeSlots;
         this.mainColor = 0xFFCC613A;
         this.accentColor = 0xFF622E1A;
         this.sortType = SortType.BY_NAME;
-        this.lockBackpack = false;
+        this.lockStorage = false;
         this.uuid = UUID.randomUUID()
             .toString();
         this.playerUuid = "";
         this.keepTab = true;
 
-        this.backpackHandler = new StorageItemStackHandler(backpackSlots, this) {
+        this.storageHandler = new StorageItemStackHandler(storageSlots, this) {
 
             @Override
             protected void onContentsChanged(int slot) {
@@ -155,12 +152,12 @@ public class StorageWrapper implements IStorageWrapper {
 
     @Override
     public int getSlots() {
-        return backpackHandler.getSlots();
+        return storageHandler.getSlots();
     }
 
     @Override
     public ItemStack getStackInSlot(int slot) {
-        ItemStack stack = backpackHandler.getStackInSlot(slot);
+        ItemStack stack = storageHandler.getStackInSlot(slot);
 
         Map<Integer, IInventoryModifiable> mods = gatherCapabilityUpgrades(IInventoryModifiable.class);
         for (IInventoryModifiable mod : mods.values()) {
@@ -177,7 +174,7 @@ public class StorageWrapper implements IStorageWrapper {
             stack = mod.onSet(slot, stack);
         }
 
-        backpackHandler.setStackInSlot(slot, stack);
+        storageHandler.setStackInSlot(slot, stack);
     }
 
     @Override
@@ -190,12 +187,12 @@ public class StorageWrapper implements IStorageWrapper {
             if (stack == null) return null;
         }
 
-        return backpackHandler.prioritizedInsertion(slot, stack, simulate);
+        return storageHandler.prioritizedInsertion(slot, stack, simulate);
     }
 
     @Override
     public @Nullable ItemStack extractItem(int slot, int amount, boolean simulate) {
-        ItemStack extracted = backpackHandler.extractItem(slot, amount, simulate);
+        ItemStack extracted = storageHandler.extractItem(slot, amount, simulate);
         if (extracted == null) return null;
 
         // Apply IInventoryModifiable wrappers
@@ -214,7 +211,7 @@ public class StorageWrapper implements IStorageWrapper {
 
         ItemStack remaining = ItemHandlerHelper.copyStackWithSize(stack, stack.stackSize);
 
-        for (int i = 0; i < backpackHandler.getSlots() && remaining != null; i++) {
+        for (int i = 0; i < storageHandler.getSlots() && remaining != null; i++) {
             remaining = insertItem(i, remaining, simulate);
         }
 
@@ -228,7 +225,7 @@ public class StorageWrapper implements IStorageWrapper {
         int remaining = amount;
         ItemStack result = null;
 
-        for (int i = 0; i < backpackHandler.getSlots(); i++) {
+        for (int i = 0; i < storageHandler.getSlots(); i++) {
             ItemStack slotStack = getStackInSlot(i);
             if (slotStack != null && slotStack.isItemEqual(wanted)) {
                 int take = Math.min(slotStack.stackSize, remaining);
@@ -250,18 +247,18 @@ public class StorageWrapper implements IStorageWrapper {
 
     @Override
     public int getSlotLimit(int slot) {
-        return backpackHandler.getSlotLimit(slot);
+        return storageHandler.getSlotLimit(slot);
     }
 
     // Setting
     @Override
     public boolean isSlotMemorized(int slotIndex) {
-        return backpackHandler.isSlotMemorized(slotIndex);
+        return storageHandler.isSlotMemorized(slotIndex);
     }
 
     @Override
     public ItemStack getMemoryStack(int slotIndex) {
-        return backpackHandler.getMemoryStack(slotIndex);
+        return storageHandler.getMemoryStack(slotIndex);
     }
 
     @Override
@@ -271,34 +268,34 @@ public class StorageWrapper implements IStorageWrapper {
 
         ItemStack copiedStack = currentStack.copy();
         copiedStack.stackSize = 1;
-        backpackHandler.setMemoryStack(slotIndex, copiedStack);
-        backpackHandler.setRespectNBT(slotIndex, respectNBT);
+        storageHandler.setMemoryStack(slotIndex, copiedStack);
+        storageHandler.setRespectNBT(slotIndex, respectNBT);
     }
 
     @Override
     public void unsetMemoryStack(int slotIndex) {
-        backpackHandler.setMemoryStack(slotIndex, null);
-        backpackHandler.setRespectNBT(slotIndex, false);
+        storageHandler.setMemoryStack(slotIndex, null);
+        storageHandler.setRespectNBT(slotIndex, false);
     }
 
     @Override
     public boolean isMemoryStackRespectNBT(int slotIndex) {
-        return backpackHandler.isRespectNBT(slotIndex);
+        return storageHandler.isRespectNBT(slotIndex);
     }
 
     @Override
     public void setMemoryStackRespectNBT(int slotIndex, boolean respect) {
-        backpackHandler.setRespectNBT(slotIndex, respect);
+        storageHandler.setRespectNBT(slotIndex, respect);
     }
 
     @Override
     public boolean isSlotLocked(int slotIndex) {
-        return backpackHandler.isSlotLocked(slotIndex);
+        return storageHandler.isSlotLocked(slotIndex);
     }
 
     @Override
     public void setSlotLocked(int slotIndex, boolean locked) {
-        backpackHandler.setSlotLocked(slotIndex, locked);
+        storageHandler.setSlotLocked(slotIndex, locked);
     }
 
     @Override
@@ -437,28 +434,8 @@ public class StorageWrapper implements IStorageWrapper {
         return true;
     }
 
-    public boolean canPickupItem(ItemStack stack) {
-        Map<Integer, IPickupUpgrade> gathered = gatherCapabilityUpgrades(IPickupUpgrade.class);
-        if (gathered.isEmpty()) return false;
-        for (IPickupUpgrade upgrade : gathered.values()) {
-            if (upgrade.canPickup(stack)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public void applyContainerEntity(World world, Entity selfEntity) {
-        Map<Integer, IEntityApplicable> gathered = gatherCapabilityUpgrades(IEntityApplicable.class);
-        if (gathered.isEmpty()) return;
-        for (IEntityApplicable mod : gathered.values()) {
-            mod.applyContainerEntity(world, selfEntity);
-        }
-    }
-
     public boolean canPlayerAccess(UUID playerUUID) {
-        if (!lockBackpack) return true;
+        if (!lockStorage) return true;
         if (playerUUID == null || playerUuid == null || playerUuid.isEmpty()) return false;
         return playerUUID.equals(UUID.fromString(playerUuid));
     }
@@ -471,48 +448,48 @@ public class StorageWrapper implements IStorageWrapper {
     public NBTTagCompound serializeNBT() {
         NBTTagCompound tag = new NBTTagCompound();
 
-        if (backpackHandler.isSizeInconsistent(backpackSlots)) {
-            backpackHandler.resize(backpackSlots);
+        if (storageHandler.isSizeInconsistent(storageSlots)) {
+            storageHandler.resize(storageSlots);
         }
         if (getUpgradeHandler().isSizeInconsistent(upgradeSlots)) {
             getUpgradeHandler().resize(upgradeSlots);
         }
 
-        tag.setInteger(BACKPACK_SLOTS, backpackSlots);
+        tag.setInteger(STORAGE_SLOTS, storageSlots);
         tag.setInteger(UPGRADE_SLOTS, upgradeSlots);
         tag.setInteger(MAIN_COLOR, mainColor);
         tag.setInteger(ACCENT_COLOR, accentColor);
 
-        tag.setTag(BACKPACK_INV, backpackHandler.serializeNBT());
+        tag.setTag(STORAGE_INV, storageHandler.serializeNBT());
         tag.setTag(UPGRADE_INV, upgradeHandler.serializeNBT());
 
         NBTTagCompound memoryTag = new NBTTagCompound();
-        StorageItemStackHelpers.saveAllSlotsExtended(memoryTag, backpackHandler.getMemorizedStacks());
+        StorageItemStackHelpers.saveAllSlotsExtended(memoryTag, storageHandler.getMemorizedStacks());
         tag.setTag(MEMORY_STACK_ITEMS_TAG, memoryTag);
 
-        List<Boolean> respectList = backpackHandler.getRespectNBTList();
-        byte[] respectBytes = new byte[backpackSlots];
-        for (int i = 0; i < backpackSlots; i++) {
+        List<Boolean> respectList = storageHandler.getRespectNBTList();
+        byte[] respectBytes = new byte[storageSlots];
+        for (int i = 0; i < storageSlots; i++) {
             boolean val = i < respectList.size() && respectList.get(i);
             respectBytes[i] = (byte) (val ? 1 : 0);
         }
         tag.setByteArray(MEMORY_STACK_RESPECT_NBT_TAG, respectBytes);
 
-        List<Boolean> locked = backpackHandler.getLockedSlotList();
-        byte[] lockedBytes = new byte[backpackSlots];
-        for (int i = 0; i < backpackSlots; i++) {
+        List<Boolean> locked = storageHandler.getLockedSlotList();
+        byte[] lockedBytes = new byte[storageSlots];
+        for (int i = 0; i < storageSlots; i++) {
             boolean val = i < locked.size() && locked.get(i);
             lockedBytes[i] = (byte) (val ? 1 : 0);
         }
         tag.setByteArray(LOCKED_SLOTS_TAG, lockedBytes);
 
-        tag.setBoolean(LOCKED_BACKPACK_TAG, lockBackpack);
+        tag.setBoolean(LOCKED_STORAGE_TAG, lockStorage);
 
         tag.setBoolean(KEEP_TAB_TAG, keepTab);
 
         tag.setString(UUID_TAG, uuid);
 
-        if (lockBackpack && playerUuid != null) {
+        if (lockStorage && playerUuid != null) {
             tag.setString(PLAYER_UUID_TAG, playerUuid);
         }
 
@@ -526,8 +503,8 @@ public class StorageWrapper implements IStorageWrapper {
     @Override
     public void deserializeNBT(NBTTagCompound tag) {
         if (tag == null) return;
-        if (tag.hasKey(BACKPACK_SLOTS, 3)) {
-            this.backpackSlots = tag.getInteger(BACKPACK_SLOTS);
+        if (tag.hasKey(STORAGE_SLOTS, 3)) {
+            this.storageSlots = tag.getInteger(STORAGE_SLOTS);
         }
         if (tag.hasKey(UPGRADE_SLOTS, 3)) {
             this.upgradeSlots = tag.getInteger(UPGRADE_SLOTS);
@@ -536,31 +513,31 @@ public class StorageWrapper implements IStorageWrapper {
         if (tag.hasKey(MAIN_COLOR, 3)) this.mainColor = tag.getInteger(MAIN_COLOR);
         if (tag.hasKey(ACCENT_COLOR, 3)) this.accentColor = tag.getInteger(ACCENT_COLOR);
 
-        if (tag.hasKey(BACKPACK_INV, 10)) {
-            backpackHandler.deserializeNBT(tag.getCompoundTag(BACKPACK_INV));
+        if (tag.hasKey(STORAGE_INV, 10)) {
+            storageHandler.deserializeNBT(tag.getCompoundTag(STORAGE_INV));
 
-            if (backpackHandler.isSizeInconsistent(this.backpackSlots)) {
-                backpackHandler.resize(this.backpackSlots);
+            if (storageHandler.isSizeInconsistent(this.storageSlots)) {
+                storageHandler.resize(this.storageSlots);
             }
 
-            StorageItemStackHelpers.loadAllItemsExtended(tag.getCompoundTag(BACKPACK_INV), backpackHandler.getStacks());
+            StorageItemStackHelpers.loadAllItemsExtended(tag.getCompoundTag(STORAGE_INV), storageHandler.getStacks());
         }
 
         if (tag.hasKey(MEMORY_STACK_ITEMS_TAG, 10)) {
             StorageItemStackHelpers
-                .loadAllItemsExtended(tag.getCompoundTag(MEMORY_STACK_ITEMS_TAG), backpackHandler.getMemorizedStacks());
+                .loadAllItemsExtended(tag.getCompoundTag(MEMORY_STACK_ITEMS_TAG), storageHandler.getMemorizedStacks());
         }
 
         if (tag.hasKey(MEMORY_STACK_RESPECT_NBT_TAG, 7)) {
             byte[] respectArr = tag.getByteArray(MEMORY_STACK_RESPECT_NBT_TAG);
-            for (int i = 0; i < respectArr.length && i < this.backpackSlots; i++) {
+            for (int i = 0; i < respectArr.length && i < this.storageSlots; i++) {
                 setMemoryStackRespectNBT(i, respectArr[i] != 0);
             }
         }
 
         if (tag.hasKey(LOCKED_SLOTS_TAG, 7)) {
             byte[] lockedArr = tag.getByteArray(LOCKED_SLOTS_TAG);
-            for (int i = 0; i < lockedArr.length && i < this.backpackSlots; i++) {
+            for (int i = 0; i < lockedArr.length && i < this.storageSlots; i++) {
                 setSlotLocked(i, lockedArr[i] != 0);
             }
         }
@@ -579,7 +556,7 @@ public class StorageWrapper implements IStorageWrapper {
             }
         }
 
-        if (tag.hasKey(LOCKED_BACKPACK_TAG, 1)) this.lockBackpack = tag.getBoolean(LOCKED_BACKPACK_TAG);
+        if (tag.hasKey(LOCKED_STORAGE_TAG, 1)) this.lockStorage = tag.getBoolean(LOCKED_STORAGE_TAG);
         if (tag.hasKey(KEEP_TAB_TAG, 1)) this.keepTab = tag.getBoolean(KEEP_TAB_TAG);
 
         if (tag.hasKey(UUID_TAG, 8)) {

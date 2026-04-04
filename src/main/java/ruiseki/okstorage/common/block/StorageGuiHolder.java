@@ -37,7 +37,7 @@ public abstract class StorageGuiHolder {
     protected void addCommonWidgets(StoragePanel panel) {
         panel.addSortingButtons();
         panel.addTransferButtons();
-        panel.addBackpackInventorySlots();
+        panel.addStorageInventorySlots();
         panel.addSearchBar();
         panel.addUpgradeSlots();
         panel.addSettingTab();

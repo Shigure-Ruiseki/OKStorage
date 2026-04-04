@@ -101,7 +101,7 @@ public class UpgradeSlotSHRegisters implements IInitListener {
                 UpgradeWrapperBase wrapper = slot.getWrapper();
                 if (!(wrapper instanceof ICraftingUpgrade upgrade)) return;
                 upgrade.setCraftingDes(NetworkUtils.readEnumValue(buf, ICraftingUpgrade.CraftingDestination.class));
-                upgrade.setUseBackpack(buf.readBoolean());
+                upgrade.setUseStorage(buf.readBoolean());
             });
 
             UpgradeSlotSHRegistry.registerServer(UPDATE_VOID, (slot, buf) -> {

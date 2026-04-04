@@ -41,7 +41,7 @@ public class SortingSettingWidget extends ExpandedTabWidget {
                         wrapper.setSlotLocked(i, true);
                     }
 
-                    for (StorageSlotSH syncHandler : panel.backpackSlotSyncHandlers) {
+                    for (StorageSlotSH syncHandler : panel.storageSlotSyncHandlers) {
                         syncHandler.syncToServer(StorageSlotSH.UPDATE_SET_SLOT_LOCK);
                     }
 
@@ -63,7 +63,7 @@ public class SortingSettingWidget extends ExpandedTabWidget {
                         wrapper.setSlotLocked(i, false);
                     }
 
-                    for (StorageSlotSH syncHandler : panel.backpackSlotSyncHandlers) {
+                    for (StorageSlotSH syncHandler : panel.storageSlotSyncHandlers) {
                         syncHandler.syncToServer(StorageSlotSH.UPDATE_UNSET_SLOT_LOCK);
                     }
 

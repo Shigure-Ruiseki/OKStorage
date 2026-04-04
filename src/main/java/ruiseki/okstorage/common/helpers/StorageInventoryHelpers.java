@@ -192,7 +192,7 @@ public class StorageInventoryHelpers {
         return false;
     }
 
-    public static void transferPlayerInventoryToBackpack(StorageWrapper wrapper, PlayerMainInvWrapper playerInv,
+    public static void transferPlayerInventoryToStorage(StorageWrapper wrapper, PlayerMainInvWrapper playerInv,
         boolean transferMatched) {
         for (int i = 9; i < playerInv.getSlots(); i++) {
             ItemStack stack = playerInv.getStackInSlot(i);
@@ -208,7 +208,7 @@ public class StorageInventoryHelpers {
         }
     }
 
-    public static void transferBackpackToPlayerInventory(StorageWrapper wrapper, PlayerMainInvWrapper playerInv,
+    public static void transferStorageToPlayerInventory(StorageWrapper wrapper, PlayerMainInvWrapper playerInv,
         boolean transferMatched) {
         for (int i = 0; i < wrapper.getSlots(); i++) {
             ItemStack stack = wrapper.getStackInSlot(i);
@@ -377,7 +377,7 @@ public class StorageInventoryHelpers {
                 }
                 break;
 
-            case BACKPACK:
+            case STORAGE:
                 for (int i = 0; i < stackHandler.getSlots() - 1; i++) {
                     ItemStack original = stackHandler.getStackInSlot(i);
                     if (original == null || original.stackSize <= 0) continue;

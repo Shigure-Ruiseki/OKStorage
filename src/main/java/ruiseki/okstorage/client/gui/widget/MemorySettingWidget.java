@@ -49,7 +49,7 @@ public class MemorySettingWidget extends ExpandedTabWidget {
                         wrapper.setMemoryStack(i, panel.shouldMemorizeRespectNBT);
                     }
 
-                    for (StorageSlotSH syncHandler : panel.backpackSlotSyncHandlers) {
+                    for (StorageSlotSH syncHandler : panel.storageSlotSyncHandlers) {
                         syncHandler.syncToServer(
                             StorageSlotSH.UPDATE_SET_MEMORY_STACK,
                             buf -> buf.writeBoolean(panel.isMemorySettingTabOpened));
@@ -73,7 +73,7 @@ public class MemorySettingWidget extends ExpandedTabWidget {
                         wrapper.unsetMemoryStack(i);
                     }
 
-                    for (StorageSlotSH syncHandler : panel.backpackSlotSyncHandlers) {
+                    for (StorageSlotSH syncHandler : panel.storageSlotSyncHandlers) {
                         syncHandler.syncToServer(StorageSlotSH.UPDATE_UNSET_MEMORY_STACK);
                     }
 

@@ -62,11 +62,11 @@ public class SearchBarWidget extends TextFieldWidget {
     }
 
     private void cacheOriginalOrder() {
-        Column backpackSlots = panel.backpackInvCol;
-        if (backpackSlots == null) return;
+        Column storageInvCol = panel.storageInvCol;
+        if (storageInvCol == null) return;
 
         originalOrder = new ArrayList<>();
-        for (IWidget child : backpackSlots.getChildren()) {
+        for (IWidget child : storageInvCol.getChildren()) {
             if (child instanceof StorageSlot slot) {
                 originalOrder.add(slot);
             }
@@ -78,10 +78,10 @@ public class SearchBarWidget extends TextFieldWidget {
     }
 
     public void doSearch(String search) {
-        Column backpackSlots = panel.backpackInvCol;
-        if (backpackSlots == null) return;
+        Column storageInvCol = panel.storageInvCol;
+        if (storageInvCol == null) return;
 
-        IWidget parent = backpackSlots.getParent();
+        IWidget parent = storageInvCol.getParent();
         if (!(parent instanceof StorageList storageList)) return;
 
         int columns = panel.rowSize;

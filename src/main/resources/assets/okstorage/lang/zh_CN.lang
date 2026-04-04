@@ -12,13 +12,6 @@ gui.sort_type.by_ore_dict=按矿物词典
 gui.sort_order.asc=升序
 gui.sort_order.desc=降序
 
-# Backpack =
-
-# Config
-config.backpackConfig=背包设置
-config.feedingConfig=喂食设置
-config.magnetConfig=磁铁设置
-
 # GUI
 gui.storage=背包
 gui.storage.settings=设置

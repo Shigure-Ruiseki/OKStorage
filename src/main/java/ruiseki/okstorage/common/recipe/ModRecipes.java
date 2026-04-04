@@ -24,7 +24,6 @@ public class ModRecipes implements IInitListener {
 
     public static void blockRecipes() {
 
-        // Leather Backpack
         GameRegistry.addRecipe(
             new ShapedOreRecipe(
                 ModBlocks.IRON_BARREL.newItemStack(),

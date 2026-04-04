@@ -26,15 +26,15 @@ public class StorageList extends ListWidget<Column, StorageList> {
     @Override
     public void onInit() {
         if (this.getScrollData() == null) {
-            scrollDirection(new BackpackScrollData(panel, thickness));
+            scrollDirection(new StorageScrollData(panel, thickness));
         }
     }
 
-    public static class BackpackScrollData extends VerticalScrollData {
+    public static class StorageScrollData extends VerticalScrollData {
 
         private final StoragePanel panel;
 
-        public BackpackScrollData(StoragePanel panel, int thickness) {
+        public StorageScrollData(StoragePanel panel, int thickness) {
             super(false, thickness);
             this.panel = panel;
         }

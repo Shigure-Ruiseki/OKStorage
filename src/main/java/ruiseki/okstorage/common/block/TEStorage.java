@@ -28,7 +28,7 @@ public class TEStorage extends TileSideCapability
     @NBTPersist
     private ForgeDirection facing = ForgeDirection.NORTH;
 
-    @NBTPersist(StorageWrapper.BACKPACK_NBT)
+    @NBTPersist(StorageWrapper.STORAGE_NBT)
     private StorageWrapper wrapper;
 
     @Delegate

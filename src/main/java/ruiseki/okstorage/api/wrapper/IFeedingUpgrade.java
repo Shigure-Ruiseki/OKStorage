@@ -52,7 +52,7 @@ public interface IFeedingUpgrade extends ITickable {
 
         // Process captured container items
         for (ItemStack capturedItem : interceptor.getCapturedItems()) {
-            // Try to insert into backpack
+            // Try to insert into storage
             ItemStack remaining = capturedItem;
             for (int i = 0; i < handler.getSlots(); i++) {
                 remaining = handler.insertItem(i, remaining, false);
@@ -61,7 +61,7 @@ public interface IFeedingUpgrade extends ITickable {
                 }
             }
 
-            // If couldn't insert into backpack, add to player inventory or drop
+            // If couldn't insert into storage, add to player inventory or drop
             if (remaining != null && remaining.stackSize > 0) {
                 if (!entity.inventory.addItemStackToInventory(remaining)) {
                     entity.dropPlayerItemWithRandomChoice(remaining, false);

@@ -14,11 +14,6 @@ gui.sort_order.desc=Descending
 
 # Barrel ==============================================
 
-# Config
-config.backpackConfig=Storage Settings
-config.feedingConfig=Feeding Settings
-config.magnetConfig=Magnet Settings
-
 # GUI
 gui.storage=Storage
 gui.storage.settings=Settings

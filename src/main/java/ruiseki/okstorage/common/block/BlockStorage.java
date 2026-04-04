@@ -78,8 +78,8 @@ public class BlockStorage extends BlockOK {
         int heading = MathHelper.floor_double(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         ForgeDirection facing = getDirectionForHeading(heading);
         TileEntity te = world.getTileEntity(x, y, z);
-        if (te instanceof TEStorage backpack) {
-            backpack.setFacing(facing);
+        if (te instanceof TEStorage storage) {
+            storage.setFacing(facing);
         }
     }
 

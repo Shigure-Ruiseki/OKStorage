@@ -61,7 +61,7 @@ public class CompactingUpgradeWrapper extends BasicUpgradeWrapper implements ICo
         if (!isEnabled()) return;
         if (!(storage instanceof StorageWrapper bw)) return;
 
-        StorageItemStackHandler invHandler = bw.backpackHandler;
+        StorageItemStackHandler invHandler = bw.storageHandler;
         CompactingRecipeCache cache = CompactingRecipeCache.getInstance();
         boolean onlyReversible = isOnlyReversible();
 

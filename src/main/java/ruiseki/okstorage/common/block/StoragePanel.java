@@ -89,8 +89,8 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
     public final StorageWrapper wrapper;
     public final TileEntity tile;
 
-    public final StorageSH backpackSyncHandler;
-    public final StorageSlotSH[] backpackSlotSyncHandlers;
+    public final StorageSH storageSyncHandler;
+    public final StorageSlotSH[] storageSlotSyncHandlers;
     public final UpgradeSlotSH[] upgradeSlotSyncHandlers;
     public final UpgradeSlotUpdateGroup[] upgradeSlotGroups;
     public final UpgradeSlotGroupWidget upgradeSlotGroupWidget;
@@ -99,7 +99,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
     public final ItemStack[] lastUpgradeStacks;
 
     public int rowSize;
-    public Column backpackInvCol;
+    public Column storageInvCol;
     public StorageList storageList;
     public SearchBarWidget searchBarWidget;
 
@@ -112,7 +112,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
 
     public StoragePanel(EntityPlayer player, TileEntity tile, PanelSyncManager syncManager, UISettings settings,
         StorageWrapper wrapper, int width) {
-        super("backpack_gui");
+        super("storage_gui");
         this.player = player;
         this.tile = tile;
         this.syncManager = syncManager;
@@ -123,16 +123,16 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
         int calculated = (width - 14) / ItemSlot.SIZE;
         this.rowSize = Math.max(9, Math.min(12, calculated));
 
-        this.backpackSyncHandler = new StorageSH(new PlayerMainInvWrapper(player.inventory), this.wrapper, this);
-        this.syncManager.syncValue("backpack_wrapper", this.backpackSyncHandler);
+        this.storageSyncHandler = new StorageSH(new PlayerMainInvWrapper(player.inventory), this.wrapper, this);
+        this.syncManager.syncValue("storage_wrapper", this.storageSyncHandler);
 
-        this.backpackSlotSyncHandlers = new StorageSlotSH[this.wrapper.getSlots()];
+        this.storageSlotSyncHandlers = new StorageSlotSH[this.wrapper.getSlots()];
         for (int i = 0; i < this.wrapper.getSlots(); i++) {
             ModularStorageSlot slot = new ModularStorageSlot(this.wrapper, i);
-            slot.slotGroup("backpack_inventory");
+            slot.slotGroup("storage_inventory");
             StorageSlotSH syncHandler = new StorageSlotSH(slot, this.wrapper, this);
-            this.syncManager.syncValue("backpack", i, syncHandler);
-            this.backpackSlotSyncHandlers[i] = syncHandler;
+            this.syncManager.syncValue("storage", i, syncHandler);
+            this.storageSlotSyncHandlers[i] = syncHandler;
 
             slot.changeListener((lastStack, currentStack, isClient, init) -> {
                 if (isClient) {
@@ -140,7 +140,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
                 }
             });
         }
-        this.syncManager.registerSlotGroup(new SlotGroup("backpack_inventory", this.wrapper.getSlots(), 100, true));
+        this.syncManager.registerSlotGroup(new SlotGroup("storage_inventory", this.wrapper.getSlots(), 100, true));
 
         tabWidgets = new ArrayList<>();
         int upgradeSlots = wrapper.getUpgradeHandler()
@@ -211,8 +211,8 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
         height(visibleRows * slotSize + 118);
 
         // set list height
-        int backpackSlotsHeight = visibleRows * slotSize;
-        storageList.maxSize(backpackSlotsHeight);
+        int storageSlotsHeight = visibleRows * slotSize;
+        storageList.maxSize(storageSlotsHeight);
         storageList.scheduleResize();
 
         this.scheduleResize();
@@ -233,7 +233,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
 
                         StorageInventoryHelpers.sortInventory(wrapper, reverse);
 
-                        backpackSyncHandler.syncToServer(StorageSH.UPDATE_SORT_INV, buf -> {
+                        storageSyncHandler.syncToServer(StorageSH.UPDATE_SORT_INV, buf -> {
                             for (int i = 0; i < wrapper.getSlots(); i++) {
                                 buf.writeItemStackToBuffer(wrapper.getStackInSlot(i));
                             }
@@ -256,9 +256,9 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
 
                 SortType nextSortType = SortType.values()[index];
 
-                backpackSyncHandler.setSortType(nextSortType);
+                storageSyncHandler.setSortType(nextSortType);
 
-                backpackSyncHandler.syncToServer(
+                storageSyncHandler.syncToServer(
                     StorageSH.UPDATE_SET_SORT_TYPE,
                     buf -> NetworkUtils.writeEnumValue(buf, nextSortType));
 
@@ -281,8 +281,8 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
                         boolean transferMatched = !Interactable.hasShiftDown();
 
                         Interactable.playButtonClickSound();
-                        backpackSyncHandler.transferToPlayerInventory(transferMatched);
-                        backpackSyncHandler.syncToServer(
+                        storageSyncHandler.transferToPlayerInventory(transferMatched);
+                        storageSyncHandler.syncToServer(
                             StorageSH.UPDATE_TRANSFER_TO_PLAYER_INV,
                             buf -> buf.writeBoolean(transferMatched));
                         return true;
@@ -303,7 +303,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
                     tooltip.pos(RichTooltip.Pos.NEXT_TO_MOUSE);
                 });
 
-        ShiftButtonWidget transferToBackpackButton = new ShiftButtonWidget(
+        ShiftButtonWidget transferToStorageButton = new ShiftButtonWidget(
             OKBGuiTextures.DOT_UP_ARROW_ICON,
             OKBGuiTextures.SOLID_UP_ARROW_ICON).bottom(85)
                 .right(7)
@@ -314,9 +314,9 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
                         boolean transferMatched = !Interactable.hasShiftDown();
 
                         Interactable.playButtonClickSound();
-                        backpackSyncHandler.transferToBackpack(transferMatched);
-                        backpackSyncHandler.syncToServer(
-                            StorageSH.UPDATE_TRANSFER_TO_BACKPACK_INV,
+                        storageSyncHandler.transferToStorage(transferMatched);
+                        storageSyncHandler.syncToServer(
+                            StorageSH.UPDATE_TRANSFER_TO_STORAGE_INV,
                             buf -> buf.writeBoolean(transferMatched));
                         return true;
                     }
@@ -336,37 +336,37 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
                     tooltip.pos(RichTooltip.Pos.NEXT_TO_MOUSE);
                 });
 
-        child(transferToPlayerButton).child(transferToBackpackButton);
+        child(transferToPlayerButton).child(transferToStorageButton);
     }
 
-    public void addBackpackInventorySlots() {
-        Row backpackInvRow = (Row) new Row().coverChildren()
+    public void addStorageInventorySlots() {
+        Row storageInvRow = (Row) new Row().coverChildren()
             .alignX(0.5f)
             .top(18)
             .childPadding(4);
 
-        storageList = new StorageList(this).name("backpack_slots");
+        storageList = new StorageList(this).name("storage_slots");
 
-        backpackInvCol = (Column) new Column().coverChildren();
+        storageInvCol = (Column) new Column().coverChildren();
 
         for (int i = 0; i < wrapper.getSlots(); i++) {
             int col = i % rowSize;
             int row = i / rowSize;
 
-            StorageSlot slot = (StorageSlot) new StorageSlot(this, wrapper).syncHandler("backpack", i)
+            StorageSlot slot = (StorageSlot) new StorageSlot(this, wrapper).syncHandler("storage", i)
                 .size(ItemSlot.SIZE)
                 .name("slot_" + i)
                 .left(col * ItemSlot.SIZE)
                 .top(row * ItemSlot.SIZE);
 
-            backpackInvCol.child(slot);
+            storageInvCol.child(slot);
         }
 
         storageList.maxSizeRel(1f)
-            .child(backpackInvCol);
-        backpackInvRow.child(storageList);
+            .child(storageInvCol);
+        storageInvRow.child(storageList);
 
-        this.child(backpackInvRow);
+        this.child(storageInvRow);
     }
 
     public void addSearchBar() {

@@ -26,9 +26,9 @@ import ruiseki.okstorage.client.gui.slot.ModularUpgradeSlot;
 import ruiseki.okstorage.common.block.StoragePanel;
 import ruiseki.okstorage.common.block.StorageWrapper;
 
-public class BackpackOverlay extends DefaultOverlayHandler {
+public class StorageOverlay extends DefaultOverlayHandler {
 
-    public BackpackOverlay() {
+    public StorageOverlay() {
         super(0, 0);
     }
 
@@ -135,7 +135,7 @@ public class BackpackOverlay extends DefaultOverlayHandler {
 
         final List<ItemStack> invStacks = new ArrayList<>();
 
-        // backpack inventory
+        // storage inventory
         for (int i = 0; i < wrapper.getSlots(); i++) {
             ItemStack stack = wrapper.getStackInSlot(i);
             if (stack != null && stack.stackSize > 0) {

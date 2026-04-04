@@ -181,7 +181,6 @@ public class StorageContainer extends ModularContainer implements IStorageContai
             } else {
                 // PICKUP (normal left/right click)
                 Slot clickedSlot = getSlot(slotId);
-                boolean isBackpackSlot = clickedSlot instanceof ModularStorageSlot;
                 boolean isFilterSlot = clickedSlot instanceof ModularFilterSlot;
                 boolean isCraftingSlot = clickedSlot instanceof ModularCraftingSlot;
 
@@ -331,7 +330,7 @@ public class StorageContainer extends ModularContainer implements IStorageContai
             if (inventoryCrafting == null) {
                 transferItemFiltered(fromSlot, fromStack, slot -> PLAYER_INV.equals(slot.getSlotGroupName()));
             } else
-                if (inventoryCrafting.getCraftingDestination() == CraftingUpgradeWrapper.CraftingDestination.BACKPACK) {
+                if (inventoryCrafting.getCraftingDestination() == CraftingUpgradeWrapper.CraftingDestination.STORAGE) {
 
                     transferItemFiltered(
                         fromSlot,
@@ -380,12 +379,12 @@ public class StorageContainer extends ModularContainer implements IStorageContai
 
     protected void transferToSlot(ModularSlot fromSlot, ModularSlot toSlot, ItemStack fromStack) {
 
-        boolean isBackpackSlot = toSlot instanceof ModularStorageSlot;
+        boolean isStorageSlot = toSlot instanceof ModularStorageSlot;
         ItemStack toStack = toSlot.getStack();
 
         int limit = stackLimit(toSlot, fromStack);
 
-        if (isBackpackSlot) {
+        if (isStorageSlot) {
             int slotIndex = toSlot.getSlotIndex();
 
             if (wrapper.isSlotMemorized(slotIndex)) {

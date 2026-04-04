@@ -28,12 +28,12 @@ import ruiseki.okstorage.common.item.wrapper.CraftingUpgradeWrapper;
 public class CraftingUpgradeWidget extends ExpandedUpgradeTabWidget<CraftingUpgradeWrapper> {
 
     private static final List<CyclicVariantButtonWidget.Variant> INTO_VARIANTS = Arrays.asList(
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.into_storage"), OKBGuiTextures.INTO_BACKPACK),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.into_storage"), OKBGuiTextures.INTO_STORAGE),
         new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.into_inventory"), OKBGuiTextures.INTO_INVENTORY));
 
-    private static final List<CyclicVariantButtonWidget.Variant> USED_BACKPACK_VARIANTS = Arrays.asList(
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.used_storage"), OKBGuiTextures.USED_BACKPACK),
-        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.unused_storage"), OKBGuiTextures.UNUSED_BACKPACK));
+    private static final List<CyclicVariantButtonWidget.Variant> USED_STORAGE_VARIANTS = Arrays.asList(
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.used_storage"), OKBGuiTextures.USED_STORAGE),
+        new CyclicVariantButtonWidget.Variant(IKey.lang("gui.storage.unused_storage"), OKBGuiTextures.UNUSED_STORAGE));
 
     private final CraftingUpgradeWrapper wrapper;
     private ItemSlot[] craftingMatrix;
@@ -55,17 +55,17 @@ public class CraftingUpgradeWidget extends ExpandedUpgradeTabWidget<CraftingUpgr
                 updateWrapper();
             }).size(20, 20);
 
-        CyclicVariantButtonWidget usedBackpackButton = new CyclicVariantButtonWidget(
-            USED_BACKPACK_VARIANTS,
-            wrapper.isUseBackpack() ? 0 : 1,
+        CyclicVariantButtonWidget usedStorageButton = new CyclicVariantButtonWidget(
+            USED_STORAGE_VARIANTS,
+            wrapper.isUseStorage() ? 0 : 1,
             index -> {
-                wrapper.setUseBackpack(index == 0);
+                wrapper.setUseStorage(index == 0);
                 updateWrapper();
             }).size(20, 20);
 
         Row buttonRow = (Row) new Row().height(20)
             .child(craftingDesButton)
-            .child(usedBackpackButton);
+            .child(usedStorageButton);
 
         ShiftButtonWidget rotated = new ShiftButtonWidget(OKBGuiTextures.ROTATED_RIGHT, OKBGuiTextures.ROTATED_LEFT)
             .size(16)
@@ -172,7 +172,7 @@ public class CraftingUpgradeWidget extends ExpandedUpgradeTabWidget<CraftingUpgr
         this.getSyncHandler()
             .syncToServer(UpgradeSlotSH.getId(UpgradeSlotSHRegisters.UPDATE_CRAFTING), buf -> {
                 NetworkUtils.writeEnumValue(buf, wrapper.getCraftingDes());
-                buf.writeBoolean(wrapper.isUseBackpack());
+                buf.writeBoolean(wrapper.isUseStorage());
             });
     }
 

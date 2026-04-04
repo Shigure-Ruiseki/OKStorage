@@ -56,7 +56,7 @@ public class AdvancedCompactingUpgradeWrapper extends AdvancedUpgradeWrapper imp
         if (!isEnabled()) return;
         if (!(storage instanceof StorageWrapper bw)) return;
 
-        StorageItemStackHandler invHandler = bw.backpackHandler;
+        StorageItemStackHandler invHandler = bw.storageHandler;
         CompactingRecipeCache cache = CompactingRecipeCache.getInstance();
         boolean onlyReversible = isOnlyReversible();
 
