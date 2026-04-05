@@ -35,7 +35,14 @@ gui.storage.void_settings=虚空设置
 gui.storage.advanced_void_settings=高级虚空设置
 gui.storage.compacting_settings=压制设置
 gui.storage.advanced_compacting_settings=高级压制设置
-
+gui.storage.jukebox_settings=唱片机设置
+gui.storage.advanced_jukebox_settings=高级唱片机设置
+gui.storage.smelting_settings=熔炼设置
+gui.storage.auto_smelting_settings=自动熔炼设置
+gui.storage.smoking_settings=烟熏设置
+gui.storage.auto_smoking_settings=自动烟熏设置
+gui.storage.blasting_settings=高炉设置
+gui.storage.auto_blasting_settings=自动高炉设置
 
 # Tooltips
 gui.storage.stack_size_extra=数量: %s / %s
@@ -115,8 +122,21 @@ gui.storage.void_overflow=虚空溢出物品
 gui.storage.void_all=在GUI中也生效
 gui.storage.void_automation=仅在自动化/其他升级中生效
 
+gui.storage.smelting_input=输入
+gui.storage.fuel_filter=燃料过滤
+
 gui.storage.only_reversible=仅可逆配方
 gui.storage.all_recipes=所有配方
+
+gui.storage.jukebox_play=播放
+gui.storage.jukebox_stop=停止
+gui.storage.jukebox_prev=上一首
+gui.storage.jukebox_next=下一首
+gui.storage.jukebox_shuffle_off=关闭随机播放
+gui.storage.jukebox_shuffle_on=启用随机播放
+gui.storage.jukebox_loop_off=关闭循环
+gui.storage.jukebox_loop_all=全部循环
+gui.storage.jukebox_loop_single=单曲循环
 
 # Items
 tile.leather_barrel.name=皮革背包
@@ -146,7 +166,14 @@ item.advanced_compacting_upgrade.name=高级压制升级
 item.inception_upgrade.name=嵌套升级
 item.void_upgrade.name=虚空升级
 item.advanced_void_upgrade.name=高级虚空升级
-
+item.smelting_upgrade.name=熔炼升级
+item.auto_smelting_upgrade.name=自动熔炼升级
+item.smoking_upgrade.name=烟熏升级
+item.auto_smoking_upgrade.name=自动烟熏升级
+item.blasting_upgrade.name=高炉升级
+item.auto_blasting_upgrade.name=自动高炉升级
+item.jukebox_upgrade.name=唱片机升级
+item.advanced_jukebox_upgrade.name=高级唱片机升级
 
 # Tooltips
 
@@ -163,5 +190,19 @@ tooltip.storage.filter_upgrade=过滤放入世界时插入的物品
 tooltip.storage.advanced_filter_upgrade=过滤放入世界时插入的物品（更多配置）
 tooltip.storage.void_upgrade=销毁过滤器选定的物品
 tooltip.storage.advanced_void_upgrade=销毁过滤器选定的物品（更多过滤选项）
-tooltip.storage.compacting_upgrade=使用2x2合成配方压缩物品（例如：雪球→雪块）
-tooltip.storage.advanced_compacting_upgrade=使用2x2和3x3合成配方压缩物品（例如：铁锭→铁块）
+tooltip.storage.compacting_upgrade=将物品压制为对应的压缩变体
+tooltip.storage.compacting_upgrade.1=仅2x2配方
+tooltip.storage.advanced_compacting_upgrade=将物品压制为对应的压缩变体
+tooltip.storage.advanced_compacting_upgrade.1=包括2x2配方，3x3配方以及更多的过滤选项
+tooltip.storage.smelting_upgrade=在升级标签页中熔炼物品
+tooltip.storage.auto_smelting_upgrade=在升级标签页中熔炼物品
+tooltip.storage.auto_smelting_upgrade.1=自动抽入/排出物品
+tooltip.storage.smoking_upgrade=在升级标签页中烟熏食物
+tooltip.storage.auto_smoking_upgrade=在升级标签页中烟熏食物
+tooltip.storage.auto_smoking_upgrade.1=自动抽入/排出物品
+tooltip.storage.blasting_upgrade=在升级标签页中高速熔炼矿物和金属材料
+tooltip.storage.auto_blasting_upgrade=在升级标签页中高速熔炼矿物和金属材料
+tooltip.storage.auto_blasting_upgrade.1=自动抽入/排出物品
+tooltip.storage.jukebox_upgrade=便携式唱片机
+tooltip.storage.advanced_jukebox_upgrade=支持更多唱片的便携唱片机
+tooltip.storage.advanced_jukebox_upgrade.1=当然还有更多播放选项

@@ -7,21 +7,30 @@ import org.apache.logging.log4j.Level;
 
 import ruiseki.okcore.item.IItem;
 import ruiseki.okstorage.OKStorage;
-import ruiseki.okstorage.common.item.ItemAdvancedCompactingUpgrade;
-import ruiseki.okstorage.common.item.ItemAdvancedFeedingUpgrade;
-import ruiseki.okstorage.common.item.ItemAdvancedFilterUpgrade;
-import ruiseki.okstorage.common.item.ItemAdvancedMagnetUpgrade;
-import ruiseki.okstorage.common.item.ItemAdvancedPickupUpgrade;
-import ruiseki.okstorage.common.item.ItemAdvancedVoidUpgrade;
-import ruiseki.okstorage.common.item.ItemCompactingUpgrade;
-import ruiseki.okstorage.common.item.ItemCraftingUpgrade;
-import ruiseki.okstorage.common.item.ItemFeedingUpgrade;
-import ruiseki.okstorage.common.item.ItemFilterUpgrade;
-import ruiseki.okstorage.common.item.ItemMagnetUpgrade;
-import ruiseki.okstorage.common.item.ItemPickupUpgrade;
-import ruiseki.okstorage.common.item.ItemStackUpgrade;
 import ruiseki.okstorage.common.item.ItemUpgrade;
-import ruiseki.okstorage.common.item.ItemVoidUpgrade;
+import ruiseki.okstorage.common.item.compacting.ItemAdvancedCompactingUpgrade;
+import ruiseki.okstorage.common.item.compacting.ItemCompactingUpgrade;
+import ruiseki.okstorage.common.item.crafting.ItemCraftingUpgrade;
+import ruiseki.okstorage.common.item.feeding.ItemAdvancedFeedingUpgrade;
+import ruiseki.okstorage.common.item.feeding.ItemFeedingUpgrade;
+import ruiseki.okstorage.common.item.filter.ItemAdvancedFilterUpgrade;
+import ruiseki.okstorage.common.item.filter.ItemFilterUpgrade;
+import ruiseki.okstorage.common.item.jukebox.ItemAdvancedJukeboxUpgrade;
+import ruiseki.okstorage.common.item.jukebox.ItemJukeboxUpgrade;
+import ruiseki.okstorage.common.item.magnet.ItemAdvancedMagnetUpgrade;
+import ruiseki.okstorage.common.item.magnet.ItemMagnetUpgrade;
+import ruiseki.okstorage.common.item.pickup.ItemAdvancedPickupUpgrade;
+import ruiseki.okstorage.common.item.pickup.ItemPickupUpgrade;
+import ruiseki.okstorage.common.item.smelter.ItemAutoBlastingUpgrade;
+import ruiseki.okstorage.common.item.smelter.ItemAutoSmeltingUpgrade;
+import ruiseki.okstorage.common.item.smelter.ItemAutoSmokingUpgrade;
+import ruiseki.okstorage.common.item.smelter.ItemBlastingUpgrade;
+import ruiseki.okstorage.common.item.smelter.ItemSmeltingUpgrade;
+import ruiseki.okstorage.common.item.smelter.ItemSmokingUpgrade;
+import ruiseki.okstorage.common.item.stack.ItemStackUpgrade;
+import ruiseki.okstorage.common.item.voiding.ItemAdvancedVoidUpgrade;
+import ruiseki.okstorage.common.item.voiding.ItemVoidUpgrade;
+import ruiseki.okstorage.compat.Mods;
 
 public enum ModItems {
 
@@ -42,6 +51,14 @@ public enum ModItems {
     ADVANCED_FILTER_UPGRADE(new ItemAdvancedFilterUpgrade()),
     COMPACTING_UPGRADE(new ItemCompactingUpgrade()),
     ADVANCED_COMPACTING_UPGRADE(new ItemAdvancedCompactingUpgrade()),
+    JUKEBOX_UPGRADE(new ItemJukeboxUpgrade()),
+    ADVANCED_JUKEBOX_UPGRADE(new ItemAdvancedJukeboxUpgrade()),
+    SMELTING_UPGRADE(new ItemSmeltingUpgrade()),
+    AUTO_SMELTING_UPGRADE(new ItemAutoSmeltingUpgrade()),
+    SMOKING_UPGRADE(new ItemSmokingUpgrade(), Mods.EtFuturum),
+    AUTO_SMOKING_UPGRADE(new ItemAutoSmokingUpgrade(), Mods.EtFuturum),
+    BLASTING_UPGRADE(new ItemBlastingUpgrade(), Mods.EtFuturum),
+    AUTO_BLASTING_UPGRADE(new ItemAutoBlastingUpgrade(), Mods.EtFuturum),
 
     //
     ;
@@ -61,9 +78,15 @@ public enum ModItems {
     }
 
     private final IItem item;
+    private final Mods requiredMod;
 
     ModItems(IItem item) {
+        this(item, null);
+    }
+
+    ModItems(IItem item, Mods requiredMod) {
         this.item = item;
+        this.requiredMod = requiredMod;
     }
 
     public Item getItem() {

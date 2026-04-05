@@ -37,7 +37,16 @@ gui.storage.void_settings=Void Settings
 gui.storage.advanced_void_settings=Adv. Void Settings
 gui.storage.compacting_settings=Compacting Settings
 gui.storage.advanced_compacting_settings=Adv. Compacting Settings
-
+gui.storage.smelting_settings=Smelting Settings
+gui.storage.auto_smelting_settings=Auto-Smelting Settings
+gui.storage.smoking_settings=Smoking Settings
+gui.storage.auto_smoking_settings=Auto-Smoking Settings
+gui.storage.blasting_settings=Blasting Settings
+gui.storage.auto_blasting_settings=Auto-Blasting Settings
+gui.storage.smelting_input=Input
+gui.storage.fuel_filter=Fuel Filter
+gui.storage.jukebox_settings=Jukebox Settings
+gui.storage.advanced_jukebox_settings=Adv. Jukebox Settings
 
 # Tooltips
 gui.storage.stack_size_extra=Count: %s / %s
@@ -117,6 +126,16 @@ gui.storage.void_overflow=Void Overflow
 gui.storage.void_all=Works in Gui as well
 gui.storage.void_automation=Only works with other upgrade/automation
 
+gui.storage.jukebox_play=Play
+gui.storage.jukebox_stop=Stop
+gui.storage.jukebox_prev=Previous
+gui.storage.jukebox_next=Next
+gui.storage.jukebox_shuffle_off=Shuffle: Off
+gui.storage.jukebox_shuffle_on=Shuffle: On
+gui.storage.jukebox_loop_off=Loop: Off
+gui.storage.jukebox_loop_all=Loop: All
+gui.storage.jukebox_loop_single=Loop: Single
+
 gui.storage.only_reversible=Only Reversible
 gui.storage.all_recipes=All Recipes
 
@@ -148,7 +167,14 @@ item.advanced_compacting_upgrade.name=Adv. Compacting Upgrade
 item.inception_upgrade.name=Inception Upgrade
 item.void_upgrade.name=Void Upgrade
 item.advanced_void_upgrade.name=Adv. Void Upgrade
-
+item.smelting_upgrade.name=Smelting Upgrade
+item.auto_smelting_upgrade.name=Auto-Smelting Upgrade
+item.smoking_upgrade.name=Smoking Upgrade
+item.auto_smoking_upgrade.name=Auto-Smoking Upgrade
+item.blasting_upgrade.name=Blasting Upgrade
+item.auto_blasting_upgrade.name=Auto-Blasting Upgrade
+item.jukebox_upgrade.name=Jukebox Upgrade
+item.advanced_jukebox_upgrade.name=Adv. Jukebox Upgrade
 
 # Tooltips
 
@@ -165,6 +191,19 @@ tooltip.storage.filter_upgrade=Filters inserted items when placing in world
 tooltip.storage.advanced_filter_upgrade=Filters inserted items when placing in world with more configurations
 tooltip.storage.void_upgrade=Voids items selected in filter
 tooltip.storage.advanced_void_upgrade=Voids items selected in filter. Has more filtering options
-tooltip.storage.compacting_upgrade=Compacts items with 2x2 crafting recipes (e.g. snowballs -> snow block)
-tooltip.storage.advanced_compacting_upgrade=Compacts items with 2x2 and 3x3 crafting recipes (e.g. iron ingots -> iron block)
-
+tooltip.storage.compacting_upgrade=Compacts items into their compressed variants
+tooltip.storage.compacting_upgrade.1=2x2 recipes only
+tooltip.storage.advanced_compacting_upgrade=Compacts items into their compressed variants
+tooltip.storage.advanced_compacting_upgrade.1=Includes 2x2, 3x3 recipes and more filter options
+tooltip.storage.smelting_upgrade=Smelts items in the upgrade tab
+tooltip.storage.auto_smelting_upgrade=Smelts items in the upgrade tab
+tooltip.storage.auto_smelting_upgrade.1=Automatically pulls in/pushes out items
+tooltip.storage.smoking_upgrade=Smokes food in the upgrade tab
+tooltip.storage.auto_smoking_upgrade=Smokes food in the upgrade tab
+tooltip.storage.auto_smoking_upgrade.1=Automatically pulls in/pushes out items
+tooltip.storage.blasting_upgrade=Blast-smelts ores and metals at high speed in the upgrade tab
+tooltip.storage.auto_blasting_upgrade=Blast-smelts ores and metals at high speed in the upgrade tab
+tooltip.storage.auto_blasting_upgrade.1=Automatically pulls in/pushes out items
+tooltip.storage.jukebox_upgrade=Portable jukebox
+tooltip.storage.advanced_jukebox_upgrade=Portable jukebox with more record slots
+tooltip.storage.advanced_jukebox_upgrade.1=And more playback options

@@ -3,7 +3,6 @@ package ruiseki.okstorage.client.gui.syncHandler;
 import java.io.IOException;
 import java.util.function.Supplier;
 
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 
 import com.cleanroommc.modularui.api.value.sync.IDoubleSyncValue;
@@ -14,14 +13,15 @@ import com.cleanroommc.modularui.value.sync.ValueSyncHandler;
 
 import ruiseki.okstorage.api.IStorageWrapper;
 import ruiseki.okstorage.api.wrapper.IProgressable;
+import ruiseki.okstorage.api.wrapper.ISmeltingUpgrade;
+import ruiseki.okstorage.api.wrapper.IUpgradeWrapper;
 import ruiseki.okstorage.client.gui.handler.DelegatedFloatSupplier;
-import ruiseki.okstorage.common.item.wrapper.UpgradeWrapperBase;
-import ruiseki.okstorage.common.item.wrapper.UpgradeWrapperFactory;
 
 public class DelegatedFloatSH extends ValueSyncHandler<Float>
     implements IFloatSyncValue<Float>, IDoubleSyncValue<Float>, IStringSyncValue<Float> {
 
     public static final int UPDATE_PROGRESS = 1;
+    public static final int UPDATE_FUEL = 2;
 
     public final IStorageWrapper wrapper;
     public final int slotIndex;
@@ -48,17 +48,19 @@ public class DelegatedFloatSH extends ValueSyncHandler<Float>
 
     @Override
     public void readOnServer(int id, PacketBuffer buf) throws IOException {
-
-        ItemStack stack = wrapper.getUpgradeHandler()
-            .getStackInSlot(slotIndex);
-
-        UpgradeWrapperBase upgradeWrapper = UpgradeWrapperFactory.createWrapper(stack, wrapper);
-
+        IUpgradeWrapper wrapper = this.wrapper.getUpgradeHandler()
+            .getWrapperInSlot(slotIndex);
         switch (id) {
 
             case UPDATE_PROGRESS:
-                if (upgradeWrapper instanceof IProgressable upgrade) {
+                if (wrapper instanceof IProgressable upgrade) {
                     setDelegatedSupplier(() -> upgrade::getProgress);
+                }
+                break;
+
+            case UPDATE_FUEL:
+                if (wrapper instanceof ISmeltingUpgrade upgrade) {
+                    setDelegatedSupplier(() -> upgrade::getBurnProgress);
                 }
                 break;
 

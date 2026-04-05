@@ -6,7 +6,6 @@ import static ruiseki.okstorage.client.gui.OKBGuiTextures.TOGGLE_ENABLE_ICON;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,10 +21,9 @@ import com.cleanroommc.modularui.widget.Widget;
 import lombok.Setter;
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.wrapper.IToggleable;
+import ruiseki.okstorage.api.wrapper.IUpgradeWrapper;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSH;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSHRegisters;
-import ruiseki.okstorage.common.item.wrapper.UpgradeWrapperBase;
-import ruiseki.okstorage.common.item.wrapper.UpgradeWrapperFactory;
 
 public class UpgradeSlotGroupWidget extends ParentWidget<UpgradeSlotGroupWidget> {
 
@@ -129,10 +127,9 @@ public class UpgradeSlotGroupWidget extends ParentWidget<UpgradeSlotGroupWidget>
         }
 
         public IToggleable getWrapper() {
-            ItemStack stack = panel.getWrapper()
+            IUpgradeWrapper wrapper = panel.getWrapper()
                 .getUpgradeHandler()
-                .getStackInSlot(slotIndex);
-            UpgradeWrapperBase wrapper = UpgradeWrapperFactory.createWrapper(stack, panel.getWrapper());
+                .getWrapperInSlot(slotIndex);
             if (wrapper instanceof IToggleable toggleableWrapper) {
                 return toggleableWrapper;
             } else {

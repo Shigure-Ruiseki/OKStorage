@@ -1,11 +1,15 @@
 package ruiseki.okstorage.common.block;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -15,20 +19,25 @@ import org.jetbrains.annotations.Nullable;
 
 import com.cleanroommc.modularui.utils.item.ItemHandlerHelper;
 
+import cpw.mods.fml.common.network.NetworkRegistry;
 import ruiseki.okcore.datastructure.BlockPos;
+import ruiseki.okcore.helper.ItemNBTHelpers;
 import ruiseki.okcore.helper.LangHelpers;
+import ruiseki.okstorage.OKStorage;
 import ruiseki.okstorage.api.IStorageWrapper;
 import ruiseki.okstorage.api.wrapper.IFilterUpgrade;
 import ruiseki.okstorage.api.wrapper.IInventoryModifiable;
+import ruiseki.okstorage.api.wrapper.IJukeboxUpgrade;
 import ruiseki.okstorage.api.wrapper.ISlotModifiable;
+import ruiseki.okstorage.api.wrapper.ISmeltingUpgrade;
 import ruiseki.okstorage.api.wrapper.ITickable;
 import ruiseki.okstorage.api.wrapper.IToggleable;
+import ruiseki.okstorage.api.wrapper.IUpgradeWrapper;
 import ruiseki.okstorage.client.gui.handler.StorageItemStackHandler;
 import ruiseki.okstorage.client.gui.handler.UpgradeItemStackHandler;
 import ruiseki.okstorage.common.SortType;
 import ruiseki.okstorage.common.helpers.StorageItemStackHelpers;
-import ruiseki.okstorage.common.item.wrapper.UpgradeWrapperBase;
-import ruiseki.okstorage.common.item.wrapper.UpgradeWrapperFactory;
+import ruiseki.okstorage.common.network.PacketJukeboxPlaybackState;
 
 public class StorageWrapper implements IStorageWrapper {
 
@@ -55,6 +64,8 @@ public class StorageWrapper implements IStorageWrapper {
     private Runnable onInventoryHandlerRefresh = () -> {};
 
     public String uuid;
+
+    private final Set<Integer> pendingJukeboxStops = new HashSet<>();
 
     public static final String STORAGE_NBT = "StorageNBT";
 
@@ -121,9 +132,39 @@ public class StorageWrapper implements IStorageWrapper {
         this.upgradeHandler = new UpgradeItemStackHandler(upgradeSlots, this) {
 
             @Override
+            public void setStackInSlot(int slot, ItemStack stack) {
+                detectPlayingJukeboxRemoval(slot);
+                super.setStackInSlot(slot, stack);
+            }
+
+            private void detectPlayingJukeboxRemoval(int slot) {
+                ItemStack existing = getStackInSlot(slot);
+                if (existing != null && ItemNBTHelpers.getBoolean(existing, IJukeboxUpgrade.PLAYING_TAG, false)) {
+                    pendingJukeboxStops.add(slot);
+                }
+            }
+
+            @Override
             protected void onContentsChanged(int slot) {
                 super.onContentsChanged(slot);
                 markDirty();
+            }
+
+            @Override
+            public ItemStack extractItem(int slot, int amount, boolean simulate) {
+                ItemStack extracted = super.extractItem(slot, amount, simulate);
+                if (!simulate) {
+                    detectPlayingJukeboxRemoval(slot);
+                }
+                if (!simulate && extracted != null) {
+                    NBTTagCompound tag = extracted.getTagCompound();
+                    if (tag != null && tag.hasKey(ISmeltingUpgrade.COOK_TIME_TAG)) {
+                        tag.removeTag(ISmeltingUpgrade.COOK_TIME_TAG);
+                        tag.removeTag(ISmeltingUpgrade.BURN_TIME_TAG);
+                        tag.removeTag(ISmeltingUpgrade.BURN_TIME_TOTAL_TAG);
+                    }
+                }
+                return extracted;
             }
         };
     }
@@ -336,15 +377,18 @@ public class StorageWrapper implements IStorageWrapper {
 
     @Override
     public boolean canAddUpgrade(int slot, ItemStack stack) {
-        ItemStack upgradeStack = upgradeHandler.getStackInSlot(slot);
-        if (upgradeStack == null) return true;
+        for (int i = 0; i < upgradeSlots; i++) {
+            ItemStack upgradeStack = upgradeHandler.getStackInSlot(i);
+            if (upgradeStack == null) continue;
 
-        UpgradeWrapperBase wrapper = UpgradeWrapperFactory.createWrapper(upgradeStack, this);
-        if (wrapper == null) return true;
-        if (wrapper instanceof IToggleable toggleable && !toggleable.isEnabled()) return true;
+            IUpgradeWrapper wrapper = this.getUpgradeHandler()
+                .getWrapperInSlot(i);
+            if (wrapper == null) continue;
+            if (wrapper instanceof IToggleable toggleable && !toggleable.isEnabled()) continue;
 
-        if (wrapper instanceof ISlotModifiable modifiable) {
-            return modifiable.canAddUpgrade(slot, stack);
+            if (wrapper instanceof ISlotModifiable modifiable) {
+                if (!modifiable.canAddUpgrade(slot, stack)) return false;
+            }
         }
         return true;
     }
@@ -375,7 +419,8 @@ public class StorageWrapper implements IStorageWrapper {
         ItemStack upgradeStack = upgradeHandler.getStackInSlot(slot);
         if (upgradeStack == null) return true;
 
-        UpgradeWrapperBase wrapper = UpgradeWrapperFactory.createWrapper(upgradeStack, this);
+        IUpgradeWrapper wrapper = this.getUpgradeHandler()
+            .getWrapperInSlot(slot);
         if (wrapper == null) return true;
         if (wrapper instanceof IToggleable toggleable && !toggleable.isEnabled()) return true;
 
@@ -391,7 +436,8 @@ public class StorageWrapper implements IStorageWrapper {
         ItemStack upgradeStack = upgradeHandler.getStackInSlot(slot);
         if (upgradeStack == null) return true;
 
-        UpgradeWrapperBase wrapper = UpgradeWrapperFactory.createWrapper(upgradeStack, this);
+        IUpgradeWrapper wrapper = this.getUpgradeHandler()
+            .getWrapperInSlot(slot);
         if (wrapper == null) return true;
         if (wrapper instanceof IToggleable toggleable && !toggleable.isEnabled()) return true;
 
@@ -411,7 +457,54 @@ public class StorageWrapper implements IStorageWrapper {
         for (ITickable wrapper : gathered.values()) {
             dirty |= wrapper.tick(world, pos);
         }
+
+        // Process disabled jukebox upgrades that have a pending stop sync
+        for (int i = 0; i < upgradeSlots; i++) {
+            if (gathered.containsKey(i)) continue;
+            ItemStack stack = upgradeHandler.getStackInSlot(i);
+            if (stack == null) continue;
+            if (!ItemNBTHelpers.getBoolean(stack, IJukeboxUpgrade.PENDING_STOP_SYNC_TAG, false)) continue;
+            IUpgradeWrapper wrapper2 = this.getUpgradeHandler()
+                .getWrapperInSlot(i);
+            if (wrapper2 instanceof ITickable tickable) {
+                dirty |= tickable.tick(world, pos);
+            }
+        }
+
+        // Process removed jukebox upgrades that were playing
+        processPendingJukeboxStops(world, pos);
+
         return dirty;
+    }
+
+    public void processPendingJukeboxStops(EntityPlayer player) {
+        if (pendingJukeboxStops.isEmpty()) return;
+        if (!(player instanceof EntityPlayerMP playerMP)) return;
+        float x = (float) player.posX;
+        float y = (float) player.posY;
+        float z = (float) player.posZ;
+        int carrierEntityId = player.getEntityId();
+        var targetPoint = new NetworkRegistry.TargetPoint(player.worldObj.provider.dimensionId, x, y, z, 64);
+        for (int slot : pendingJukeboxStops) {
+            var packet = new PacketJukeboxPlaybackState(uuid, slot, false, 0, 0, x, y, z, "", carrierEntityId);
+            OKStorage.instance.getPacketHandler()
+                .sendToAllAround(packet, targetPoint);
+        }
+        pendingJukeboxStops.clear();
+    }
+
+    public void processPendingJukeboxStops(World world, BlockPos pos) {
+        if (pendingJukeboxStops.isEmpty()) return;
+        float x = pos.x + 0.5f;
+        float y = pos.y + 0.5f;
+        float z = pos.z + 0.5f;
+        var targetPoint = new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, y, z, 64);
+        for (int slot : pendingJukeboxStops) {
+            var packet = new PacketJukeboxPlaybackState(uuid, slot, false, 0, 0, x, y, z, "", -1);
+            OKStorage.instance.getPacketHandler()
+                .sendToAllAround(packet, targetPoint);
+        }
+        pendingJukeboxStops.clear();
     }
 
     @Override
@@ -583,9 +676,9 @@ public class StorageWrapper implements IStorageWrapper {
             ItemStack stack = upgradeHandler.getStackInSlot(i);
             if (stack == null) continue;
 
-            UpgradeWrapperBase wrapper = UpgradeWrapperFactory.createWrapper(stack, this);
+            IUpgradeWrapper wrapper = this.getUpgradeHandler()
+                .getWrapperInSlot(i);
             if (wrapper == null) continue;
-            if (wrapper instanceof IToggleable toggleable && !toggleable.isEnabled()) continue;
             if (capabilityClass.isAssignableFrom(wrapper.getClass())) {
                 result.put(i, capabilityClass.cast(wrapper));
             }
