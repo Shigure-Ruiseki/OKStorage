@@ -3,11 +3,11 @@ package ruiseki.okstorage.client.gui.syncHandler;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 
-import ruiseki.okstorage.client.gui.slot.ModularFilterSlot;
+import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 
 public class FoodFilterSlotSH extends FilterSlotSH {
 
-    public FoodFilterSlotSH(ModularFilterSlot slot) {
+    public FoodFilterSlotSH(ModularSlot slot) {
         super(slot);
     }
 

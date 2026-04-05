@@ -3,7 +3,7 @@ package ruiseki.okstorage.client.gui.widget.upgrade;
 import net.minecraft.item.ItemStack;
 
 import ruiseki.okstorage.api.IStoragePanel;
-import ruiseki.okstorage.common.item.wrapper.FeedingUpgradeWrapper;
+import ruiseki.okstorage.common.item.feeding.FeedingUpgradeWrapper;
 
 public class FeedingUpgradeWidget extends BasicExpandedTabWidget<FeedingUpgradeWrapper> {
 

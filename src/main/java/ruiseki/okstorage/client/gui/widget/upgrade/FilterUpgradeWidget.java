@@ -15,7 +15,7 @@ import ruiseki.okstorage.client.gui.OKBGuiTextures;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSH;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSHRegisters;
 import ruiseki.okstorage.client.gui.widget.CyclicVariantButtonWidget;
-import ruiseki.okstorage.common.item.wrapper.FilterUpgradeWrapper;
+import ruiseki.okstorage.common.item.filter.FilterUpgradeWrapper;
 
 public class FilterUpgradeWidget extends BasicExpandedTabWidget<FilterUpgradeWrapper> {
 

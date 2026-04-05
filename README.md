@@ -26,6 +26,8 @@
 - [X] Void upgrade — filter item to remove
 - [X] Crafting upgrade — crafting table
 - [X] Compacting upgrade — compact item
+- [X] JukeBox upgrade — play music disc
+- [X] Smelting upgrade — smelt item
 
 ## License
 

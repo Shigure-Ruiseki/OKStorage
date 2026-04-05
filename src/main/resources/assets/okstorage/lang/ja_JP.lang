@@ -22,6 +22,14 @@ gui.storage.void_settings=自動廃棄アップグレードの設定
 gui.storage.advanced_void_settings=詳細な自動廃棄アップグレードの設定
 gui.storage.compacting_settings=圧縮設定
 gui.storage.advanced_compacting_settings=詳細な圧縮設定
+gui.storage.jukebox_settings=ジュークボックス設定
+gui.storage.advanced_jukebox_settings=詳細なジュークボックス設定
+gui.storage.smelting_settings=精錬設定
+gui.storage.auto_smelting_settings=自動精錬設定
+gui.storage.smoking_settings=燻製設定
+gui.storage.auto_smoking_settings=自動燻製設定
+gui.storage.blasting_settings=溶鉱炉設定
+gui.storage.auto_blasting_settings=自動溶鉱炉設定
 
 
 # Tooltips
@@ -102,6 +110,19 @@ gui.storage.void_overflow=あふれた分を廃棄
 gui.storage.void_all=GUI内でも機能する
 gui.storage.void_automation=他のアップグレード/自動化でのみ機能する
 
+gui.storage.smelting_input=入力
+gui.storage.fuel_filter=燃料フィルター
+
+gui.storage.jukebox_play=再生
+gui.storage.jukebox_stop=停止
+gui.storage.jukebox_prev=前の曲
+gui.storage.jukebox_next=次の曲
+gui.storage.jukebox_shuffle_off=シャッフル: オフ
+gui.storage.jukebox_shuffle_on=シャッフル: オン
+gui.storage.jukebox_loop_off=ループ: オフ
+gui.storage.jukebox_loop_all=ループ: 全曲
+gui.storage.jukebox_loop_single=ループ: 一曲
+
 gui.storage.only_reversible=可逆レシピのみ
 gui.storage.all_recipes=すべてのレシピ
 
@@ -134,6 +155,14 @@ item.advanced_compacting_upgrade.name=詳細な圧縮アップグレード
 item.inception_upgrade.name=インセプションアップグレード
 item.void_upgrade.name=廃棄アップグレード
 item.advanced_void_upgrade.name=詳細な廃棄アップグレード
+item.smelting_upgrade.name=精錬アップグレード
+item.auto_smelting_upgrade.name=自動精錬アップグレード
+item.smoking_upgrade.name=燻製アップグレード
+item.auto_smoking_upgrade.name=自動燻製アップグレード
+item.blasting_upgrade.name=溶鉱炉アップグレード
+item.auto_blasting_upgrade.name=自動溶鉱炉アップグレード
+item.jukebox_upgrade.name=ジュークボックスアップグレード
+item.advanced_jukebox_upgrade.name=詳細なジュークボックスアップグレード
 
 # Tooltips
 
@@ -150,5 +179,19 @@ tooltip.storage.filter_upgrade=ワールドに設置する際に搬入アイテ�
 tooltip.storage.advanced_filter_upgrade=ワールドに設置する際に搬入アイテムをフィルタリングします（詳細設定可能）
 tooltip.storage.void_upgrade=フィルターで選択されたアイテムを消去します
 tooltip.storage.advanced_void_upgrade=フィルターで選択されたアイテムを消去します。より詳細なフィルタリングオプションがあります
-tooltip.storage.compacting_upgrade=2x2クラフトレシピでアイテムを圧縮します（例：雪球→雪ブロック）
-tooltip.storage.advanced_compacting_upgrade=2x2および3x3クラフトレシピでアイテムを圧縮します（例：鉄インゴット→鉄ブロック）
+tooltip.storage.compacting_upgrade=アイテムを対応する圧縮バリアントに圧縮します
+tooltip.storage.compacting_upgrade.1=2x2レシピのみ
+tooltip.storage.advanced_compacting_upgrade=アイテムを対応する圧縮バリアントに圧縮します
+tooltip.storage.advanced_compacting_upgrade.1=2x2、3x3レシピおよびより多くのフィルターオプションを含む
+tooltip.storage.smelting_upgrade=アップグレードタブでアイテムを精錬します
+tooltip.storage.auto_smelting_upgrade=アップグレードタブでアイテムを精錬します
+tooltip.storage.auto_smelting_upgrade.1=アイテムを自動搬入/搬出します
+tooltip.storage.smoking_upgrade=アップグレードタブで食べ物を燻製にします
+tooltip.storage.auto_smoking_upgrade=アップグレードタブで食べ物を燻製にします
+tooltip.storage.auto_smoking_upgrade.1=アイテムを自動搬入/搬出します
+tooltip.storage.blasting_upgrade=アップグレードタブで鉱石や金属を高速精錬します
+tooltip.storage.auto_blasting_upgrade=アップグレードタブで鉱石や金属を高速精錬します
+tooltip.storage.auto_blasting_upgrade.1=アイテムを自動搬入/搬出しますク）
+tooltip.storage.jukebox_upgrade=ポータブルジュークボックス
+tooltip.storage.advanced_jukebox_upgrade=より多くのレコードスロットを持つポータブルジュークボックス
+tooltip.storage.advanced_jukebox_upgrade.1=より多くの再生オプションも利用可能

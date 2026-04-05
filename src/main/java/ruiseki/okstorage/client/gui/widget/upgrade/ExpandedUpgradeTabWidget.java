@@ -10,7 +10,7 @@ import com.cleanroommc.modularui.drawable.ItemDrawable;
 import lombok.Getter;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSH;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSHRegisters;
-import ruiseki.okstorage.common.item.wrapper.UpgradeWrapperBase;
+import ruiseki.okstorage.common.item.UpgradeWrapperBase;
 
 public abstract class ExpandedUpgradeTabWidget<U extends UpgradeWrapperBase> extends ExpandedTabWidget {
 

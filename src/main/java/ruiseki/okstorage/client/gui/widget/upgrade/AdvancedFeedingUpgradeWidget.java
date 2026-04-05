@@ -15,7 +15,7 @@ import ruiseki.okstorage.client.gui.OKBGuiTextures;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSH;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSHRegisters;
 import ruiseki.okstorage.client.gui.widget.CyclicVariantButtonWidget;
-import ruiseki.okstorage.common.item.wrapper.AdvancedFeedingUpgradeWrapper;
+import ruiseki.okstorage.common.item.feeding.AdvancedFeedingUpgradeWrapper;
 
 public class AdvancedFeedingUpgradeWidget extends AdvancedExpandedTabWidget<AdvancedFeedingUpgradeWrapper> {
 

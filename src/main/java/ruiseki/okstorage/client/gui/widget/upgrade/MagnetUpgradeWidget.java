@@ -13,7 +13,7 @@ import ruiseki.okstorage.client.gui.OKBGuiTextures;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSH;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSHRegisters;
 import ruiseki.okstorage.client.gui.widget.CyclicVariantButtonWidget;
-import ruiseki.okstorage.common.item.wrapper.MagnetUpgradeWrapper;
+import ruiseki.okstorage.common.item.magnet.MagnetUpgradeWrapper;
 
 public class MagnetUpgradeWidget extends BasicExpandedTabWidget<MagnetUpgradeWrapper> {
 

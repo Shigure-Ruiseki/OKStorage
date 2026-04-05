@@ -18,6 +18,39 @@ public class OKBGuiTextures {
         .name("vanilla_search")
         .build();
 
+    // Furnace GUI textures (from vanilla furnace texture)
+    private static final ResourceLocation FURNACE_GUI = new ResourceLocation(
+        "minecraft",
+        "textures/gui/container/furnace.png");
+
+    public static final UITexture FURNACE_FLAME_BACKGROUND = UITexture.builder()
+        .location(FURNACE_GUI)
+        .imageSize(256, 256)
+        .xy(56, 36, 14, 14)
+        .name("furnace_flame_bg")
+        .build();
+
+    public static final UITexture FURNACE_FLAME_FOREGROUND = UITexture.builder()
+        .location(FURNACE_GUI)
+        .imageSize(256, 256)
+        .xy(176, 0, 14, 14)
+        .name("furnace_flame_fg")
+        .build();
+
+    public static final UITexture FURNACE_ARROW_BACKGROUND = UITexture.builder()
+        .location(FURNACE_GUI)
+        .imageSize(256, 256)
+        .xy(79, 35, 24, 17)
+        .name("furnace_arrow_bg")
+        .build();
+
+    public static final UITexture FURNACE_ARROW_FOREGROUND = UITexture.builder()
+        .location(FURNACE_GUI)
+        .imageSize(256, 256)
+        .xy(176, 14, 24, 17)
+        .name("furnace_arrow_fg")
+        .build();
+
     private static final ResourceLocation GUI_CONTROLS = new ResourceLocation("okcore", "gui/gui_controls.png");
 
     private static final ResourceLocation ICON_LOCATION = new ResourceLocation("okcore", "gui/icons");
@@ -82,6 +115,17 @@ public class OKBGuiTextures {
     public static final UITexture VOID_ANY = icon("void_any", 208, 16);
     public static final UITexture VOID_ALL = icon("void_all", 0, 48);
     public static final UITexture VOID_AUTOMATION = icon("void_automation", 16, 48);
+
+    public static final IDrawable JUKEBOX_STOP_ICON = icon("jukebox_stop", 0, 64);
+    public static final IDrawable JUKEBOX_PLAY_ICON = icon("jukebox_play", 16, 64);
+    public static final IDrawable JUKEBOX_NEXT_ICON = icon("jukebox_next", 32, 96);
+    public static final IDrawable JUKEBOX_PREV_ICON = icon("jukebox_prev", 48, 96);
+
+    public static final IDrawable SHUFFLE_OFF_ICON = icon("shuffle_off", 112, 80);
+    public static final IDrawable SHUFFLE_ON_ICON = icon("shuffle_on", 96, 80);
+    public static final IDrawable LOOP_ALL_ICON = icon("loop_all", 128, 80);
+    public static final IDrawable LOOP_SINGLE_ICON = icon("loop_single", 144, 80);
+    public static final IDrawable LOOP_OFF_ICON = icon("loop_off", 160, 80);
 
     public static final UITexture ROTATED_RIGHT = icon("rotated_right", 0, 170);
     public static final UITexture ROTATED_LEFT = icon("rotated_left", 48, 170);
