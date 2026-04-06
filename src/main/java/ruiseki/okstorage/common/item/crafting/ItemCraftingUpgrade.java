@@ -10,7 +10,8 @@ import ruiseki.okcore.helper.LangHelpers;
 import ruiseki.okstorage.Reference;
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.IStorageWrapper;
-import ruiseki.okstorage.client.gui.syncHandler.DelegatedCraftingStackHandlerSH;
+import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSH;
+import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSHRegisters;
 import ruiseki.okstorage.client.gui.widget.updateGroup.UpgradeSlotUpdateGroup;
 import ruiseki.okstorage.client.gui.widget.upgrade.CraftingUpgradeWidget;
 import ruiseki.okstorage.client.gui.widget.upgrade.ExpandedTabWidget;
@@ -42,10 +43,10 @@ public class ItemCraftingUpgrade extends ItemUpgrade<CraftingUpgradeWrapper> {
 
     @Override
     public void updateWidgetDelegates(CraftingUpgradeWrapper wrapper, UpgradeSlotUpdateGroup group) {
-        DelegatedCraftingStackHandlerSH handler = group.get("crafting_handler");
+        DelegatedStackHandlerSH handler = group.get("crafting_handler");
         if (handler == null) return;
         handler.setDelegatedStackHandler(wrapper::getStorage);
-        handler.syncToServer(DelegatedCraftingStackHandlerSH.UPDATE_CRAFTING);
+        handler.syncToServer(DelegatedStackHandlerSH.getId(DelegatedStackHandlerSHRegisters.UPDATE_CRAFTING));
     }
 
     @Override

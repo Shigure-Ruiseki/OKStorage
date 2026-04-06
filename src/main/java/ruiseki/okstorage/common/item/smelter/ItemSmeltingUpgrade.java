@@ -10,8 +10,11 @@ import ruiseki.okcore.helper.LangHelpers;
 import ruiseki.okstorage.Reference;
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.IStorageWrapper;
+import ruiseki.okstorage.api.upgrade.IUpgradeItem;
+import ruiseki.okstorage.api.upgrade.UpgradeSlotChangeResult;
 import ruiseki.okstorage.client.gui.syncHandler.DelegatedFloatSH;
 import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSH;
+import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSHRegisters;
 import ruiseki.okstorage.client.gui.widget.updateGroup.UpgradeSlotUpdateGroup;
 import ruiseki.okstorage.client.gui.widget.upgrade.ExpandedTabWidget;
 import ruiseki.okstorage.client.gui.widget.upgrade.SmeltingUpgradeWidget;
@@ -36,6 +39,27 @@ public class ItemSmeltingUpgrade extends ItemUpgrade<SmeltingUpgradeWrapper> {
     }
 
     @Override
+    public UpgradeSlotChangeResult canAddUpgradeTo(IStorageWrapper wrapper, ItemStack upgradeStack, int targetSlot) {
+        int[] conflicts = IUpgradeItem.findConflictSlots(
+            wrapper,
+            targetSlot,
+            ItemSmeltingUpgrade.class,
+            ItemAutoSmeltingUpgrade.class,
+            ItemSmokingUpgrade.class,
+            ItemAutoSmokingUpgrade.class,
+            ItemBlastingUpgrade.class,
+            ItemAutoBlastingUpgrade.class);
+        if (conflicts.length >= 1) {
+            return UpgradeSlotChangeResult.fail(
+                "gui.storage.error.add.only_single_upgrade_allowed",
+                conflicts,
+                LangHelpers.localize("item.smelting_upgrade.name"),
+                wrapper.getDisplayName());
+        }
+        return UpgradeSlotChangeResult.success();
+    }
+
+    @Override
     public SmeltingUpgradeWrapper createWrapper(ItemStack stack, IStorageWrapper storage,
         Consumer<ItemStack> upgradeConsumer) {
         return new SmeltingUpgradeWrapper(stack, storage, upgradeConsumer);
@@ -46,7 +70,7 @@ public class ItemSmeltingUpgrade extends ItemUpgrade<SmeltingUpgradeWrapper> {
         DelegatedStackHandlerSH smeltingHandler = group.get("smelting_inv_handler");
         if (smeltingHandler == null) return;
         smeltingHandler.setDelegatedStackHandler(wrapper::getStorage);
-        smeltingHandler.syncToServer(DelegatedStackHandlerSH.UPDATE_STORAGE);
+        smeltingHandler.syncToServer(DelegatedStackHandlerSH.getId(DelegatedStackHandlerSHRegisters.UPDATE_STORAGE));
 
         DelegatedFloatSH progressHandler = group.get("smelting_progress_handler");
         if (progressHandler == null) return;

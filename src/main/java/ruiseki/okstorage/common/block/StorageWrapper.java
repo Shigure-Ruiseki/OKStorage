@@ -131,13 +131,8 @@ public class StorageWrapper implements IStorageWrapper {
 
         this.upgradeHandler = new UpgradeItemStackHandler(upgradeSlots, this) {
 
-            @Override
-            public void setStackInSlot(int slot, ItemStack stack) {
-                detectPlayingJukeboxRemoval(slot);
-                super.setStackInSlot(slot, stack);
-            }
-
             private void detectPlayingJukeboxRemoval(int slot) {
+                if (justSavingNbtChange) return;
                 ItemStack existing = getStackInSlot(slot);
                 if (existing != null && ItemNBTHelpers.getBoolean(existing, IJukeboxUpgrade.PLAYING_TAG, false)) {
                     pendingJukeboxStops.add(slot);
@@ -152,16 +147,23 @@ public class StorageWrapper implements IStorageWrapper {
 
             @Override
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                ItemStack extracted = super.extractItem(slot, amount, simulate);
                 if (!simulate) {
                     detectPlayingJukeboxRemoval(slot);
                 }
+                ItemStack extracted = super.extractItem(slot, amount, simulate);
                 if (!simulate && extracted != null) {
                     NBTTagCompound tag = extracted.getTagCompound();
-                    if (tag != null && tag.hasKey(ISmeltingUpgrade.COOK_TIME_TAG)) {
-                        tag.removeTag(ISmeltingUpgrade.COOK_TIME_TAG);
-                        tag.removeTag(ISmeltingUpgrade.BURN_TIME_TAG);
-                        tag.removeTag(ISmeltingUpgrade.BURN_TIME_TOTAL_TAG);
+                    if (tag != null) {
+                        if (tag.hasKey(ISmeltingUpgrade.COOK_TIME_TAG)) {
+                            tag.removeTag(ISmeltingUpgrade.COOK_TIME_TAG);
+                            tag.removeTag(ISmeltingUpgrade.BURN_TIME_TAG);
+                            tag.removeTag(ISmeltingUpgrade.BURN_TIME_TOTAL_TAG);
+                        }
+                        if (tag.hasKey(IJukeboxUpgrade.PLAYING_TAG)) {
+                            tag.removeTag(IJukeboxUpgrade.PLAYING_TAG);
+                            tag.removeTag(IJukeboxUpgrade.PROGRESS_TICKS_TAG);
+                            tag.removeTag(IJukeboxUpgrade.PENDING_STOP_SYNC_TAG);
+                        }
                     }
                 }
                 return extracted;
@@ -505,6 +507,27 @@ public class StorageWrapper implements IStorageWrapper {
                 .sendToAllAround(packet, targetPoint);
         }
         pendingJukeboxStops.clear();
+    }
+
+    public void forceStopAllJukeboxes(World world, float x, float y, float z) {
+        if (world.isRemote) return;
+        var targetPoint = new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, y, z, 64);
+        for (int i = 0; i < upgradeSlots; i++) {
+            ItemStack stack = upgradeHandler.getStackInSlot(i);
+            if (stack == null) continue;
+            if (!ItemNBTHelpers.getBoolean(stack, IJukeboxUpgrade.PLAYING_TAG, false)) continue;
+            var packet = new PacketJukeboxPlaybackState(uuid, i, false, 0, 0, x, y, z, "", -1);
+            OKStorage.instance.getPacketHandler()
+                .sendToAllAround(packet, targetPoint);
+            IUpgradeWrapper wrapper = upgradeHandler.getWrapperInSlot(i);
+            if (wrapper instanceof IJukeboxUpgrade jukebox) {
+                jukebox.stop();
+            }
+        }
+    }
+
+    public void writeAdditionalInfo(World world, float x, float y, float z) {
+        forceStopAllJukeboxes(world, x, y, z);
     }
 
     @Override

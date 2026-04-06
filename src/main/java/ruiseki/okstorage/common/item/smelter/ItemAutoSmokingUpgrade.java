@@ -10,8 +10,11 @@ import ruiseki.okcore.helper.LangHelpers;
 import ruiseki.okstorage.Reference;
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.IStorageWrapper;
+import ruiseki.okstorage.api.upgrade.IUpgradeItem;
+import ruiseki.okstorage.api.upgrade.UpgradeSlotChangeResult;
 import ruiseki.okstorage.client.gui.syncHandler.DelegatedFloatSH;
 import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSH;
+import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSHRegisters;
 import ruiseki.okstorage.client.gui.widget.updateGroup.UpgradeSlotUpdateGroup;
 import ruiseki.okstorage.client.gui.widget.upgrade.AdvancedSmeltingUpgradeWidget;
 import ruiseki.okstorage.client.gui.widget.upgrade.ExpandedTabWidget;
@@ -37,6 +40,27 @@ public class ItemAutoSmokingUpgrade extends ItemUpgrade<AutoSmokingUpgradeWrappe
     }
 
     @Override
+    public UpgradeSlotChangeResult canAddUpgradeTo(IStorageWrapper wrapper, ItemStack upgradeStack, int targetSlot) {
+        int[] conflicts = IUpgradeItem.findConflictSlots(
+            wrapper,
+            targetSlot,
+            ItemSmeltingUpgrade.class,
+            ItemAutoSmeltingUpgrade.class,
+            ItemSmokingUpgrade.class,
+            ItemAutoSmokingUpgrade.class,
+            ItemBlastingUpgrade.class,
+            ItemAutoBlastingUpgrade.class);
+        if (conflicts.length >= 1) {
+            return UpgradeSlotChangeResult.fail(
+                "gui.storage.error.add.only_single_upgrade_allowed",
+                conflicts,
+                LangHelpers.localize("item.smelting_upgrade.name"),
+                wrapper.getDisplayName());
+        }
+        return UpgradeSlotChangeResult.success();
+    }
+
+    @Override
     public AutoSmokingUpgradeWrapper createWrapper(ItemStack stack, IStorageWrapper storage,
         Consumer<ItemStack> upgradeConsumer) {
         return new AutoSmokingUpgradeWrapper(stack, storage, upgradeConsumer);
@@ -47,22 +71,23 @@ public class ItemAutoSmokingUpgrade extends ItemUpgrade<AutoSmokingUpgradeWrappe
         DelegatedStackHandlerSH handler = group.get("adv_common_filter_handler");
         if (handler == null) return;
         handler.setDelegatedStackHandler(wrapper::getFilterItems);
-        handler.syncToServer(DelegatedStackHandlerSH.UPDATE_FILTERABLE);
+        handler.syncToServer(DelegatedStackHandlerSH.getId(DelegatedStackHandlerSHRegisters.UPDATE_FILTERABLE));
 
         DelegatedStackHandlerSH oreDictHandler = group.get("ore_dict_handler");
         if (oreDictHandler == null) return;
         oreDictHandler.setDelegatedStackHandler(wrapper::getOreDictItem);
-        oreDictHandler.syncToServer(DelegatedStackHandlerSH.UPDATE_ORE_DICT);
+        oreDictHandler.syncToServer(DelegatedStackHandlerSH.getId(DelegatedStackHandlerSHRegisters.UPDATE_ORE_DICT));
 
         DelegatedStackHandlerSH smeltingHandler = group.get("smelting_inv_handler");
         if (smeltingHandler == null) return;
         smeltingHandler.setDelegatedStackHandler(wrapper::getStorage);
-        smeltingHandler.syncToServer(DelegatedStackHandlerSH.UPDATE_STORAGE);
+        smeltingHandler.syncToServer(DelegatedStackHandlerSH.getId(DelegatedStackHandlerSHRegisters.UPDATE_STORAGE));
 
         DelegatedStackHandlerSH fuelFilterHandler = group.get("fuel_filter_handler");
         if (fuelFilterHandler == null) return;
         fuelFilterHandler.setDelegatedStackHandler(wrapper::getFuelFilterItems);
-        fuelFilterHandler.syncToServer(DelegatedStackHandlerSH.UPDATE_FUEL_FILTER);
+        fuelFilterHandler
+            .syncToServer(DelegatedStackHandlerSH.getId(DelegatedStackHandlerSHRegisters.UPDATE_FUEL_FILTER));
 
         DelegatedFloatSH progressHandler = group.get("smelting_progress_handler");
         if (progressHandler == null) return;

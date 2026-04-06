@@ -1,79 +1,84 @@
 package ruiseki.okstorage.client.gui.syncHandler;
 
+import java.io.IOException;
 import java.util.function.Supplier;
 
+import net.minecraft.inventory.IInventory;
 import net.minecraft.network.PacketBuffer;
 
 import com.cleanroommc.modularui.utils.item.EmptyHandler;
 import com.cleanroommc.modularui.utils.item.IItemHandler;
 import com.cleanroommc.modularui.value.sync.SyncHandler;
 
-import ruiseki.okstorage.api.wrapper.IAdvancedFilterable;
-import ruiseki.okstorage.api.wrapper.IBasicFilterable;
-import ruiseki.okstorage.api.wrapper.ISmeltingUpgrade;
-import ruiseki.okstorage.api.wrapper.IStorageUpgrade;
+import ruiseki.okstorage.api.IStorageContainer;
+import ruiseki.okstorage.api.IStorageWrapper;
+import ruiseki.okstorage.api.upgrade.DelegatedStackHandlerSHRegistry;
 import ruiseki.okstorage.api.wrapper.IUpgradeWrapper;
 import ruiseki.okstorage.client.gui.handler.DelegatedItemHandler;
-import ruiseki.okstorage.common.block.StorageWrapper;
 
 public class DelegatedStackHandlerSH extends SyncHandler {
 
-    public static final int UPDATE_FILTERABLE = 0;
-    public static final int UPDATE_ORE_DICT = 1;
-    public static final int UPDATE_STORAGE = 2;
-    public static final int UPDATE_FUEL_FILTER = 4;
-
-    private final StorageWrapper wrapper;
-    private final int slotIndex;
-    private final int wrappedSlotAmount;
+    public final Supplier<IStorageContainer<?>> containerProvider;
+    public final IStorageWrapper wrapper;
+    public final int slotIndex;
+    public final int wrappedSlotAmount;
 
     public DelegatedItemHandler delegatedStackHandler;
+    public IInventory inventory;
 
-    public DelegatedStackHandlerSH(StorageWrapper wrapper, int slotIndex, int wrappedSlotAmount) {
+    public DelegatedStackHandlerSH(Supplier<IStorageContainer<?>> containerProvider, IStorageWrapper wrapper,
+        int slotIndex, int wrappedSlotAmount) {
         this.wrapper = wrapper;
         this.slotIndex = slotIndex;
         this.wrappedSlotAmount = wrappedSlotAmount;
+        this.containerProvider = containerProvider;
 
         this.delegatedStackHandler = new DelegatedItemHandler(() -> EmptyHandler.INSTANCE, this.wrappedSlotAmount);
     }
 
     public void setDelegatedStackHandler(Supplier<IItemHandler> delegated) {
-        delegatedStackHandler.setDelegated(delegated);
+        this.delegatedStackHandler.setDelegated(delegated);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> T getInventory() {
+        return (T) inventory;
+    }
+
+    public void setInventory(IInventory inventory) {
+        this.inventory = inventory;
     }
 
     @Override
     public void readOnClient(int id, PacketBuffer buf) {
-
+        if (!DelegatedStackHandlerSHRegistry.isClientEmpty()) {
+            try {
+                DelegatedStackHandlerSHRegistry.handleClient(this, id, buf);
+                this.wrapper.markDirty();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override
     public void readOnServer(int id, PacketBuffer buf) {
-        IUpgradeWrapper wrapper = this.wrapper.getUpgradeHandler()
-            .getWrapperInSlot(slotIndex);
-        switch (id) {
-            case UPDATE_FILTERABLE:
-                if (wrapper instanceof IBasicFilterable upgrade) {
-                    setDelegatedStackHandler(upgrade::getFilterItems);
-                }
-                break;
-            case UPDATE_ORE_DICT:
-                if (wrapper instanceof IAdvancedFilterable upgrade) {
-                    setDelegatedStackHandler(upgrade::getOreDictItem);
-                }
-                break;
-            case UPDATE_STORAGE:
-                if (wrapper instanceof IStorageUpgrade upgrade) {
-                    setDelegatedStackHandler(upgrade::getStorage);
-                }
-                break;
-            case UPDATE_FUEL_FILTER:
-                if (wrapper instanceof ISmeltingUpgrade upgrade) {
-                    setDelegatedStackHandler(upgrade::getFuelFilterItems);
-                }
-                break;
-            default:
-                return;
+        if (!DelegatedStackHandlerSHRegistry.isServerEmpty()) {
+            try {
+                DelegatedStackHandlerSHRegistry.handleServer(this, id, buf);
+                this.wrapper.markDirty();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
+    }
 
+    public IUpgradeWrapper getWrapper() {
+        return this.wrapper.getUpgradeHandler()
+            .getWrapperInSlot(slotIndex);
+    }
+
+    public static int getId(String name) {
+        return DelegatedStackHandlerSHRegistry.getId(name);
     }
 }

@@ -15,6 +15,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ruiseki.okcore.helper.LangHelpers;
 import ruiseki.okstorage.Reference;
 import ruiseki.okstorage.api.IStorageWrapper;
+import ruiseki.okstorage.api.upgrade.IUpgradeItem;
+import ruiseki.okstorage.api.upgrade.UpgradeSlotChangeResult;
 import ruiseki.okstorage.common.item.ItemUpgrade;
 import ruiseki.okstorage.config.ModConfig;
 
@@ -73,6 +75,20 @@ public class ItemStackUpgrade extends ItemUpgrade<StackUpgradeWrapper> {
     @Override
     public void addInformation(ItemStack itemstack, EntityPlayer entityplayer, List<String> list, boolean flag) {
         list.add(LangHelpers.localize("tooltip.storage.stack_upgrade", multiplier(itemstack)));
+    }
+
+    @Override
+    public UpgradeSlotChangeResult canAddUpgradeTo(IStorageWrapper wrapper, ItemStack upgradeStack, int targetSlot) {
+        int[] conflicts = IUpgradeItem.findConflictSlots(wrapper, targetSlot, ItemStackUpgrade.class);
+        if (conflicts.length >= 3) {
+            return UpgradeSlotChangeResult.fail(
+                "gui.storage.error.add.only_x_upgrades_allowed",
+                conflicts,
+                3,
+                upgradeStack.getDisplayName(),
+                wrapper.getDisplayName());
+        }
+        return UpgradeSlotChangeResult.success();
     }
 
     @Override

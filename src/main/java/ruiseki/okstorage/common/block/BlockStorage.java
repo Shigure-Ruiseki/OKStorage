@@ -80,6 +80,10 @@ public class BlockStorage extends BlockOK {
         TileEntity te = world.getTileEntity(x, y, z);
         if (te instanceof TEStorage storage) {
             storage.setFacing(facing);
+            if (!world.isRemote) {
+                storage.getWrapper()
+                    .forceStopAllJukeboxes(world, x + 0.5f, y + 0.5f, z + 0.5f);
+            }
         }
     }
 

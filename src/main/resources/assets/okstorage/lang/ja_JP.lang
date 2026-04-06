@@ -31,6 +31,10 @@ gui.storage.auto_smoking_settings=自動燻製設定
 gui.storage.blasting_settings=溶鉱炉設定
 gui.storage.auto_blasting_settings=自動溶鉱炉設定
 
+#アップグレードエラー
+gui.storage.error.add.upgrade_not_allowed=%1$sは%2$sに装着できません
+gui.storage.error.add.only_single_upgrade_allowed=%1$sは%2$sに1つだけ装着可能です
+gui.storage.error.add.only_x_upgrades_allowed=%2$sは%3$sに%1$d個まで装着可能です
 
 # Tooltips
 gui.storage.stack_size_extra=数: %s / %s

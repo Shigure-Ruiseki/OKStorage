@@ -11,6 +11,7 @@ import ruiseki.okstorage.Reference;
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.IStorageWrapper;
 import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSH;
+import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSHRegisters;
 import ruiseki.okstorage.client.gui.widget.updateGroup.UpgradeSlotUpdateGroup;
 import ruiseki.okstorage.client.gui.widget.upgrade.AdvancedVoidUpgradeWidget;
 import ruiseki.okstorage.client.gui.widget.upgrade.ExpandedTabWidget;
@@ -45,12 +46,12 @@ public class ItemAdvancedVoidUpgrade extends ItemUpgrade<AdvancedVoidUpgradeWrap
         DelegatedStackHandlerSH handler = group.get("adv_common_filter_handler");
         if (handler == null) return;
         handler.setDelegatedStackHandler(wrapper::getFilterItems);
-        handler.syncToServer(DelegatedStackHandlerSH.UPDATE_FILTERABLE);
+        handler.syncToServer(DelegatedStackHandlerSH.getId(DelegatedStackHandlerSHRegisters.UPDATE_FILTERABLE));
 
         DelegatedStackHandlerSH oreDictHandler = group.get("ore_dict_handler");
         if (oreDictHandler == null) return;
         oreDictHandler.setDelegatedStackHandler(wrapper::getOreDictItem);
-        oreDictHandler.syncToServer(DelegatedStackHandlerSH.UPDATE_ORE_DICT);
+        oreDictHandler.syncToServer(DelegatedStackHandlerSH.getId(DelegatedStackHandlerSHRegisters.UPDATE_ORE_DICT));
     }
 
     @Override
