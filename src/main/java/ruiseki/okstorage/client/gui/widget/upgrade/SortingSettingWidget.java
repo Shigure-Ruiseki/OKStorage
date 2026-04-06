@@ -7,6 +7,7 @@ import com.cleanroommc.modularui.widgets.layout.Row;
 
 import ruiseki.okstorage.client.gui.OKBGuiTextures;
 import ruiseki.okstorage.client.gui.syncHandler.StorageSlotSH;
+import ruiseki.okstorage.client.gui.syncHandler.StorageSlotSHRegisters;
 import ruiseki.okstorage.client.gui.widget.TabWidget;
 import ruiseki.okstorage.client.gui.widget.TabWidget.ExpandDirection;
 import ruiseki.okstorage.common.block.StoragePanel;
@@ -42,7 +43,7 @@ public class SortingSettingWidget extends ExpandedTabWidget {
                     }
 
                     for (StorageSlotSH syncHandler : panel.storageSlotSyncHandlers) {
-                        syncHandler.syncToServer(StorageSlotSH.UPDATE_SET_SLOT_LOCK);
+                        syncHandler.syncToServer(StorageSlotSH.getId(StorageSlotSHRegisters.UPDATE_SET_SLOT_LOCK));
                     }
 
                     return true;
@@ -64,7 +65,7 @@ public class SortingSettingWidget extends ExpandedTabWidget {
                     }
 
                     for (StorageSlotSH syncHandler : panel.storageSlotSyncHandlers) {
-                        syncHandler.syncToServer(StorageSlotSH.UPDATE_UNSET_SLOT_LOCK);
+                        syncHandler.syncToServer(StorageSlotSH.getId(StorageSlotSHRegisters.UPDATE_UNSET_SLOT_LOCK));
                     }
 
                     return true;

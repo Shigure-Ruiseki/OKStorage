@@ -219,7 +219,7 @@ public class TEStorage extends TileSideCapability
 
     @Override
     public int getInventoryStackLimit() {
-        return 64 * wrapper.applySlotLimitModifiers(1, 0);
+        return 64 * wrapper.applySlotLimitModifiers();
     }
 
     @Override

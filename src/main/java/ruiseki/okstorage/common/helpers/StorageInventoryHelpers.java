@@ -35,7 +35,7 @@ public class StorageInventoryHelpers {
 
             ItemStack inSlot = wrapper.getStackInSlot(i);
 
-            int limit = mem.getMaxStackSize() * wrapper.applyStackLimitModifiers(1, i, mem);
+            int limit = mem.getMaxStackSize() * wrapper.applyStackLimitModifiers();
             int current = inSlot != null ? inSlot.stackSize : 0;
 
             if (current >= limit) continue;
@@ -81,7 +81,7 @@ public class StorageInventoryHelpers {
             ItemStack baseStack = wrapper.getStackInSlot(i);
             if (baseStack == null) continue;
 
-            int slotMaxSize = baseStack.getMaxStackSize() * wrapper.applyStackLimitModifiers(1, i, baseStack);
+            int slotMaxSize = baseStack.getMaxStackSize() * wrapper.applyStackLimitModifiers();
 
             for (int j = i + 1; j < wrapper.getSlots(); j++) {
                 if (isMem != wrapper.isSlotMemorized(j) || wrapper.isSlotLocked(j)) continue;

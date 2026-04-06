@@ -12,9 +12,10 @@ import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.IStorageWrapper;
 import ruiseki.okstorage.api.upgrade.IUpgradeItem;
 import ruiseki.okstorage.api.upgrade.UpgradeSlotChangeResult;
-import ruiseki.okstorage.client.gui.syncHandler.DelegatedFloatSH;
 import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSH;
 import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSHRegisters;
+import ruiseki.okstorage.client.gui.syncHandler.value.DelegatedFloatSH;
+import ruiseki.okstorage.client.gui.syncHandler.value.DelegatedValueSHRegisters;
 import ruiseki.okstorage.client.gui.widget.updateGroup.UpgradeSlotUpdateGroup;
 import ruiseki.okstorage.client.gui.widget.upgrade.ExpandedTabWidget;
 import ruiseki.okstorage.client.gui.widget.upgrade.SmeltingUpgradeWidget;
@@ -74,13 +75,13 @@ public class ItemBlastingUpgrade extends ItemUpgrade<BlastingUpgradeWrapper> {
 
         DelegatedFloatSH progressHandler = group.get("smelting_progress_handler");
         if (progressHandler == null) return;
-        progressHandler.setDelegatedSupplier(() -> wrapper::getProgress);
-        progressHandler.syncToServer(DelegatedFloatSH.UPDATE_PROGRESS);
+        progressHandler.setDelegatedSupplier(wrapper::getProgress);
+        progressHandler.syncToServer(DelegatedFloatSH.getId(DelegatedValueSHRegisters.UPDATE_PROGRESS));
 
         DelegatedFloatSH fuelHandler = group.get("smelting_fuel_handler");
         if (fuelHandler == null) return;
-        fuelHandler.setDelegatedSupplier(() -> wrapper::getBurnProgress);
-        fuelHandler.syncToServer(DelegatedFloatSH.UPDATE_FUEL);
+        fuelHandler.setDelegatedSupplier(wrapper::getBurnProgress);
+        fuelHandler.syncToServer(DelegatedFloatSH.getId(DelegatedValueSHRegisters.UPDATE_FUEL));
     }
 
     @Override

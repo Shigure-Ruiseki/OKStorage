@@ -53,6 +53,7 @@ import ruiseki.okstorage.client.gui.slot.ModularUpgradeSlot;
 import ruiseki.okstorage.client.gui.slot.StorageSlot;
 import ruiseki.okstorage.client.gui.slot.UpgradeSlot;
 import ruiseki.okstorage.client.gui.syncHandler.StorageSH;
+import ruiseki.okstorage.client.gui.syncHandler.StorageSHRegisters;
 import ruiseki.okstorage.client.gui.syncHandler.StorageSlotSH;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSH;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSHRegisters;
@@ -101,6 +102,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
     public final TileEntity tile;
 
     public final StorageSH storageSyncHandler;
+    public final PlayerMainInvWrapper playerInv;
     public final StorageSlotSH[] storageSlotSyncHandlers;
     public final UpgradeSlotSH[] upgradeSlotSyncHandlers;
     public final UpgradeSlotUpdateGroup[] upgradeSlotGroups;
@@ -138,7 +140,8 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
         int calculated = (width - 14) / ItemSlot.SIZE;
         this.rowSize = Math.max(9, Math.min(12, calculated));
 
-        this.storageSyncHandler = new StorageSH(new PlayerMainInvWrapper(player.inventory), this.wrapper, this);
+        this.playerInv = new PlayerMainInvWrapper(player.inventory);
+        this.storageSyncHandler = new StorageSH(this.playerInv, this.wrapper, this);
         this.syncManager.syncValue("storage_wrapper", this.storageSyncHandler);
 
         this.storageSlotSyncHandlers = new StorageSlotSH[this.wrapper.getSlots()];
@@ -248,7 +251,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
 
                         StorageInventoryHelpers.sortInventory(wrapper, reverse);
 
-                        storageSyncHandler.syncToServer(StorageSH.UPDATE_SORT_INV, buf -> {
+                        storageSyncHandler.syncToServer(StorageSH.getId(StorageSHRegisters.UPDATE_SORT_INV), buf -> {
                             for (int i = 0; i < wrapper.getSlots(); i++) {
                                 buf.writeItemStackToBuffer(wrapper.getStackInSlot(i));
                             }
@@ -271,10 +274,10 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
 
                 SortType nextSortType = SortType.values()[index];
 
-                storageSyncHandler.setSortType(nextSortType);
+                wrapper.setSortType(nextSortType);
 
                 storageSyncHandler.syncToServer(
-                    StorageSH.UPDATE_SET_SORT_TYPE,
+                    StorageSH.getId(StorageSHRegisters.UPDATE_SET_SORT_TYPE),
                     buf -> NetworkUtils.writeEnumValue(buf, nextSortType));
 
             }).setEnabledIf(cyclicVariantButtonWidget -> !settingPanel.isPanelOpen())
@@ -296,9 +299,9 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
                         boolean transferMatched = !Interactable.hasShiftDown();
 
                         Interactable.playButtonClickSound();
-                        storageSyncHandler.transferToPlayerInventory(transferMatched);
+                        StorageInventoryHelpers.transferPlayerInventoryToStorage(wrapper, playerInv, transferMatched);
                         storageSyncHandler.syncToServer(
-                            StorageSH.UPDATE_TRANSFER_TO_PLAYER_INV,
+                            StorageSH.getId(StorageSHRegisters.UPDATE_TRANSFER_TO_PLAYER_INV),
                             buf -> buf.writeBoolean(transferMatched));
                         return true;
                     }
@@ -329,9 +332,9 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
                         boolean transferMatched = !Interactable.hasShiftDown();
 
                         Interactable.playButtonClickSound();
-                        storageSyncHandler.transferToStorage(transferMatched);
+                        StorageInventoryHelpers.transferPlayerInventoryToStorage(wrapper, playerInv, transferMatched);
                         storageSyncHandler.syncToServer(
-                            StorageSH.UPDATE_TRANSFER_TO_STORAGE_INV,
+                            StorageSH.getId(StorageSHRegisters.UPDATE_TRANSFER_TO_STORAGE_INV),
                             buf -> buf.writeBoolean(transferMatched));
                         return true;
                     }
