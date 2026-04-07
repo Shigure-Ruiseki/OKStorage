@@ -11,6 +11,7 @@ import ruiseki.okstorage.Reference;
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.IStorageWrapper;
 import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSH;
+import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSHRegisters;
 import ruiseki.okstorage.client.gui.widget.updateGroup.UpgradeSlotUpdateGroup;
 import ruiseki.okstorage.client.gui.widget.upgrade.BasicExpandedTabWidget;
 import ruiseki.okstorage.client.gui.widget.upgrade.ExpandedTabWidget;
@@ -45,7 +46,7 @@ public class ItemPickupUpgrade extends ItemUpgrade<PickupUpgradeWrapper> {
         DelegatedStackHandlerSH handler = group.get("common_filter_handler");
         if (handler == null) return;
         handler.setDelegatedStackHandler(wrapper::getFilterItems);
-        handler.syncToServer(DelegatedStackHandlerSH.UPDATE_FILTERABLE);
+        handler.syncToServer(DelegatedStackHandlerSH.getId(DelegatedStackHandlerSHRegisters.UPDATE_FILTERABLE));
     }
 
     @Override

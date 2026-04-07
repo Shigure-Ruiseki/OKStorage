@@ -10,7 +10,10 @@ import ruiseki.okcore.helper.LangHelpers;
 import ruiseki.okstorage.Reference;
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.IStorageWrapper;
+import ruiseki.okstorage.api.upgrade.IUpgradeItem;
+import ruiseki.okstorage.api.upgrade.UpgradeSlotChangeResult;
 import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSH;
+import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSHRegisters;
 import ruiseki.okstorage.client.gui.widget.updateGroup.UpgradeSlotUpdateGroup;
 import ruiseki.okstorage.client.gui.widget.upgrade.AdvancedJukeboxUpgradeWidget;
 import ruiseki.okstorage.client.gui.widget.upgrade.ExpandedTabWidget;
@@ -36,6 +39,20 @@ public class ItemAdvancedJukeboxUpgrade extends ItemUpgrade<AdvancedJukeboxUpgra
     }
 
     @Override
+    public UpgradeSlotChangeResult canAddUpgradeTo(IStorageWrapper wrapper, ItemStack upgradeStack, int targetSlot) {
+        int[] conflicts = IUpgradeItem
+            .findConflictSlots(wrapper, targetSlot, ItemJukeboxUpgrade.class, ItemAdvancedJukeboxUpgrade.class);
+        if (conflicts.length >= 1) {
+            return UpgradeSlotChangeResult.fail(
+                "gui.storage.error.add.only_single_upgrade_allowed",
+                conflicts,
+                LangHelpers.localize("item.jukebox_upgrade.name"),
+                wrapper.getDisplayName());
+        }
+        return UpgradeSlotChangeResult.success();
+    }
+
+    @Override
     public AdvancedJukeboxUpgradeWrapper createWrapper(ItemStack stack, IStorageWrapper storage,
         Consumer<ItemStack> upgradeConsumer) {
         return new AdvancedJukeboxUpgradeWrapper(stack, storage, upgradeConsumer);
@@ -46,7 +63,7 @@ public class ItemAdvancedJukeboxUpgrade extends ItemUpgrade<AdvancedJukeboxUpgra
         DelegatedStackHandlerSH handler = group.get("adv_jukebox_handler");
         if (handler == null) return;
         handler.setDelegatedStackHandler(wrapper::getStorage);
-        handler.syncToServer(DelegatedStackHandlerSH.UPDATE_STORAGE);
+        handler.syncToServer(DelegatedStackHandlerSH.getId(DelegatedStackHandlerSHRegisters.UPDATE_STORAGE));
     }
 
     @Override

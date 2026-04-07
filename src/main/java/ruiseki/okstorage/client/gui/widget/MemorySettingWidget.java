@@ -10,6 +10,7 @@ import com.cleanroommc.modularui.widgets.layout.Row;
 
 import ruiseki.okstorage.client.gui.OKBGuiTextures;
 import ruiseki.okstorage.client.gui.syncHandler.StorageSlotSH;
+import ruiseki.okstorage.client.gui.syncHandler.StorageSlotSHRegisters;
 import ruiseki.okstorage.client.gui.widget.TabWidget.ExpandDirection;
 import ruiseki.okstorage.client.gui.widget.upgrade.ExpandedTabWidget;
 import ruiseki.okstorage.common.block.StoragePanel;
@@ -51,7 +52,7 @@ public class MemorySettingWidget extends ExpandedTabWidget {
 
                     for (StorageSlotSH syncHandler : panel.storageSlotSyncHandlers) {
                         syncHandler.syncToServer(
-                            StorageSlotSH.UPDATE_SET_MEMORY_STACK,
+                            StorageSlotSH.getId(StorageSlotSHRegisters.UPDATE_SET_MEMORY_STACK),
                             buf -> buf.writeBoolean(panel.isMemorySettingTabOpened));
                     }
 
@@ -74,7 +75,7 @@ public class MemorySettingWidget extends ExpandedTabWidget {
                     }
 
                     for (StorageSlotSH syncHandler : panel.storageSlotSyncHandlers) {
-                        syncHandler.syncToServer(StorageSlotSH.UPDATE_UNSET_MEMORY_STACK);
+                        syncHandler.syncToServer(StorageSlotSH.getId(StorageSlotSHRegisters.UPDATE_UNSET_MEMORY_STACK));
                     }
 
                     return true;

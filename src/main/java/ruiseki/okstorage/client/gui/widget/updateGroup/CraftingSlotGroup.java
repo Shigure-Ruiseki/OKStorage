@@ -1,26 +1,44 @@
 package ruiseki.okstorage.client.gui.widget.updateGroup;
 
+import java.util.function.Supplier;
+
+import net.minecraft.item.ItemStack;
+
+import com.cleanroommc.modularui.utils.item.EmptyHandler;
+import com.cleanroommc.modularui.utils.item.IItemHandler;
 import com.cleanroommc.modularui.value.sync.ItemSlotSH;
 import com.cleanroommc.modularui.widgets.slot.ModularCraftingSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 
 import ruiseki.okstorage.api.widget.IUpgradeSlotGroupFactory;
+import ruiseki.okstorage.api.wrapper.ICraftingUpgrade;
+import ruiseki.okstorage.api.wrapper.IUpgradeWrapper;
+import ruiseki.okstorage.client.gui.handler.IndexedInventoryCraftingWrapper;
 import ruiseki.okstorage.client.gui.slot.CraftingSlotInfo;
 import ruiseki.okstorage.client.gui.slot.IndexedModularCraftingMatrixSlot;
 import ruiseki.okstorage.client.gui.slot.IndexedModularCraftingSlot;
-import ruiseki.okstorage.client.gui.syncHandler.DelegatedCraftingStackHandlerSH;
+import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSH;
+import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSHRegisters;
 
 public class CraftingSlotGroup implements IUpgradeSlotGroupFactory {
 
     @Override
     public void build(UpgradeSlotUpdateGroup group) {
 
-        DelegatedCraftingStackHandlerSH craftingStackHandler = new DelegatedCraftingStackHandlerSH(
+        DelegatedStackHandlerSH craftingStackHandler = new DelegatedStackHandlerSH(
             group.panel::getContainer,
             group.wrapper,
             group.slotIndex,
-            10);
+            10) {
+
+            @Override
+            public void setDelegatedStackHandler(Supplier<IItemHandler> delegated) {
+                super.setDelegatedStackHandler(delegated);
+                updateInventoryCrafting(this);
+            }
+
+        };
         group.syncManager.syncValue("crafting_delegation_" + group.slotIndex, craftingStackHandler);
         group.put("crafting_handler", craftingStackHandler);
 
@@ -36,7 +54,9 @@ public class CraftingSlotGroup implements IUpgradeSlotGroupFactory {
 
             slot.changeListener((stack, onlyAmountChanged, client, init) -> {
                 if (!client) return;
-                craftingStackHandler.syncToServer(DelegatedCraftingStackHandlerSH.DETECT_CHANGES);
+                DelegatedStackHandlerSH handler = group.get("crafting_handler");
+                handler.syncToServer(
+                    DelegatedStackHandlerSH.getId(DelegatedStackHandlerSHRegisters.UPDATE_CRAFTING_CHANGES));
             });
         }
         group.put("crafting_matrix_slots", slots);
@@ -57,5 +77,49 @@ public class CraftingSlotGroup implements IUpgradeSlotGroupFactory {
         CraftingSlotInfo craftingInfo = new CraftingSlotInfo(slots, craftingOutputSlot);
         group.put("crafting_info", craftingInfo);
 
+    }
+
+    public void updateInventoryCrafting(DelegatedStackHandlerSH handler) {
+
+        IndexedInventoryCraftingWrapper inventoryCrafting;
+        if (handler.getInventory() instanceof IndexedInventoryCraftingWrapper inv) {
+            inventoryCrafting = inv;
+        } else {
+            inventoryCrafting = new IndexedInventoryCraftingWrapper(
+                handler.slotIndex,
+                handler.containerProvider.get()
+                    .getContainer(),
+                3,
+                3,
+                handler.delegatedStackHandler,
+                0);
+
+            handler.setInventory(inventoryCrafting);
+
+            handler.containerProvider.get()
+                .registerInventoryCrafting(handler.slotIndex, inventoryCrafting);
+        }
+
+        IUpgradeWrapper wrapper = handler.wrapper.getUpgradeHandler()
+            .getWrapperInSlot(handler.slotIndex);
+        if (!(wrapper instanceof ICraftingUpgrade craftingWrapper)) {
+            return;
+        }
+
+        inventoryCrafting.setCraftingDestination(craftingWrapper.getCraftingDes());
+
+        inventoryCrafting.detectChanges();
+
+        if (handler.isValid() && !handler.getSyncManager()
+            .isClient() && !(handler.delegatedStackHandler.get() instanceof EmptyHandler)) {
+            int resultSlot = inventoryCrafting.getSizeInventory() - 1;
+
+            ItemStack result = handler.delegatedStackHandler.get()
+                .getStackInSlot(resultSlot);
+
+            handler.syncToClient(
+                DelegatedStackHandlerSH.getId(DelegatedStackHandlerSHRegisters.UPDATE_CRAFTING),
+                buffer -> buffer.writeItemStackToBuffer(result));
+        }
     }
 }

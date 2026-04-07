@@ -5,7 +5,7 @@ import com.cleanroommc.modularui.widgets.slot.SlotGroup;
 import ruiseki.okstorage.api.widget.IUpgradeSlotGroupFactory;
 import ruiseki.okstorage.client.gui.slot.ModularFilterSlot;
 import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSH;
-import ruiseki.okstorage.client.gui.syncHandler.FoodFilterSlotSH;
+import ruiseki.okstorage.client.gui.syncHandler.FilterSlotSH;
 
 public class AdvancedFeedingFilterSlotGroupFactory implements IUpgradeSlotGroupFactory {
 
@@ -18,7 +18,7 @@ public class AdvancedFeedingFilterSlotGroupFactory implements IUpgradeSlotGroupF
         for (int i = 0; i < 16; i++) {
             ModularFilterSlot slot = new ModularFilterSlot(commonFilterStackHandler.delegatedStackHandler, i);
             slot.slotGroup("adv_feeding_filters_" + group.slotIndex);
-            group.syncManager.syncValue("adv_feeding_filter_" + group.slotIndex, i, new FoodFilterSlotSH(slot));
+            group.syncManager.syncValue("adv_feeding_filter_" + group.slotIndex, i, new FilterSlotSH(slot));
         }
         group.put("adv_feeding_filter_slots", slots);
 

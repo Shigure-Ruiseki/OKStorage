@@ -9,6 +9,8 @@ import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.IStorageWrapper;
+import ruiseki.okstorage.api.upgrade.StorageSlotSHRegistry;
+import ruiseki.okstorage.api.wrapper.IUpgradeWrapper;
 
 public class StorageSlotSH extends ItemSlotSH {
 
@@ -28,34 +30,36 @@ public class StorageSlotSH extends ItemSlotSH {
 
     @Override
     public void readOnServer(int id, PacketBuffer buf) throws IOException {
-
-        switch (id) {
-            case UPDATE_SET_MEMORY_STACK: {
-                wrapper.setMemoryStack(getSlot().getSlotIndex(), buf.readBoolean());
-                break;
+        if (!StorageSlotSHRegistry.isServerEmpty()) {
+            try {
+                StorageSlotSHRegistry.handleServer(this, id, buf);
+                wrapper.markDirty();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-
-            case UPDATE_UNSET_MEMORY_STACK:
-                wrapper.unsetMemoryStack(getSlot().getSlotIndex());
-                break;
-
-            case UPDATE_SET_SLOT_LOCK:
-                wrapper.setSlotLocked(getSlot().getSlotIndex(), true);
-                break;
-
-            case UPDATE_UNSET_SLOT_LOCK:
-                wrapper.setSlotLocked(getSlot().getSlotIndex(), false);
-                break;
-
-            default:
-                super.readOnServer(id, buf);
-                return;
         }
-        wrapper.markDirty();
+        super.readOnServer(id, buf);
     }
 
     @Override
     public void readOnClient(int id, PacketBuffer buf) {
+        if (!StorageSlotSHRegistry.isClientEmpty()) {
+            try {
+                StorageSlotSHRegistry.handleClient(this, id, buf);
+                wrapper.markDirty();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         super.readOnClient(id, buf);
+    }
+
+    public IUpgradeWrapper getWrapper() {
+        return this.wrapper.getUpgradeHandler()
+            .getWrapperInSlot(getSlot().getSlotIndex());
+    }
+
+    public static int getId(String name) {
+        return StorageSlotSHRegistry.getId(name);
     }
 }

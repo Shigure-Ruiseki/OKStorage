@@ -10,8 +10,12 @@ import ruiseki.okcore.helper.LangHelpers;
 import ruiseki.okstorage.Reference;
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.IStorageWrapper;
-import ruiseki.okstorage.client.gui.syncHandler.DelegatedFloatSH;
+import ruiseki.okstorage.api.upgrade.IUpgradeItem;
+import ruiseki.okstorage.api.upgrade.UpgradeSlotChangeResult;
 import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSH;
+import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSHRegisters;
+import ruiseki.okstorage.client.gui.syncHandler.value.DelegatedFloatSH;
+import ruiseki.okstorage.client.gui.syncHandler.value.DelegatedValueSHRegisters;
 import ruiseki.okstorage.client.gui.widget.updateGroup.UpgradeSlotUpdateGroup;
 import ruiseki.okstorage.client.gui.widget.upgrade.ExpandedTabWidget;
 import ruiseki.okstorage.client.gui.widget.upgrade.SmeltingUpgradeWidget;
@@ -36,6 +40,27 @@ public class ItemBlastingUpgrade extends ItemUpgrade<BlastingUpgradeWrapper> {
     }
 
     @Override
+    public UpgradeSlotChangeResult canAddUpgradeTo(IStorageWrapper wrapper, ItemStack upgradeStack, int targetSlot) {
+        int[] conflicts = IUpgradeItem.findConflictSlots(
+            wrapper,
+            targetSlot,
+            ItemSmeltingUpgrade.class,
+            ItemAutoSmeltingUpgrade.class,
+            ItemSmokingUpgrade.class,
+            ItemAutoSmokingUpgrade.class,
+            ItemBlastingUpgrade.class,
+            ItemAutoBlastingUpgrade.class);
+        if (conflicts.length >= 1) {
+            return UpgradeSlotChangeResult.fail(
+                "gui.storage.error.add.only_single_upgrade_allowed",
+                conflicts,
+                LangHelpers.localize("item.smelting_upgrade.name"),
+                wrapper.getDisplayName());
+        }
+        return UpgradeSlotChangeResult.success();
+    }
+
+    @Override
     public BlastingUpgradeWrapper createWrapper(ItemStack stack, IStorageWrapper storage,
         Consumer<ItemStack> upgradeConsumer) {
         return new BlastingUpgradeWrapper(stack, storage, upgradeConsumer);
@@ -46,17 +71,17 @@ public class ItemBlastingUpgrade extends ItemUpgrade<BlastingUpgradeWrapper> {
         DelegatedStackHandlerSH smeltingHandler = group.get("smelting_inv_handler");
         if (smeltingHandler == null) return;
         smeltingHandler.setDelegatedStackHandler(wrapper::getStorage);
-        smeltingHandler.syncToServer(DelegatedStackHandlerSH.UPDATE_STORAGE);
+        smeltingHandler.syncToServer(DelegatedStackHandlerSH.getId(DelegatedStackHandlerSHRegisters.UPDATE_STORAGE));
 
         DelegatedFloatSH progressHandler = group.get("smelting_progress_handler");
         if (progressHandler == null) return;
-        progressHandler.setDelegatedSupplier(() -> wrapper::getProgress);
-        progressHandler.syncToServer(DelegatedFloatSH.UPDATE_PROGRESS);
+        progressHandler.setDelegatedSupplier(wrapper::getProgress);
+        progressHandler.syncToServer(DelegatedFloatSH.getId(DelegatedValueSHRegisters.UPDATE_PROGRESS));
 
         DelegatedFloatSH fuelHandler = group.get("smelting_fuel_handler");
         if (fuelHandler == null) return;
-        fuelHandler.setDelegatedSupplier(() -> wrapper::getBurnProgress);
-        fuelHandler.syncToServer(DelegatedFloatSH.UPDATE_FUEL);
+        fuelHandler.setDelegatedSupplier(wrapper::getBurnProgress);
+        fuelHandler.syncToServer(DelegatedFloatSH.getId(DelegatedValueSHRegisters.UPDATE_FUEL));
     }
 
     @Override

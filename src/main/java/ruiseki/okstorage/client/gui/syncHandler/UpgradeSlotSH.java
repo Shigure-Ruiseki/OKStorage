@@ -2,7 +2,6 @@ package ruiseki.okstorage.client.gui.syncHandler;
 
 import java.io.IOException;
 
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 
 import com.cleanroommc.modularui.value.sync.ItemSlotSH;
@@ -51,8 +50,6 @@ public class UpgradeSlotSH extends ItemSlotSH {
     }
 
     public IUpgradeWrapper getWrapper() {
-        ItemStack stack = getSlot().getStack();
-        if (stack == null) return null;
         return this.wrapper.getUpgradeHandler()
             .getWrapperInSlot(getSlot().getSlotIndex());
     }

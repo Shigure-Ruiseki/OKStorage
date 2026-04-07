@@ -25,7 +25,11 @@ import ruiseki.okcore.command.CommandMod;
 import ruiseki.okcore.helper.MinecraftHelpers;
 import ruiseki.okcore.init.ModBase;
 import ruiseki.okcore.proxy.ICommonProxy;
+import ruiseki.okstorage.client.gui.syncHandler.DelegatedStackHandlerSHRegisters;
+import ruiseki.okstorage.client.gui.syncHandler.StorageSHRegisters;
+import ruiseki.okstorage.client.gui.syncHandler.StorageSlotSHRegisters;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSHRegisters;
+import ruiseki.okstorage.client.gui.syncHandler.value.DelegatedValueSHRegisters;
 import ruiseki.okstorage.client.gui.widget.updateGroup.UpgradeSlotGroupRegisters;
 import ruiseki.okstorage.common.init.ModBlocks;
 import ruiseki.okstorage.common.init.ModItems;
@@ -63,6 +67,10 @@ public class OKStorage extends ModBase {
         addInitListeners(new ModOreDicts());
         addInitListeners(new UpgradeSlotGroupRegisters());
         addInitListeners(new UpgradeSlotSHRegisters());
+        addInitListeners(new StorageSlotSHRegisters());
+        addInitListeners(new StorageSHRegisters());
+        addInitListeners(new DelegatedStackHandlerSHRegisters());
+        addInitListeners(new DelegatedValueSHRegisters());
     }
 
     @Override

@@ -44,6 +44,11 @@ gui.storage.auto_smoking_settings=自动烟熏设置
 gui.storage.blasting_settings=高炉设置
 gui.storage.auto_blasting_settings=自动高炉设置
 
+#升级错误
+gui.storage.error.add.upgrade_not_allowed=%s不能加装于%s
+gui.storage.error.add.only_single_upgrade_allowed=仅可加装单个%s于%s
+gui.storage.error.add.only_x_upgrades_allowed=仅可加装%d个%s于%s
+
 # Tooltips
 gui.storage.stack_size_extra=数量: %s / %s
 gui.storage.not_in_effect=未生效

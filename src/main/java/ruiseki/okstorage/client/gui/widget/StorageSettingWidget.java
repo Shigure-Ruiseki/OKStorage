@@ -8,6 +8,7 @@ import com.cleanroommc.modularui.widgets.layout.Row;
 
 import ruiseki.okstorage.client.gui.OKBGuiTextures;
 import ruiseki.okstorage.client.gui.syncHandler.StorageSH;
+import ruiseki.okstorage.client.gui.syncHandler.StorageSHRegisters;
 import ruiseki.okstorage.client.gui.widget.upgrade.ExpandedTabWidget;
 import ruiseki.okstorage.common.block.StoragePanel;
 import ruiseki.okstorage.common.block.StorageSettingPanel;
@@ -80,7 +81,7 @@ public class StorageSettingWidget extends ExpandedTabWidget {
     }
 
     private void updateWrapper() {
-        this.panel.storageSyncHandler.syncToServer(StorageSH.UPDATE_SETTING, buffer -> {
+        this.panel.storageSyncHandler.syncToServer(StorageSH.getId(StorageSHRegisters.UPDATE_SETTING), buffer -> {
             buffer.writeBoolean(wrapper.lockStorage);
             buffer.writeStringToBuffer(
                 panel.player.getUniqueID()

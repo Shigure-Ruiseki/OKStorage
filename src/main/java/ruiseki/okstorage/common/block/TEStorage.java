@@ -103,6 +103,18 @@ public class TEStorage extends TileSideCapability
         onSendUpdate();
     }
 
+    public StorageWrapper getWrapper() {
+        return wrapper;
+    }
+
+    @Override
+    public void invalidate() {
+        if (worldObj != null && !worldObj.isRemote) {
+            wrapper.forceStopAllJukeboxes(worldObj, xCoord + 0.5f, yCoord + 0.5f, zCoord + 0.5f);
+        }
+        super.invalidate();
+    }
+
     @Override
     public void onChunkLoad() {
         super.onChunkLoad();
@@ -207,7 +219,7 @@ public class TEStorage extends TileSideCapability
 
     @Override
     public int getInventoryStackLimit() {
-        return 64 * wrapper.applySlotLimitModifiers(1, 0);
+        return 64 * wrapper.applySlotLimitModifiers();
     }
 
     @Override

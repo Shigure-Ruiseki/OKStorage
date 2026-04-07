@@ -4,17 +4,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.cleanroommc.modularui.api.IPanelHandler;
 import com.cleanroommc.modularui.api.drawable.IKey;
 import com.cleanroommc.modularui.api.widget.Interactable;
 import com.cleanroommc.modularui.drawable.AdaptableUITexture;
+import com.cleanroommc.modularui.drawable.GuiDraw;
 import com.cleanroommc.modularui.drawable.ItemDrawable;
 import com.cleanroommc.modularui.drawable.UITexture;
 import com.cleanroommc.modularui.network.NetworkUtils;
@@ -23,6 +27,7 @@ import com.cleanroommc.modularui.screen.RichTooltip;
 import com.cleanroommc.modularui.screen.UISettings;
 import com.cleanroommc.modularui.screen.viewport.ModularGuiContext;
 import com.cleanroommc.modularui.theme.WidgetTheme;
+import com.cleanroommc.modularui.utils.GlStateManager;
 import com.cleanroommc.modularui.utils.item.PlayerMainInvWrapper;
 import com.cleanroommc.modularui.value.sync.PanelSyncManager;
 import com.cleanroommc.modularui.widgets.layout.Column;
@@ -35,6 +40,7 @@ import ruiseki.okcore.helper.LangHelpers;
 import ruiseki.okstorage.api.IStorageContainer;
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.IStorageWrapper;
+import ruiseki.okstorage.api.upgrade.UpgradeSlotChangeResult;
 import ruiseki.okstorage.api.wrapper.IDirtable;
 import ruiseki.okstorage.api.wrapper.IToggleable;
 import ruiseki.okstorage.api.wrapper.IUpgradeWrapper;
@@ -45,7 +51,9 @@ import ruiseki.okstorage.client.gui.slot.CraftingSlotInfo;
 import ruiseki.okstorage.client.gui.slot.ModularStorageSlot;
 import ruiseki.okstorage.client.gui.slot.ModularUpgradeSlot;
 import ruiseki.okstorage.client.gui.slot.StorageSlot;
+import ruiseki.okstorage.client.gui.slot.UpgradeSlot;
 import ruiseki.okstorage.client.gui.syncHandler.StorageSH;
+import ruiseki.okstorage.client.gui.syncHandler.StorageSHRegisters;
 import ruiseki.okstorage.client.gui.syncHandler.StorageSlotSH;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSH;
 import ruiseki.okstorage.client.gui.syncHandler.UpgradeSlotSHRegisters;
@@ -74,6 +82,11 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
         .tiled()
         .build();
 
+    public static final int ERROR_BACKGROUND_COLOR = 0xF0100010;
+    public static final int ERROR_BORDER_COLOR = 0xFFB02E26;
+    public static final int ERROR_TEXT_COLOR = 0xB02E26;
+    public static final int ERROR_DISPLAY_TICKS = 60;
+
     private static final List<CyclicVariantButtonWidget.Variant> SORT_TYPE_VARIANTS = Arrays.asList(
         new CyclicVariantButtonWidget.Variant(
             IKey.lang(LangHelpers.localize("gui.storage.sort_by_name")),
@@ -89,6 +102,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
     public final TileEntity tile;
 
     public final StorageSH storageSyncHandler;
+    public final PlayerMainInvWrapper playerInv;
     public final StorageSlotSH[] storageSlotSyncHandlers;
     public final UpgradeSlotSH[] upgradeSlotSyncHandlers;
     public final UpgradeSlotUpdateGroup[] upgradeSlotGroups;
@@ -109,6 +123,10 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
     public boolean isSortingSettingTabOpened = false;
     public boolean isResetOpenedTabs = false;
 
+    @Nullable
+    public UpgradeSlotChangeResult activeError;
+    public float activeErrorSetTick;
+
     public StoragePanel(EntityPlayer player, TileEntity tile, PanelSyncManager syncManager, UISettings settings,
         StorageWrapper wrapper, int width) {
         super("storage_gui");
@@ -122,7 +140,8 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
         int calculated = (width - 14) / ItemSlot.SIZE;
         this.rowSize = Math.max(9, Math.min(12, calculated));
 
-        this.storageSyncHandler = new StorageSH(new PlayerMainInvWrapper(player.inventory), this.wrapper, this);
+        this.playerInv = new PlayerMainInvWrapper(player.inventory);
+        this.storageSyncHandler = new StorageSH(this.playerInv, this.wrapper, this);
         this.syncManager.syncValue("storage_wrapper", this.storageSyncHandler);
 
         this.storageSlotSyncHandlers = new StorageSlotSH[this.wrapper.getSlots()];
@@ -232,7 +251,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
 
                         StorageInventoryHelpers.sortInventory(wrapper, reverse);
 
-                        storageSyncHandler.syncToServer(StorageSH.UPDATE_SORT_INV, buf -> {
+                        storageSyncHandler.syncToServer(StorageSH.getId(StorageSHRegisters.UPDATE_SORT_INV), buf -> {
                             for (int i = 0; i < wrapper.getSlots(); i++) {
                                 buf.writeItemStackToBuffer(wrapper.getStackInSlot(i));
                             }
@@ -255,10 +274,10 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
 
                 SortType nextSortType = SortType.values()[index];
 
-                storageSyncHandler.setSortType(nextSortType);
+                wrapper.setSortType(nextSortType);
 
                 storageSyncHandler.syncToServer(
-                    StorageSH.UPDATE_SET_SORT_TYPE,
+                    StorageSH.getId(StorageSHRegisters.UPDATE_SET_SORT_TYPE),
                     buf -> NetworkUtils.writeEnumValue(buf, nextSortType));
 
             }).setEnabledIf(cyclicVariantButtonWidget -> !settingPanel.isPanelOpen())
@@ -280,9 +299,9 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
                         boolean transferMatched = !Interactable.hasShiftDown();
 
                         Interactable.playButtonClickSound();
-                        storageSyncHandler.transferToPlayerInventory(transferMatched);
+                        StorageInventoryHelpers.transferPlayerInventoryToStorage(wrapper, playerInv, transferMatched);
                         storageSyncHandler.syncToServer(
-                            StorageSH.UPDATE_TRANSFER_TO_PLAYER_INV,
+                            StorageSH.getId(StorageSHRegisters.UPDATE_TRANSFER_TO_PLAYER_INV),
                             buf -> buf.writeBoolean(transferMatched));
                         return true;
                     }
@@ -313,9 +332,9 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
                         boolean transferMatched = !Interactable.hasShiftDown();
 
                         Interactable.playButtonClickSound();
-                        storageSyncHandler.transferToStorage(transferMatched);
+                        StorageInventoryHelpers.transferPlayerInventoryToStorage(wrapper, playerInv, transferMatched);
                         storageSyncHandler.syncToServer(
-                            StorageSH.UPDATE_TRANSFER_TO_STORAGE_INV,
+                            StorageSH.getId(StorageSHRegisters.UPDATE_TRANSFER_TO_STORAGE_INV),
                             buf -> buf.writeBoolean(transferMatched));
                         return true;
                     }
@@ -389,7 +408,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
             .left(-21);
         for (int i = 0; i < wrapper.getUpgradeHandler()
             .getSlots(); i++) {
-            ItemSlot itemSlot = new ItemSlot().syncHandler("upgrades", i)
+            UpgradeSlot itemSlot = (UpgradeSlot) new UpgradeSlot(this, i).syncHandler("upgrades", i)
                 .pos(5, 5 + i * ItemSlot.SIZE)
                 .name("slot_" + i);
             upgradeSlotWidgets.add(itemSlot);
@@ -651,6 +670,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
             resizer().getArea().height,
             WidgetTheme.getDefault()
                 .getTheme());
+        renderErrorOverlay(context.getPartialTicks());
     }
 
     @Override
@@ -696,5 +716,72 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
     @Override
     public boolean isSortingSettingTabOpened() {
         return isSortingSettingTabOpened;
+    }
+
+    @Override
+    public boolean isSlotInConflict(int slotIndex) {
+        updateActiveError(0f);
+        if (activeError == null) return false;
+        for (int s : activeError.getConflictSlots()) {
+            if (s == slotIndex) return true;
+        }
+        return false;
+    }
+
+    private void updateActiveError(float partialTicks) {
+        // pick up new error from any upgrade slot
+        for (var widget : upgradeSlotWidgets) {
+            if (widget instanceof UpgradeSlot upgradeSlot
+                && upgradeSlot.getSlot() instanceof ModularUpgradeSlot modularSlot) {
+                UpgradeSlotChangeResult result = modularSlot.getLastChangeResult();
+                if (result != null && !result.isSuccessful()) {
+                    if (result != activeError) {
+                        activeError = result;
+                        activeErrorSetTick = getCurrentTick(partialTicks);
+                    }
+                    modularSlot.setLastChangeResult(null);
+                    return;
+                }
+            }
+        }
+        // check expiry
+        if (activeError != null && getCurrentTick(partialTicks) - activeErrorSetTick >= ERROR_DISPLAY_TICKS) {
+            activeError = null;
+        }
+    }
+
+    private void renderErrorOverlay(float partialTicks) {
+        updateActiveError(partialTicks);
+        if (activeError == null || activeError.getErrorLangKey() == null) return;
+
+        String errorText = LangHelpers.localize(activeError.getErrorLangKey(), activeError.getErrorArgs());
+        FontRenderer font = Minecraft.getMinecraft().fontRenderer;
+        int textWidth = font.getStringWidth(errorText);
+
+        int panelWidth = resizer().getArea().width;
+        int panelHeight = resizer().getArea().height;
+
+        int padding = 4;
+        int boxWidth = textWidth + padding * 2;
+        int boxHeight = font.FONT_HEIGHT + padding * 2;
+        int boxX = (panelWidth - boxWidth) / 2;
+        int boxY = panelHeight - 90;
+
+        GlStateManager.disableDepth();
+        // border
+        GuiDraw.drawRect(boxX, boxY, boxWidth, boxHeight, ERROR_BORDER_COLOR);
+        // background
+        GuiDraw.drawRect(boxX + 1, boxY + 1, boxWidth - 2, boxHeight - 2, ERROR_BACKGROUND_COLOR);
+        // re-enable textures after drawRect for font rendering
+        GlStateManager.enableTexture2D();
+        GlStateManager.color(1f, 1f, 1f, 1f);
+        // text
+        font.drawStringWithShadow(errorText, boxX + padding, boxY + padding, ERROR_TEXT_COLOR);
+        GlStateManager.enableDepth();
+    }
+
+    private float getCurrentTick(float partialTicks) {
+        var mc = Minecraft.getMinecraft();
+        return mc.theWorld != null ? mc.theWorld.getTotalWorldTime() + partialTicks : 0;
     }
 }

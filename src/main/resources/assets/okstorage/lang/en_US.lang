@@ -48,6 +48,11 @@ gui.storage.fuel_filter=Fuel Filter
 gui.storage.jukebox_settings=Jukebox Settings
 gui.storage.advanced_jukebox_settings=Adv. Jukebox Settings
 
+#Upgrade Errors
+gui.storage.error.add.upgrade_not_allowed=%s cannot be installed on %s
+gui.storage.error.add.only_single_upgrade_allowed=Only a single %s can be installed on %s
+gui.storage.error.add.only_x_upgrades_allowed=Only %d %s can be installed on %s
+
 # Tooltips
 gui.storage.stack_size_extra=Count: %s / %s
 gui.storage.not_in_effect=Not in effect

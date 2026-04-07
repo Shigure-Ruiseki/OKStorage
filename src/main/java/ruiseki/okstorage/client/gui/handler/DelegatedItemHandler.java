@@ -2,6 +2,7 @@ package ruiseki.okstorage.client.gui.handler;
 
 import java.util.function.Supplier;
 
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 import com.cleanroommc.modularui.utils.item.EmptyHandler;
@@ -45,6 +46,16 @@ public class DelegatedItemHandler implements IItemHandlerModifiable {
     @Override
     public ItemStack getStackInSlot(int slot) {
         return get().getStackInSlot(slot);
+    }
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+        return get().isItemValid(slot, stack);
+    }
+
+    @Override
+    public boolean isSlotFromInventory(int index, IInventory inventory, int invIndex) {
+        return get().isSlotFromInventory(index, inventory, invIndex);
     }
 
     @Override
