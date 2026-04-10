@@ -9,7 +9,7 @@ import com.cleanroommc.modularui.value.sync.SyncHandler;
 
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.upgrade.StorageSHRegistry;
-import ruiseki.okstorage.common.block.StorageWrapper;
+import ruiseki.okstorage.common.block.storage.StorageWrapper;
 
 public class StorageSH extends SyncHandler {
 

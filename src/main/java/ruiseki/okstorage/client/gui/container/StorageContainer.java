@@ -28,7 +28,7 @@ import ruiseki.okstorage.client.gui.handler.IndexedInventoryCraftingWrapper;
 import ruiseki.okstorage.client.gui.slot.IndexedModularCraftingMatrixSlot;
 import ruiseki.okstorage.client.gui.slot.IndexedModularCraftingSlot;
 import ruiseki.okstorage.client.gui.slot.ModularStorageSlot;
-import ruiseki.okstorage.common.block.StorageWrapper;
+import ruiseki.okstorage.common.block.storage.StorageWrapper;
 import ruiseki.okstorage.common.item.crafting.CraftingUpgradeWrapper;
 import ruiseki.okstorage.compat.Mods;
 import ruiseki.okstorage.compat.tic.TinkersHelpers;

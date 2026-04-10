@@ -11,7 +11,7 @@ import com.cleanroommc.modularui.widgets.ListWidget;
 import com.cleanroommc.modularui.widgets.layout.Column;
 import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 
-import ruiseki.okstorage.common.block.StoragePanel;
+import ruiseki.okstorage.common.block.storage.StoragePanel;
 
 public class StorageList extends ListWidget<Column, StorageList> {
 

@@ -10,9 +10,9 @@ import ruiseki.okstorage.client.gui.OKBGuiTextures;
 import ruiseki.okstorage.client.gui.syncHandler.StorageSH;
 import ruiseki.okstorage.client.gui.syncHandler.StorageSHRegisters;
 import ruiseki.okstorage.client.gui.widget.upgrade.ExpandedTabWidget;
-import ruiseki.okstorage.common.block.StoragePanel;
-import ruiseki.okstorage.common.block.StorageSettingPanel;
-import ruiseki.okstorage.common.block.StorageWrapper;
+import ruiseki.okstorage.common.block.storage.StoragePanel;
+import ruiseki.okstorage.common.block.storage.StorageSettingPanel;
+import ruiseki.okstorage.common.block.storage.StorageWrapper;
 
 public class StorageSettingWidget extends ExpandedTabWidget {
 

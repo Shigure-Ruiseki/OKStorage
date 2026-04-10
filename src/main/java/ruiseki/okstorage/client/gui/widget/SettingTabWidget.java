@@ -12,7 +12,7 @@ import com.cleanroommc.modularui.theme.WidgetThemeEntry;
 import com.cleanroommc.modularui.widget.Widget;
 
 import ruiseki.okstorage.client.gui.OKBGuiTextures;
-import ruiseki.okstorage.common.block.StoragePanel;
+import ruiseki.okstorage.common.block.storage.StoragePanel;
 
 public class SettingTabWidget extends Widget<SettingTabWidget> implements Interactable {
 

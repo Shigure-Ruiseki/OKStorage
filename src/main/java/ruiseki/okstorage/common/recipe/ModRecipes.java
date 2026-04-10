@@ -126,6 +126,18 @@ public class ModRecipes implements IInitListener {
                 'B',
                 ModItems.STACK_UPGRADE.newItemStack(1, 3)));
 
+        // Stack Upgrade Starter Tier
+        GameRegistry.addRecipe(
+            new ShapedOreRecipe(
+                ModItems.STACK_UPGRADE.newItemStack(1, 5),
+                "BBB",
+                "BUB",
+                "BBB",
+                'B',
+                "blockCopper",
+                'U',
+                ModItems.BASE_UPGRADE.getItem()));
+
         // Crafting Upgrade
         GameRegistry.addRecipe(
             new ShapedOreRecipe(

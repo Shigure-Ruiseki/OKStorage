@@ -48,6 +48,11 @@ gui.storage.auto_blasting_settings=自动高炉设置
 gui.storage.error.add.upgrade_not_allowed=%s不能加装于%s
 gui.storage.error.add.only_single_upgrade_allowed=仅可加装单个%s于%s
 gui.storage.error.add.only_x_upgrades_allowed=仅可加装%d个%s于%s
+gui.storage.error.add.any_upgrade_exists=所有升级插槽必须为空
+gui.storage.error.add.no_upgrade_can_be_added=无法加装升级
+gui.storage.error.remove.infinity_upgrade_only_admin=只有管理员可移除无限升级
+gui.storage.error.remove.banned_item=移除升级前必须先移除该物品
+gui.storage.error.remove.stack_low_multiplier=堆叠倍数必须大于%s
 
 # Tooltips
 gui.storage.stack_size_extra=数量: %s / %s
@@ -151,11 +156,13 @@ tile.diamond_barrel.name=钻石背包
 tile.obsidian_barrel.name=黑曜石背包
 
 item.upgrade_base.name=空白升级
+item.stack_upgrade.name=堆叠升级
 item.stack_upgrade.iron.name=堆叠升级T1
 item.stack_upgrade.gold.name=堆叠升级T2
 item.stack_upgrade.diamond.name=堆叠升级T3
 item.stack_upgrade.obsidian.name=堆叠升级T4
 item.stack_upgrade.omega.name=堆叠升级Ω
+item.stack_upgrade.starter.name=堆叠升级青春版
 item.crafting_upgrade.name=合成升级
 item.everlasting_upgrade.name=永恒升级
 item.magnet_upgrade.name=磁铁升级
@@ -179,6 +186,8 @@ item.blasting_upgrade.name=高炉升级
 item.auto_blasting_upgrade.name=自动高炉升级
 item.jukebox_upgrade.name=唱片机升级
 item.advanced_jukebox_upgrade.name=高级唱片机升级
+item.infinity_upgrade.name=无限升级（管理员）
+item.survival_infinity_upgrade.name=生存模式无限升级
 
 # Tooltips
 
@@ -211,3 +220,7 @@ tooltip.storage.auto_blasting_upgrade.1=自动抽入/排出物品
 tooltip.storage.jukebox_upgrade=便携式唱片机
 tooltip.storage.advanced_jukebox_upgrade=支持更多唱片的便携唱片机
 tooltip.storage.advanced_jukebox_upgrade.1=当然还有更多播放选项
+tooltip.storage.infinity_upgrade=使背包内所有物品数量无限
+tooltip.storage.infinity_upgrade.1=仅管理员可安装、卸下或破坏此背包
+tooltip.storage.survival_infinity_upgrade=使背包内所有物品数量无限
+tooltip.storage.survival_infinity_upgrade.1=所有玩家均可设置物品数量无限，破坏和拾取背包

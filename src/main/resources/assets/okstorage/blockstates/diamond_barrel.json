@@ -5,15 +5,15 @@
 
     "facing=north,open=false": { "model": "okstorage:block/diamond_barrel", "x": 90, "y": 0 },
     "facing=south,open=false": { "model": "okstorage:block/diamond_barrel", "x": 90, "y": 180 },
-    "facing=west,open=false": { "model": "okstorage:block/diamond_barrel", "x": 90, "y": 90 },
-    "facing=east,open=false": { "model": "okstorage:block/diamond_barrel", "x": 90, "y": 270 },
+    "facing=east,open=false": { "model": "okstorage:block/diamond_barrel", "x": 90, "y": 90 },
+    "facing=west,open=false": { "model": "okstorage:block/diamond_barrel", "x": 90, "y": 270 },
 
     "facing=up,open=true": { "model": "okstorage:block/diamond_barrel_open" },
     "facing=down,open=true": { "model": "okstorage:block/diamond_barrel_open", "x": 180 },
 
     "facing=north,open=true": { "model": "okstorage:block/diamond_barrel_open", "x": 90, "y": 0 },
     "facing=south,open=true": { "model": "okstorage:block/diamond_barrel_open", "x": 90, "y": 180 },
-    "facing=west,open=true": { "model": "okstorage:block/diamond_barrel_open", "x": 90, "y": 90 },
-    "facing=east,open=true": { "model": "okstorage:block/diamond_barrel_open", "x": 90, "y": 270 }
+    "facing=east,open=true": { "model": "okstorage:block/diamond_barrel_open", "x": 90, "y": 90 },
+    "facing=west,open=true": { "model": "okstorage:block/diamond_barrel_open", "x": 90, "y": 270 }
   }
 }

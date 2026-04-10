@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-import ruiseki.okstorage.common.block.StorageWrapper;
+import ruiseki.okstorage.common.block.storage.StorageWrapper;
 
 public class StorageUpgradeRecipe extends ShapedOreRecipe {
 

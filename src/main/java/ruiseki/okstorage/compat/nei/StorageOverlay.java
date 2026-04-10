@@ -23,8 +23,8 @@ import ruiseki.okstorage.client.gui.slot.CraftingSlotInfo;
 import ruiseki.okstorage.client.gui.slot.IndexedModularCraftingSlot;
 import ruiseki.okstorage.client.gui.slot.ModularFilterSlot;
 import ruiseki.okstorage.client.gui.slot.ModularUpgradeSlot;
-import ruiseki.okstorage.common.block.StoragePanel;
-import ruiseki.okstorage.common.block.StorageWrapper;
+import ruiseki.okstorage.common.block.storage.StoragePanel;
+import ruiseki.okstorage.common.block.storage.StorageWrapper;
 
 public class StorageOverlay extends DefaultOverlayHandler {
 

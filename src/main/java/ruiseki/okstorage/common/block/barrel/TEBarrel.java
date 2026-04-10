@@ -7,7 +7,7 @@ import com.cleanroommc.modularui.value.sync.PanelSyncManager;
 
 import ruiseki.okcore.persist.nbt.NBTPersist;
 import ruiseki.okstorage.api.IOpenState;
-import ruiseki.okstorage.common.block.TEStorage;
+import ruiseki.okstorage.common.block.storage.TEStorage;
 
 public class TEBarrel extends TEStorage implements IOpenState {
 

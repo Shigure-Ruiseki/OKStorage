@@ -1,4 +1,4 @@
-package ruiseki.okstorage.common.block;
+package ruiseki.okstorage.common.block.storage;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;

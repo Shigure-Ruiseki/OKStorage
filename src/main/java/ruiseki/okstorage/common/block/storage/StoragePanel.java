@@ -1,4 +1,4 @@
-package ruiseki.okstorage.common.block;
+package ruiseki.okstorage.common.block.storage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -186,6 +186,8 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
 
                 if (!itemChanged && !tabDirty) return;
                 lastUpgradeStacks[slotIndex] = stack == null ? null : stack.copy();
+
+                activeError = null;
 
                 updateUpgradeWidgets();
             });
@@ -723,6 +725,16 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
         updateActiveError(0f);
         if (activeError == null) return false;
         for (int s : activeError.getConflictSlots()) {
+            if (s == slotIndex) return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isInventorySlotInConflict(int slotIndex) {
+        updateActiveError(0f);
+        if (activeError == null) return false;
+        for (int s : activeError.getInventoryConflictSlots()) {
             if (s == slotIndex) return true;
         }
         return false;

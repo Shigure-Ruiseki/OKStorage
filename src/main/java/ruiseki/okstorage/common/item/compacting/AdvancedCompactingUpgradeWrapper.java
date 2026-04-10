@@ -17,7 +17,7 @@ import ruiseki.okcore.helper.ItemNBTHelpers;
 import ruiseki.okstorage.api.IStorageWrapper;
 import ruiseki.okstorage.api.wrapper.ICompactingUpgrade;
 import ruiseki.okstorage.client.gui.handler.StorageItemStackHandler;
-import ruiseki.okstorage.common.block.StorageWrapper;
+import ruiseki.okstorage.common.block.storage.StorageWrapper;
 import ruiseki.okstorage.common.item.AdvancedUpgradeWrapper;
 import ruiseki.okstorage.common.recipe.CompactingRecipeCache;
 import ruiseki.okstorage.common.recipe.CompactingRecipeCache.CompactingResult;

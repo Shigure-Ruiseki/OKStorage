@@ -35,6 +35,11 @@ gui.storage.auto_blasting_settings=自動溶鉱炉設定
 gui.storage.error.add.upgrade_not_allowed=%1$sは%2$sに装着できません
 gui.storage.error.add.only_single_upgrade_allowed=%1$sは%2$sに1つだけ装着可能です
 gui.storage.error.add.only_x_upgrades_allowed=%2$sは%3$sに%1$d個まで装着可能です
+gui.storage.error.add.any_upgrade_exists=全てのアップグレードスロットが空でなければなりません
+gui.storage.error.add.no_upgrade_can_be_added=アップグレードを追加できません
+gui.storage.error.remove.infinity_upgrade_only_admin=管理者のみが無限アップグレードを取り外せます
+gui.storage.error.remove.banned_item=アップグレードを取り外す前にこのアイテムを取り除く必要があります
+gui.storage.error.remove.stack_low_multiplier=スタック倍率は%sより大きくなければなりません
 
 # Tooltips
 gui.storage.stack_size_extra=数: %s / %s
@@ -139,11 +144,13 @@ tile.diamond_barrel.name=ダイヤモンドのバックパック
 tile.obsidian_barrel.name=黒曜石のバックパック
 
 item.upgrade_base.name=アップグレードベース
+item.stack_upgrade.name=スタックアップグレード
 item.stack_upgrade.iron.name=スタックアップグレード Tier 1
 item.stack_upgrade.gold.name=スタックアップグレード Tier 2
 item.stack_upgrade.diamond.name=スタックアップグレード Tier 3
 item.stack_upgrade.obsidian.name=スタックアップグレード Tier 4
 item.stack_upgrade.omega.name=スタックアップグレード Tier Ω
+item.stack_upgrade.starter.name=スタックアップグレード 青春版
 item.crafting_upgrade.name=クラフトアップグレード
 item.everlasting_upgrade.name=永遠アップグレード
 item.magnet_upgrade.name=マグネットアップグレード
@@ -167,13 +174,15 @@ item.blasting_upgrade.name=溶鉱炉アップグレード
 item.auto_blasting_upgrade.name=自動溶鉱炉アップグレード
 item.jukebox_upgrade.name=ジュークボックスアップグレード
 item.advanced_jukebox_upgrade.name=詳細なジュークボックスアップグレード
+item.infinity_upgrade.name=無限アップグレード（管理者）
+item.survival_infinity_upgrade.name=サバイバル無限アップグレード
 
 # Tooltips
 
 tooltip.storage.magnet_upgrade=近くのエンティティを自動で拾います
 tooltip.storage.advanced_magnet_upgrade=近くのエンティティを自動で拾います（詳細設定可能）
 tooltip.storage.upgrade_base=何もしません！アップグレードスロットに入れてみてください！
-tooltip.storage.stack_upgrade=スタックサイズを %d 倍にします
+tooltip.storage.stack_upgrade=スタックサイズを %s 倍にします
 tooltip.storage.crafting_upgrade=バックパックの横にクラフトグリッドを追加します
 tooltip.storage.pickup_upgrade=バックパックがアイテムを拾えるようにします
 tooltip.storage.advanced_pickup_upgrade=バックパックがアイテムを拾えるようにします（詳細設定可能）
@@ -199,3 +208,7 @@ tooltip.storage.auto_blasting_upgrade.1=アイテムを自動搬入/搬出しま
 tooltip.storage.jukebox_upgrade=ポータブルジュークボックス
 tooltip.storage.advanced_jukebox_upgrade=より多くのレコードスロットを持つポータブルジュークボックス
 tooltip.storage.advanced_jukebox_upgrade.1=より多くの再生オプションも利用可能
+tooltip.storage.infinity_upgrade=バックパック内の全てのアイテムを無限にします
+tooltip.storage.infinity_upgrade.1=管理者のみがこのバックパックの設置・取り外し・破壊が可能です
+tooltip.storage.survival_infinity_upgrade=バックパック内の全てのアイテムを無限にします
+tooltip.storage.survival_infinity_upgrade.1=全てのプレイヤーがこのアップグレードを使用できます

@@ -10,9 +10,9 @@ import ruiseki.okstorage.client.gui.syncHandler.StorageSlotSH;
 import ruiseki.okstorage.client.gui.syncHandler.StorageSlotSHRegisters;
 import ruiseki.okstorage.client.gui.widget.TabWidget;
 import ruiseki.okstorage.client.gui.widget.TabWidget.ExpandDirection;
-import ruiseki.okstorage.common.block.StoragePanel;
-import ruiseki.okstorage.common.block.StorageSettingPanel;
-import ruiseki.okstorage.common.block.StorageWrapper;
+import ruiseki.okstorage.common.block.storage.StoragePanel;
+import ruiseki.okstorage.common.block.storage.StorageSettingPanel;
+import ruiseki.okstorage.common.block.storage.StorageWrapper;
 
 public class SortingSettingWidget extends ExpandedTabWidget {
 

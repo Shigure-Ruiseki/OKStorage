@@ -1,6 +1,6 @@
-package ruiseki.okstorage.common.block;
+package ruiseki.okstorage.common.block.storage;
 
-import static ruiseki.okstorage.common.block.StoragePanel.LAYERED_TAB_TEXTURE;
+import static ruiseki.okstorage.common.block.storage.StoragePanel.LAYERED_TAB_TEXTURE;
 
 import com.cleanroommc.modularui.api.drawable.IKey;
 import com.cleanroommc.modularui.screen.ModularPanel;

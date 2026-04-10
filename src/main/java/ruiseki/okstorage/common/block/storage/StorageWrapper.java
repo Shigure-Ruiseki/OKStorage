@@ -1,4 +1,4 @@
-package ruiseki.okstorage.common.block;
+package ruiseki.okstorage.common.block.storage;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,7 +25,9 @@ import ruiseki.okcore.helper.ItemNBTHelpers;
 import ruiseki.okcore.helper.LangHelpers;
 import ruiseki.okstorage.OKStorage;
 import ruiseki.okstorage.api.IStorageWrapper;
+import ruiseki.okstorage.api.upgrade.UpgradeSlotChangeResult;
 import ruiseki.okstorage.api.wrapper.IFilterUpgrade;
+import ruiseki.okstorage.api.wrapper.IInfinityUpgrade;
 import ruiseki.okstorage.api.wrapper.IInventoryModifiable;
 import ruiseki.okstorage.api.wrapper.IJukeboxUpgrade;
 import ruiseki.okstorage.api.wrapper.ISlotModifiable;
@@ -343,29 +345,37 @@ public class StorageWrapper implements IStorageWrapper {
     }
 
     @Override
-    public int applyStackLimitModifiers() {
+    public double applyStackLimitModifiers() {
+        if (!gatherCapabilityUpgrades(IInfinityUpgrade.class).isEmpty()) {
+            return Integer.MAX_VALUE;
+        }
+
         Map<Integer, IStackSizeUpgrade> gathered = gatherCapabilityUpgrades(IStackSizeUpgrade.class);
         if (gathered.isEmpty()) return 1;
 
-        int total = 0;
+        double total = 0;
         for (IStackSizeUpgrade mod : gathered.values()) {
             total += mod.getMultiplier();
         }
 
-        return total == 0 ? 1 : total;
+        return total <= 0 ? 1 : total;
     }
 
     @Override
-    public int applySlotLimitModifiers() {
+    public double applySlotLimitModifiers() {
+        if (!gatherCapabilityUpgrades(IInfinityUpgrade.class).isEmpty()) {
+            return Integer.MAX_VALUE;
+        }
+
         Map<Integer, IStackSizeUpgrade> gathered = gatherCapabilityUpgrades(IStackSizeUpgrade.class);
         if (gathered.isEmpty()) return 1;
 
-        int total = 0;
+        double total = 0;
         for (IStackSizeUpgrade mod : gathered.values()) {
             total += mod.getMultiplier();
         }
 
-        return total == 0 ? 1 : total;
+        return total <= 0 ? 1 : total;
     }
 
     @Override
@@ -409,35 +419,47 @@ public class StorageWrapper implements IStorageWrapper {
 
     @Override
     public boolean canRemoveUpgrade(int slot) {
+        return getRemoveUpgradeResult(slot).isSuccessful();
+    }
+
+    @Override
+    public UpgradeSlotChangeResult getRemoveUpgradeResult(int slot) {
         ItemStack upgradeStack = upgradeHandler.getStackInSlot(slot);
-        if (upgradeStack == null) return true;
+        if (upgradeStack == null) return UpgradeSlotChangeResult.success();
 
         IUpgradeWrapper wrapper = this.getUpgradeHandler()
             .getWrapperInSlot(slot);
-        if (wrapper == null) return true;
-        if (wrapper instanceof IToggleable toggleable && !toggleable.isEnabled()) return true;
+        if (wrapper == null) return UpgradeSlotChangeResult.success();
+        if (wrapper instanceof IToggleable toggleable && !toggleable.isEnabled())
+            return UpgradeSlotChangeResult.success();
 
         if (wrapper instanceof ISlotModifiable modifiable) {
-            return modifiable.canRemoveUpgrade(slot);
+            return modifiable.getRemoveUpgradeResult(slot);
         }
 
-        return true;
+        return UpgradeSlotChangeResult.success();
     }
 
     @Override
     public boolean canReplaceUpgrade(int slot, ItemStack replacement) {
+        return getReplaceUpgradeResult(slot, replacement).isSuccessful();
+    }
+
+    @Override
+    public UpgradeSlotChangeResult getReplaceUpgradeResult(int slot, ItemStack replacement) {
         ItemStack upgradeStack = upgradeHandler.getStackInSlot(slot);
-        if (upgradeStack == null) return true;
+        if (upgradeStack == null) return UpgradeSlotChangeResult.success();
 
         IUpgradeWrapper wrapper = this.getUpgradeHandler()
             .getWrapperInSlot(slot);
-        if (wrapper == null) return true;
-        if (wrapper instanceof IToggleable toggleable && !toggleable.isEnabled()) return true;
+        if (wrapper == null) return UpgradeSlotChangeResult.success();
+        if (wrapper instanceof IToggleable toggleable && !toggleable.isEnabled())
+            return UpgradeSlotChangeResult.success();
 
         if (wrapper instanceof ISlotModifiable modifiable) {
-            return modifiable.canReplaceUpgrade(slot, replacement);
+            return modifiable.getReplaceUpgradeResult(slot, replacement);
         }
-        return true;
+        return UpgradeSlotChangeResult.success();
     }
 
     @Override

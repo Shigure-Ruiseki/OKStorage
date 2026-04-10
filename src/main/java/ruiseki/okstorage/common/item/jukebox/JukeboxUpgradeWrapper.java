@@ -18,7 +18,7 @@ import ruiseki.okstorage.OKStorage;
 import ruiseki.okstorage.api.IStorageWrapper;
 import ruiseki.okstorage.api.wrapper.IJukeboxUpgrade;
 import ruiseki.okstorage.client.gui.handler.BaseItemStackHandler;
-import ruiseki.okstorage.common.block.StorageWrapper;
+import ruiseki.okstorage.common.block.storage.StorageWrapper;
 import ruiseki.okstorage.common.item.UpgradeWrapperBase;
 import ruiseki.okstorage.common.network.PacketJukeboxPlaybackState;
 import ruiseki.okstorage.common.network.PacketJukeboxPositionUpdate;
@@ -149,6 +149,13 @@ public class JukeboxUpgradeWrapper extends UpgradeWrapperBase implements IJukebo
             if (current == null || !(current.getItem() instanceof ItemRecord)) {
                 stop();
             }
+        }
+    }
+
+    @Override
+    public void onBeforeRemoved() {
+        if (isPlaying()) {
+            stop();
         }
     }
 

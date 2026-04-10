@@ -33,4 +33,6 @@ public interface IStoragePanel<T extends ModularPanel> {
     T getPanel();
 
     boolean isSlotInConflict(int slotIndex);
+
+    boolean isInventorySlotInConflict(int slotIndex);
 }

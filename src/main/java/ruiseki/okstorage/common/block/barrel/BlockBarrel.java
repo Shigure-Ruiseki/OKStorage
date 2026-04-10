@@ -14,7 +14,7 @@ import com.gtnewhorizon.gtnhlib.blockstate.registry.BlockPropertyRegistry;
 
 import ruiseki.okcore.helper.TileHelpers;
 import ruiseki.okstorage.api.IOpenState;
-import ruiseki.okstorage.common.block.BlockStorage;
+import ruiseki.okstorage.common.block.storage.BlockStorage;
 
 public class BlockBarrel extends BlockStorage {
 

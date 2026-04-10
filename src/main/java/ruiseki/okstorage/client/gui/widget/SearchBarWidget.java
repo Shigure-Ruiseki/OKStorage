@@ -16,9 +16,8 @@ import com.cleanroommc.modularui.widgets.layout.Column;
 import com.cleanroommc.modularui.widgets.textfield.TextFieldWidget;
 
 import ruiseki.okstorage.client.gui.slot.StorageSlot;
-import ruiseki.okstorage.common.block.StoragePanel;
+import ruiseki.okstorage.common.block.storage.StoragePanel;
 import ruiseki.okstorage.common.search.ItemStackKey;
-import ruiseki.okstorage.common.search.ItemStackKeyPool;
 import ruiseki.okstorage.common.search.SearchNode;
 import ruiseki.okstorage.common.search.SearchParser;
 
@@ -113,7 +112,7 @@ public class SearchBarWidget extends TextFieldWidget {
                 continue;
             }
 
-            ItemStackKey key = ItemStackKeyPool.get(
+            ItemStackKey key = ItemStackKey.of(
                 slot.getSlot()
                     .getStack());
             boolean match = compiledSearch.matches(key);

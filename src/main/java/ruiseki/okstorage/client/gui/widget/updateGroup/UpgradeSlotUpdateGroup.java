@@ -8,7 +8,7 @@ import com.cleanroommc.modularui.value.sync.PanelSyncManager;
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.widget.IUpgradeSlotGroupFactory;
 import ruiseki.okstorage.api.widget.UpgradeSlotGroupRegistry;
-import ruiseki.okstorage.common.block.StorageWrapper;
+import ruiseki.okstorage.common.block.storage.StorageWrapper;
 
 public class UpgradeSlotUpdateGroup {
 

@@ -52,6 +52,11 @@ gui.storage.advanced_jukebox_settings=Adv. Jukebox Settings
 gui.storage.error.add.upgrade_not_allowed=%s cannot be installed on %s
 gui.storage.error.add.only_single_upgrade_allowed=Only a single %s can be installed on %s
 gui.storage.error.add.only_x_upgrades_allowed=Only %d %s can be installed on %s
+gui.storage.error.add.any_upgrade_exists=All upgrade slots must be empty
+gui.storage.error.add.no_upgrade_can_be_added=Cannot add upgrades
+gui.storage.error.remove.infinity_upgrade_only_admin=Only administrators can remove infinity upgrade
+gui.storage.error.remove.banned_item=Must remove this item before removing upgrade
+gui.storage.error.remove.stack_low_multiplier=Stack multiplier must be greater than %s
 
 # Tooltips
 gui.storage.stack_size_extra=Count: %s / %s
@@ -152,11 +157,13 @@ tile.diamond_barrel.name=Diamond Barrel
 tile.obsidian_barrel.name=Obsidian Barrel
 
 item.upgrade_base.name=Upgrade Base
+item.stack_upgrade.name=Stack Upgrade
 item.stack_upgrade.iron.name=Stack Upgrade Tier 1
 item.stack_upgrade.gold.name=Stack Upgrade Tier 2
 item.stack_upgrade.diamond.name=Stack Upgrade Tier 3
 item.stack_upgrade.obsidian.name=Stack Upgrade Tier 4
 item.stack_upgrade.omega.name=Stack Upgrade Omega Tier
+item.stack_upgrade.starter.name=Stack Upgrade Starter Tier
 item.crafting_upgrade.name=Crafting Upgrade
 item.everlasting_upgrade.name=Everlasting Upgrade
 item.magnet_upgrade.name=Magnet Upgrade
@@ -180,13 +187,15 @@ item.blasting_upgrade.name=Blasting Upgrade
 item.auto_blasting_upgrade.name=Auto-Blasting Upgrade
 item.jukebox_upgrade.name=Jukebox Upgrade
 item.advanced_jukebox_upgrade.name=Adv. Jukebox Upgrade
+item.infinity_upgrade.name=Infinity Upgrade (Admin)
+item.survival_infinity_upgrade.name=Survival Infinity Upgrade
 
 # Tooltips
 
 tooltip.storage.magnet_upgrade=Automatically picks up nearby entities
 tooltip.storage.advanced_magnet_upgrade=Automatically picks up nearby entities with more configurations
 tooltip.storage.upgrade_base=It does nothing! Feel free to put it in your upgrade slots!
-tooltip.storage.stack_upgrade=Multiplies stack size by %d
+tooltip.storage.stack_upgrade=Multiplies stack size by %s
 tooltip.storage.crafting_upgrade=Adds additional crafting grid to side of storage
 tooltip.storage.pickup_upgrade=Allows storages to pickup items
 tooltip.storage.advanced_pickup_upgrade=Allows storage to pickup items with more configurations
@@ -212,3 +221,7 @@ tooltip.storage.auto_blasting_upgrade.1=Automatically pulls in/pushes out items
 tooltip.storage.jukebox_upgrade=Portable jukebox
 tooltip.storage.advanced_jukebox_upgrade=Portable jukebox with more record slots
 tooltip.storage.advanced_jukebox_upgrade.1=And more playback options
+tooltip.storage.infinity_upgrade=Makes all items in the backpack infinite
+tooltip.storage.infinity_upgrade.1=Only administrators can install, remove, or break this backpack
+tooltip.storage.survival_infinity_upgrade=Makes all items in the backpack infinite
+tooltip.storage.survival_infinity_upgrade.1=All players can use this upgrade
