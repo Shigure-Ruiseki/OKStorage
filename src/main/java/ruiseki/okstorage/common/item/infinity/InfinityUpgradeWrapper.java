@@ -1,12 +1,14 @@
 package ruiseki.okstorage.common.item.infinity;
 
-import net.minecraft.entity.Entity;
+import java.util.function.Consumer;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.World;
+
 import org.jetbrains.annotations.Nullable;
+
 import ruiseki.okcore.helper.ItemNBTHelpers;
 import ruiseki.okstorage.api.IStorageWrapper;
 import ruiseki.okstorage.api.wrapper.IEntityApplicable;
@@ -14,8 +16,6 @@ import ruiseki.okstorage.api.wrapper.IInfinityUpgrade;
 import ruiseki.okstorage.api.wrapper.IInventoryModifiable;
 import ruiseki.okstorage.api.wrapper.ISlotModifiable;
 import ruiseki.okstorage.common.item.UpgradeWrapperBase;
-
-import java.util.function.Consumer;
 
 public class InfinityUpgradeWrapper extends UpgradeWrapperBase
     implements IInventoryModifiable, ISlotModifiable, IInfinityUpgrade, IEntityApplicable {
@@ -26,7 +26,7 @@ public class InfinityUpgradeWrapper extends UpgradeWrapperBase
     private boolean active = true;
 
     public InfinityUpgradeWrapper(ItemStack upgrade, IStorageWrapper storage, Consumer<ItemStack> upgradeConsumer,
-                                  boolean admin) {
+        boolean admin) {
         super(upgrade, storage, upgradeConsumer);
         this.admin = admin;
     }

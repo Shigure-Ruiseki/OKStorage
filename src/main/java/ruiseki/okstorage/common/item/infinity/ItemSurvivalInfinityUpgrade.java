@@ -1,7 +1,12 @@
 package ruiseki.okstorage.common.item.infinity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+
 import ruiseki.okcore.helper.LangHelpers;
 import ruiseki.okstorage.Reference;
 import ruiseki.okstorage.api.IStorageWrapper;
@@ -9,10 +14,6 @@ import ruiseki.okstorage.api.upgrade.IUpgradeItem;
 import ruiseki.okstorage.api.upgrade.UpgradeSlotChangeResult;
 import ruiseki.okstorage.client.gui.handler.UpgradeItemStackHandler;
 import ruiseki.okstorage.common.item.ItemUpgrade;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
 
 public class ItemSurvivalInfinityUpgrade extends ItemUpgrade<InfinityUpgradeWrapper> {
 
@@ -60,7 +61,7 @@ public class ItemSurvivalInfinityUpgrade extends ItemUpgrade<InfinityUpgradeWrap
 
     @Override
     public InfinityUpgradeWrapper createWrapper(ItemStack stack, IStorageWrapper storage,
-                                                Consumer<ItemStack> consumer) {
+        Consumer<ItemStack> consumer) {
         return new InfinityUpgradeWrapper(stack, storage, consumer, false);
     }
 }

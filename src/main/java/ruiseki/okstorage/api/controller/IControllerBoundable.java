@@ -6,11 +6,13 @@ import java.util.function.Consumer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import ruiseki.okcore.datastructure.BlockPos;
 import ruiseki.okcore.helper.TileHelpers;
 import ruiseki.okstorage.common.block.controller.TEController;
 
 public interface IControllerBoundable {
+
     String CONTROLLER_POS_TAG = "controllerPos";
 
     void setControllerPos(BlockPos controllerPos);
@@ -54,7 +56,7 @@ public interface IControllerBoundable {
     }
 
     default void addToController(World level, BlockPos pos, BlockPos controllerPos) {
-        //noop by default
+        // noop by default
     }
 
     default void addToAdjacentController() {
@@ -66,7 +68,8 @@ public interface IControllerBoundable {
                 IControllerBoundable boundable = TileHelpers.getSafeTile(world, offsetPos, IControllerBoundable.class);
                 if (boundable != null) {
                     if (boundable.canConnectStorages()) {
-                        boundable.getControllerPos().ifPresent(controllerPos -> addToController(world, pos, controllerPos));
+                        boundable.getControllerPos()
+                            .ifPresent(controllerPos -> addToController(world, pos, controllerPos));
                     }
                 } else {
                     addToController(world, pos, offsetPos);

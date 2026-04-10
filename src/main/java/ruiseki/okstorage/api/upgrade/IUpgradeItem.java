@@ -42,7 +42,7 @@ public interface IUpgradeItem<W extends IUpgradeWrapper> {
      * Default check: if an infinity upgrade is already installed, no other upgrades can be added.
      */
     default UpgradeSlotChangeResult checkInfinityConflict(IStorageWrapper wrapper, ItemStack upgradeStack,
-                                                          int targetSlot) {
+        int targetSlot) {
         int[] infinitySlots = findConflictSlots(
             wrapper,
             targetSlot,

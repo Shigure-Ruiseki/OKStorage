@@ -99,7 +99,7 @@ public class BlockStorage extends BlockOK {
 
     @Override
     public float getExplosionResistance(Entity exploder, World world, int x, int y, int z, double explosionX,
-                                        double explosionY, double explosionZ) {
+        double explosionY, double explosionZ) {
         if (hasAdminProtection(world, x, y, z)) {
             return Float.MAX_VALUE;
         }

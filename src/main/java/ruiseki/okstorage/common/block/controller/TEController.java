@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,6 +13,7 @@ import java.util.TreeSet;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import ruiseki.okcore.datastructure.BlockPos;
 import ruiseki.okcore.helper.TileHelpers;
 import ruiseki.okcore.item.IItemHandlerModifiable;
@@ -34,7 +34,9 @@ public class TEController extends TileEntityOK {
     protected final Map<ItemStackKey, Set<BlockPos>> stackStorages = new HashMap<>();
     private final Map<BlockPos, Set<ItemStackKey>> storageStacks = new HashMap<>();
     protected final Map<Item, Set<ItemStackKey>> itemStackKeys = new HashMap<>();
-    private final Comparator<BlockPos> distanceComparator = Comparator.<BlockPos>comparingDouble(p -> p.distSqr(getPos())).thenComparing(Comparator.naturalOrder());
+    private final Comparator<BlockPos> distanceComparator = Comparator
+        .<BlockPos>comparingDouble(p -> p.distSqr(getPos()))
+        .thenComparing(Comparator.naturalOrder());
     protected final Set<BlockPos> emptySlotsStorages = new TreeSet<>(distanceComparator);
 
     protected final Map<Item, Set<BlockPos>> memorizedItemStorages = new HashMap<>();
@@ -65,7 +67,7 @@ public class TEController extends TileEntityOK {
             storageStacks.clear();
             itemStackKeys.clear();
             emptySlotsStorages.clear();
-//            storagePositions.forEach(this::addStorageStacksAndRegisterListeners);
+            // storagePositions.forEach(this::addStorageStacksAndRegisterListeners);
         }
     }
 
@@ -132,9 +134,9 @@ public class TEController extends TileEntityOK {
             final boolean finalFirst = first;
             IControllerBoundable boundable = TileHelpers.getSafeTile(worldObj, posToCheck, IControllerBoundable.class);
             if (boundable != null) {
-//                tryToConnectStorageAndAddPositionsToCheckAround(positionsToCheck, addingLinkedSelf, positionsChecked, posToCheck, finalFirst, boundable);
-            }
-            else {
+                // tryToConnectStorageAndAddPositionsToCheckAround(positionsToCheck, addingLinkedSelf, positionsChecked,
+                // posToCheck, finalFirst, boundable);
+            } else {
                 positionsChecked.add(posToCheck);
             }
             first = false;

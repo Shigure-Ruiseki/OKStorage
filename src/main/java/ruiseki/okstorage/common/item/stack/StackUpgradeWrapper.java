@@ -10,7 +10,6 @@ import ruiseki.okstorage.api.IStorageWrapper;
 import ruiseki.okstorage.api.upgrade.UpgradeSlotChangeResult;
 import ruiseki.okstorage.api.wrapper.IInfinityUpgrade;
 import ruiseki.okstorage.api.wrapper.IStackSizeUpgrade;
-import ruiseki.okstorage.api.wrapper.IUpgradeWrapper;
 import ruiseki.okstorage.common.item.UpgradeWrapperBase;
 
 public class StackUpgradeWrapper extends UpgradeWrapperBase implements IStackSizeUpgrade {

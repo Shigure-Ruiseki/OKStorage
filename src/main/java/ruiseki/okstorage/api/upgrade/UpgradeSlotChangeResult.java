@@ -47,7 +47,7 @@ public class UpgradeSlotChangeResult {
     }
 
     public static UpgradeSlotChangeResult failWithInventoryConflicts(String errorLangKey, int[] inventoryConflictSlots,
-                                                                     Object... args) {
+        Object... args) {
         return new UpgradeSlotChangeResult(false, errorLangKey, EMPTY_SLOTS, inventoryConflictSlots, args);
     }
 
@@ -55,7 +55,7 @@ public class UpgradeSlotChangeResult {
      * %s cannot be installed on %s
      */
     public static UpgradeSlotChangeResult failUpgradeNotAllowed(int[] conflictSlots, String upgradeName,
-                                                                String storageName) {
+        String storageName) {
         return fail("gui.storage.error.add.upgrade_not_allowed", conflictSlots, upgradeName, storageName);
     }
 
@@ -63,7 +63,7 @@ public class UpgradeSlotChangeResult {
      * Only a single %s can be installed on %s
      */
     public static UpgradeSlotChangeResult failOnlySingleAllowed(int[] conflictSlots, String upgradeName,
-                                                                String storageName) {
+        String storageName) {
         return fail("gui.storage.error.add.only_single_upgrade_allowed", conflictSlots, upgradeName, storageName);
     }
 
@@ -71,20 +71,15 @@ public class UpgradeSlotChangeResult {
      * Only %d %s can be installed on %s
      */
     public static UpgradeSlotChangeResult failOnlyXAllowed(int[] conflictSlots, int maxCount, String upgradeName,
-                                                           String storageName) {
-        return fail(
-            "gui.storage.error.add.only_x_upgrades_allowed",
-            conflictSlots,
-            maxCount,
-            upgradeName,
-            storageName);
+        String storageName) {
+        return fail("gui.storage.error.add.only_x_upgrades_allowed", conflictSlots, maxCount, upgradeName, storageName);
     }
 
     /**
      * Stack multiplier must be greater than %s
      */
     public static UpgradeSlotChangeResult failStackLowMultiplier(int[] inventoryConflictSlots,
-                                                                 String formattedMultiplier) {
+        String formattedMultiplier) {
         return failWithInventoryConflicts(
             "gui.storage.error.remove.stack_low_multiplier",
             inventoryConflictSlots,

@@ -1,6 +1,7 @@
 package ruiseki.okstorage.api.wrapper;
 
 import net.minecraft.item.ItemStack;
+
 import ruiseki.okstorage.api.upgrade.UpgradeSlotChangeResult;
 
 public interface ISlotModifiable {

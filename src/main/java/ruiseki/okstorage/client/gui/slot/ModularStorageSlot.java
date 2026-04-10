@@ -1,9 +1,9 @@
 package ruiseki.okstorage.client.gui.slot;
 
-import com.cleanroommc.modularui.utils.item.ItemHandlerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
+import com.cleanroommc.modularui.utils.item.ItemHandlerHelper;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 
 import ruiseki.okstorage.api.IStorageWrapper;
@@ -48,7 +48,6 @@ public class ModularStorageSlot extends ModularSlot {
         }
         return super.isItemValid(stack);
     }
-
 
     @Override
     public int getItemStackLimit(ItemStack stack) {
