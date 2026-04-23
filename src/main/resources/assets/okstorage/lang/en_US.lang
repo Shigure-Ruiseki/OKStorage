@@ -22,51 +22,41 @@ gui.configuration_tab=Configuration Tab
 gui.search_bar.tool_tip=Right click to clear the search bar
 
 gui.storage.pickup_settings=Pickup Settings
-gui.storage.advanced_pickup_settings=Adv. Pickup Settings
+gui.storage.advanced_pickup_settings=Advanced Pickup Settings
 gui.storage.magnet_settings=Magnet Settings
-gui.storage.advanced_magnet_settings=Adv. Magnet Settings
+gui.storage.advanced_magnet_settings=Advanced Magnet Settings
 gui.storage.feeding_settings=Feeding Settings
-gui.storage.advanced_feeding_settings=Adv. Feeding Settings
+gui.storage.advanced_feeding_settings=Advanced Feeding Settings
 gui.storage.filter_settings=Filter Settings
-gui.storage.advanced_filter_settings=Adv. Filter Settings
+gui.storage.advanced_filter_settings=Advanced Filter Settings
 gui.storage.storage_settings=Storage Settings
-gui.storage.memory_settings=Memory Settings
-gui.storage.sorting_settings=Sorting Settings
-gui.storage.crafting_settings=Crafting Settings
+gui.storage.memory_settings=Slot Memory Settings
+gui.storage.sorting_settings=No Sort Slot Sorting Settings
+gui.storage.crafting_settings=Crafting
 gui.storage.void_settings=Void Settings
-gui.storage.advanced_void_settings=Adv. Void Settings
+gui.storage.advanced_void_settings=Advanced Void Settings
 gui.storage.compacting_settings=Compacting Settings
-gui.storage.advanced_compacting_settings=Adv. Compacting Settings
+gui.storage.advanced_compacting_settings=Advanced Compacting Settings
 gui.storage.smelting_settings=Smelting Settings
-gui.storage.auto_smelting_settings=Auto-Smelting Settings
+gui.storage.auto_smelting_settings=Auto-Smelting
 gui.storage.smoking_settings=Smoking Settings
-gui.storage.auto_smoking_settings=Auto-Smoking Settings
-gui.storage.blasting_settings=Blasting Settings
-gui.storage.auto_blasting_settings=Auto-Blasting Settings
+gui.storage.auto_smoking_settings=Auto-Smoking
+gui.storage.blasting_settings=Blasting
+gui.storage.auto_blasting_settings=Auto-Blasting
 gui.storage.smelting_input=Input
 gui.storage.fuel_filter=Fuel Filter
-gui.storage.jukebox_settings=Jukebox Settings
-gui.storage.advanced_jukebox_settings=Adv. Jukebox Settings
-
-#Upgrade Errors
-gui.storage.error.add.upgrade_not_allowed=%s cannot be installed on %s
-gui.storage.error.add.only_single_upgrade_allowed=Only a single %s can be installed on %s
-gui.storage.error.add.only_x_upgrades_allowed=Only %d %s can be installed on %s
-gui.storage.error.add.any_upgrade_exists=All upgrade slots must be empty
-gui.storage.error.add.no_upgrade_can_be_added=Cannot add upgrades
-gui.storage.error.remove.infinity_upgrade_only_admin=Only administrators can remove infinity upgrade
-gui.storage.error.remove.banned_item=Must remove this item before removing upgrade
-gui.storage.error.remove.stack_low_multiplier=Stack multiplier must be greater than %s
+gui.storage.jukebox_settings=Jukebox
+gui.storage.advanced_jukebox_settings=Advanced Jukebox
 
 # Tooltips
 gui.storage.stack_size_extra=Count: %s / %s
 gui.storage.not_in_effect=Not in effect
-gui.storage.whitelist=Whitelist
-gui.storage.blacklist=Blacklist
+gui.storage.whitelist=Allow
+gui.storage.blacklist=Block
 
-gui.storage.match_item=By Item
-gui.storage.match_mod_id=By Mod ID
-gui.storage.match_ore_dict=By Ore Dictionary
+gui.storage.match_item=Match Item
+gui.storage.match_mod_id=Match Mod
+gui.storage.match_ore_dict=Match Ore Dictionary
 
 gui.storage.match_durability=Match Durability
 gui.storage.ignore_durability=Ignore Durability
@@ -74,11 +64,11 @@ gui.storage.ignore_durability=Ignore Durability
 gui.storage.match_nbt=Match NBT
 gui.storage.ignore_nbt=Ignore NBT
 
-gui.storage.item_magnet=Get items
-gui.storage.ignore_item_magnet=Do not get items
+gui.storage.item_magnet=Pickup Items
+gui.storage.ignore_item_magnet=Do Not Pickup Items
 
-gui.storage.exp_magnet=Get experients
-gui.storage.ignore_exp_magnet=Do not get experients
+gui.storage.exp_magnet=Pickup Experience
+gui.storage.ignore_exp_magnet=Do Not Pickup Experience
 
 gui.storage.add_ore_dict_entry=Add Ore Dict.
 gui.storage.remove_ore_dict_entry=Remove Ore Dict.
@@ -91,29 +81,29 @@ gui.storage.ignore_health=Do not consider health\nIgnores player's health and on
 gui.storage.consider_health=Feed player immediately when hurt\nIgnores hunger setting when player is not at max health
 
 gui.storage.input_output=Input & Output
-gui.storage.input=Input Only
-gui.storage.output=Output Only
+gui.storage.input=Input
+gui.storage.output=Output
 
-gui.storage.sort_inventory=Sort Storage Inventory
-gui.storage.sort_by_name=Sort By Name
-gui.storage.sort_by_mod_id=Sort By Mod ID
-gui.storage.sort_by_count=Sort By Count
-gui.storage.sort_by_ore_dict=Sort By Ore Dictionary
+gui.storage.sort_inventory=Sort Inventory
+gui.storage.sort_by_name=By Name
+gui.storage.sort_by_mod_id=By Mod ID
+gui.storage.sort_by_count=By Count
+gui.storage.sort_by_ore_dict=By Ore Dictionary
 
-gui.storage.transfer_to_player_inv=Transfer All Items to Player Inventory
-gui.storage.transfer_to_player_inv_matched_1=Transfer Matched Items to Player Inventory
+gui.storage.transfer_to_player_inv=Transfer to Inventory
+gui.storage.transfer_to_player_inv_matched_1=Transfer Matching to Inventory
 gui.storage.transfer_to_player_inv_matched_2=Shift To Transfer All
-gui.storage.transfer_to_storage_inv=Transfer All Items to Storage Inventory
-gui.storage.transfer_to_storage_inv_matched_1=Transfer Matched Items to Storage Inventory
+gui.storage.transfer_to_storage_inv=Transfer to Storage
+gui.storage.transfer_to_storage_inv_matched_1=Transfer Matching to Storage
 gui.storage.transfer_to_storage_inv_matched_2=Shift To Transfer All
 
 gui.storage.memorized_slot=Memorized Slot
-gui.storage.memorize_all=Memorize All Slots
-gui.storage.unmemorize_all=Forget All Slots
+gui.storage.memorize_all=Select All Slots
+gui.storage.unmemorize_all=Unselect All Slots
 
 gui.storage.no_sorting_slot=No Sorting Slot
-gui.storage.lock_all_sort=Select All Slots For No Sorting
-gui.storage.unlock_all_sort=Select All Slots For Sorting
+gui.storage.lock_all_sort=Select All Slots
+gui.storage.unlock_all_sort=Unselect All Slots
 
 gui.storage.into_storage=Shift Click Result Into\nBStorage
 gui.storage.into_inventory=Shift Click Result Into\nPlayer's Inventory
@@ -121,33 +111,59 @@ gui.storage.used_storage=Refill Crafting Grid
 gui.storage.unused_storage=Do Not Refill Crafting Grid
 
 gui.storage.search_hint=Search...
-gui.storage.lock_search=Keep Search Phrase: On
-gui.storage.unlock_search=Keep Search Phrase: Off
+gui.storage.lock_search=Keep Search Phrase: ON
+gui.storage.unlock_search=Keep Search Phrase: OFF
 
-gui.storage.lock_storage=Another Player Can Not Open
-gui.storage.unlock_storage=Another Player Can Open
+gui.storage.lock_backpack=Another player can NOT open
+gui.storage.unlock_backpack=Another player can open
 
-gui.storage.keep_tab=Keep Tab Open: On
-gui.storage.not_keep_tab=Keep Tab Open: Off
+gui.storage.keep_tab=Keep Tab Open: ON
+gui.storage.not_keep_tab=Keep Tab Open: OFF
 
-gui.storage.void_any=Void Any
-gui.storage.void_overflow=Void Overflow
+gui.storage.void_any=Void Always
+gui.storage.void_overflow=Void Slot Overflow
 
-gui.storage.void_all=Works in Gui as well
-gui.storage.void_automation=Only works with other upgrade/automation
+gui.storage.void_all=Works in GUI as well
+gui.storage.void_automation=Only works with other upgrades/automation
 
+gui.storage.only_reversible=Only Reversible
+gui.storage.all_recipes=All Recipes
 gui.storage.jukebox_play=Play
 gui.storage.jukebox_stop=Stop
 gui.storage.jukebox_prev=Previous
 gui.storage.jukebox_next=Next
-gui.storage.jukebox_shuffle_off=Shuffle: Off
-gui.storage.jukebox_shuffle_on=Shuffle: On
-gui.storage.jukebox_loop_off=Loop: Off
-gui.storage.jukebox_loop_all=Loop: All
-gui.storage.jukebox_loop_single=Loop: Single
 
-gui.storage.only_reversible=Only Reversible
-gui.storage.all_recipes=All Recipes
+gui.storage.jukebox_shuffle_off=Shuffle Disabled
+gui.storage.jukebox_shuffle_on=Shuffle Enabled
+gui.storage.jukebox_loop_off=Repeat Disabled
+gui.storage.jukebox_loop_all=Repeat All
+gui.storage.jukebox_loop_single=Repeat One
+
+gui.storage.refill.enabled=Enabled
+gui.storage.refill.target.main_hand=Main hand
+gui.storage.refill.target.main_hand.acronym=M
+gui.storage.refill.target.any=Any slot
+gui.storage.refill.target.any.acronym=A
+gui.storage.refill.target.hotbar=Hotbar slot %s
+gui.storage.refill.target_tooltip=Refill %s
+gui.storage.refill.scroll_hint=Scroll to change target slot
+
+gui.storage.swap_weapon=Swap Weapon\nSwaps weapon into hand when a tool is clicked on entity
+gui.storage.no_swap_weapon=Do Not Swap Weapon\nWeapon is never swapped into hand
+gui.storage.swap_tool=Swap Tools\nSwaps appropriate tool into hand when it holds weapon or another tool
+gui.storage.only_tool_swap_tool=Only Swap For Other Tools\nSwaps tool into hand only if it holds another tool, does not swap for weapon
+gui.storage.no_swap_tool=Do Not Swap Tools\nTools are never swapped into hand
+
+gui.storage.advanced_tool_swapper_settings=Advanced Tool Swapper Settings
+
+gui.storage.error.add.upgrade_not_allowed=%s can't be used in %s
+gui.storage.error.add.only_single_upgrade_allowed=Only single %s can be used in %s
+gui.storage.error.add.only_x_upgrades_allowed=Only %dx %s can be used in %s
+gui.storage.error.add.any_upgrade_exists=All upgrade slots need to be empty
+gui.storage.error.add.no_upgrade_can_be_added=No upgrade can be added
+gui.storage.error.remove.infinity_upgrade_only_admin=Only admins can remove Infinity Upgrade
+gui.storage.error.remove.banned_item=This item must be removed before the upgrade can be
+gui.storage.error.remove.stack_low_multiplier=There's at least one slot or upgrade that requires multiplier higher than %s
 
 # Items
 tile.leather_barrel.name=Leather Barrel
@@ -167,18 +183,18 @@ item.stack_upgrade.starter.name=Stack Upgrade Starter Tier
 item.crafting_upgrade.name=Crafting Upgrade
 item.everlasting_upgrade.name=Everlasting Upgrade
 item.magnet_upgrade.name=Magnet Upgrade
-item.advanced_magnet_upgrade.name=Adv. Magnet Upgrade
+item.advanced_magnet_upgrade.name=Advanced Magnet Upgrade
 item.pickup_upgrade.name=Pickup Upgrade
-item.advanced_pickup_upgrade.name=Adv. Pickup Upgrade
+item.advanced_pickup_upgrade.name=Advanced Pickup Upgrade
 item.feeding_upgrade.name=Feeding Upgrade
-item.advanced_feeding_upgrade.name=Adv. Feeding Upgrade
+item.advanced_feeding_upgrade.name=Advanced Feeding Upgrade
 item.filter_upgrade.name=Filter Upgrade
-item.advanced_filter_upgrade.name=Adv. Filter Upgrade
+item.advanced_filter_upgrade.name=Advanced Filter Upgrade
 item.compacting_upgrade.name=Compacting Upgrade
-item.advanced_compacting_upgrade.name=Adv. Compacting Upgrade
+item.advanced_compacting_upgrade.name=Advanced Compacting Upgrade
 item.inception_upgrade.name=Inception Upgrade
 item.void_upgrade.name=Void Upgrade
-item.advanced_void_upgrade.name=Adv. Void Upgrade
+item.advanced_void_upgrade.name=Advanced Void Upgrade
 item.smelting_upgrade.name=Smelting Upgrade
 item.auto_smelting_upgrade.name=Auto-Smelting Upgrade
 item.smoking_upgrade.name=Smoking Upgrade
@@ -186,42 +202,58 @@ item.auto_smoking_upgrade.name=Auto-Smoking Upgrade
 item.blasting_upgrade.name=Blasting Upgrade
 item.auto_blasting_upgrade.name=Auto-Blasting Upgrade
 item.jukebox_upgrade.name=Jukebox Upgrade
-item.advanced_jukebox_upgrade.name=Adv. Jukebox Upgrade
+item.advanced_jukebox_upgrade.name=Advanced Jukebox Upgrade
 item.infinity_upgrade.name=Infinity Upgrade (Admin)
 item.survival_infinity_upgrade.name=Survival Infinity Upgrade
 
 # Tooltips
 
-tooltip.storage.magnet_upgrade=Automatically picks up nearby entities
-tooltip.storage.advanced_magnet_upgrade=Automatically picks up nearby entities with more configurations
+tooltip.storage.magnet_upgrade=Magnets items into backpack at range
+tooltip.storage.advanced_magnet_upgrade=Magnets items into backpack at a greater range
+tooltip.storage.advanced_magnet_upgrade.1=Has more filtering options
+tooltip.storage.everlasting_upgrade=Backpack becomes indestructible
+tooltip.storage.everlasting_upgrade.1=Can't despawn or fall into void
 tooltip.storage.upgrade_base=It does nothing! Feel free to put it in your upgrade slots!
-tooltip.storage.stack_upgrade=Multiplies stack size by %s
-tooltip.storage.crafting_upgrade=Adds additional crafting grid to side of storage
-tooltip.storage.pickup_upgrade=Allows storages to pickup items
-tooltip.storage.advanced_pickup_upgrade=Allows storage to pickup items with more configurations
-tooltip.storage.feeding_upgrade=Allows storages to automatically feed player
-tooltip.storage.advanced_feeding_upgrade=Allows storage to automatically feed player with more configurations
-tooltip.storage.filter_upgrade=Filters inserted items when placing in world
-tooltip.storage.advanced_filter_upgrade=Filters inserted items when placing in world with more configurations
+tooltip.backpack.stack_upgrade=Multiplies the number of stacks that can fit in a slot by %s
+tooltip.storage.crafting_upgrade=Crafting table in an upgrade tab
+tooltip.storage.inception_upgrade=Makes it possible to put backpacks into the backpack
+tooltip.storage.pickup_upgrade=Makes backpack pickup items
+tooltip.storage.advanced_pickup_upgrade=Makes backpack pickup items
+tooltip.storage.advanced_pickup_upgrade.1=Has more filtering options
+tooltip.storage.feeding_upgrade=Feeds player with food from backpack's inventory
+tooltip.storage.advanced_feeding_upgrade=Feeds player with food from backpack's inventory
+tooltip.storage.advanced_feeding_upgrade.1=More options for when food gets fed to player
+tooltip.storage.filter_upgrade=Filters items piped in and/or out of backpack
+tooltip.storage.advanced_filter_upgrade=Filters items piped in and/or out of backpack
+tooltip.storage.advanced_filter_upgrade.1=Has more filtering options
 tooltip.storage.void_upgrade=Voids items selected in filter
-tooltip.storage.advanced_void_upgrade=Voids items selected in filter. Has more filtering options
+tooltip.storage.advanced_void_upgrade=Voids items selected in filter
+tooltip.storage.advanced_void_upgrade.1=Has more filtering options
+tooltip.storage.jukebox_upgrade=Portable Jukebox
+tooltip.storage.advanced_jukebox_upgrade=Portable Jukebox with support for more music discs
+tooltip.storage.advanced_jukebox_upgrade.1=Also more playback options
+tooltip.storage.infinity_upgrade=Makes all items in backpack infinite
+tooltip.storage.infinity_upgrade.1=Only admins can set infinite items and break or pickup backpack
+tooltip.storage.survival_infinity_upgrade=Makes all items in backpack infinite
+tooltip.storage.survival_infinity_upgrade.1=All players can set infinite items and break or pickup backpack
 tooltip.storage.compacting_upgrade=Compacts items into their compressed variants
-tooltip.storage.compacting_upgrade.1=2x2 recipes only
+tooltip.storage.compacting_upgrade.1=Only 2x2 recipes
 tooltip.storage.advanced_compacting_upgrade=Compacts items into their compressed variants
-tooltip.storage.advanced_compacting_upgrade.1=Includes 2x2, 3x3 recipes and more filter options
-tooltip.storage.smelting_upgrade=Smelts items in the upgrade tab
-tooltip.storage.auto_smelting_upgrade=Smelts items in the upgrade tab
-tooltip.storage.auto_smelting_upgrade.1=Automatically pulls in/pushes out items
-tooltip.storage.smoking_upgrade=Smokes food in the upgrade tab
-tooltip.storage.auto_smoking_upgrade=Smokes food in the upgrade tab
-tooltip.storage.auto_smoking_upgrade.1=Automatically pulls in/pushes out items
-tooltip.storage.blasting_upgrade=Blast-smelts ores and metals at high speed in the upgrade tab
-tooltip.storage.auto_blasting_upgrade=Blast-smelts ores and metals at high speed in the upgrade tab
-tooltip.storage.auto_blasting_upgrade.1=Automatically pulls in/pushes out items
-tooltip.storage.jukebox_upgrade=Portable jukebox
-tooltip.storage.advanced_jukebox_upgrade=Portable jukebox with more record slots
-tooltip.storage.advanced_jukebox_upgrade.1=And more playback options
-tooltip.storage.infinity_upgrade=Makes all items in the backpack infinite
-tooltip.storage.infinity_upgrade.1=Only administrators can install, remove, or break this backpack
-tooltip.storage.survival_infinity_upgrade=Makes all items in the backpack infinite
-tooltip.storage.survival_infinity_upgrade.1=All players can use this upgrade
+tooltip.storage.advanced_compacting_upgrade.1=Both 2x2 and 3x3 recipes with more filtering options
+tooltip.storage.smelting_upgrade=Smelting in an upgrade tab
+tooltip.storage.auto_smelting_upgrade=Smelting in an upgrade tab
+tooltip.storage.auto_smelting_upgrade.1=Automatically pulls/pushes items
+tooltip.storage.smoking_upgrade=Smoking food in an upgrade tab
+tooltip.storage.auto_smoking_upgrade=Smoking food in an upgrade tab
+tooltip.storage.auto_smoking_upgrade.1=Automatically pulls/pushes items
+tooltip.storage.blasting_upgrade=Blasting ores and metal stuff in an upgrade tab
+tooltip.storage.auto_blasting_upgrade=Blasting ores and metal stuff in an upgrade tab
+tooltip.storage.auto_blasting_upgrade.1=Automatically pulls/pushes items
+tooltip.storage.tool_swapper_upgrade=Automatically swaps item in player's hand for the one effective on the block/entity when these are left clicked.
+tooltip.storage.advanced_tool_swapper_upgrade=Automatically swaps item in player's hand for the one effective on the block/entity when these are left clicked.
+tooltip.storage.advanced_tool_swapper_upgrade.1=Has filter options and enables swapping wrench like tools for block/entity player is looking at with %s
+tooltip.storage.anvil_upgrade=Anvil in an upgrade tab
+tooltip.storage.refill_upgrade=Keeps refilling stack of selected items in player's inventory
+tooltip.storage.advanced_refill_upgrade=Keeps refilling stack of selected items in player's inventory
+tooltip.storage.advanced_refill_upgrade.1=Allows for more precise target slot selection
+tooltip.storage.advanced_refill_upgrade.2=Also allows middle click picking blocks from backpack

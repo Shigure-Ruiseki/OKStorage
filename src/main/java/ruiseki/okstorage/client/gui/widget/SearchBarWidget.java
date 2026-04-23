@@ -60,7 +60,7 @@ public class SearchBarWidget extends TextFieldWidget {
         doSearch(prevText);
     }
 
-    private void cacheOriginalOrder() {
+    public void cacheOriginalOrder() {
         Column storageInvCol = panel.storageInvCol;
         if (storageInvCol == null) return;
 
@@ -83,7 +83,7 @@ public class SearchBarWidget extends TextFieldWidget {
         IWidget parent = storageInvCol.getParent();
         if (!(parent instanceof StorageList storageList)) return;
 
-        int columns = panel.rowSize;
+        int columns = panel.getUsableRowSize();
         int slotSize = StorageSlot.SIZE;
 
         SearchNode compiledSearch = search.isEmpty() ? null : SearchParser.parse(search);

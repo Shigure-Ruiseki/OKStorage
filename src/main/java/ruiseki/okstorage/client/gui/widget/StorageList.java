@@ -20,7 +20,7 @@ public class StorageList extends ListWidget<Column, StorageList> {
 
     public StorageList(StoragePanel panel) {
         this.panel = panel;
-        width(panel.rowSize * ItemSlot.SIZE + thickness * 2);
+        width(panel.getUsableRowSize() * ItemSlot.SIZE + thickness * 2);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class StorageList extends ListWidget<Column, StorageList> {
                 return false;
             }
 
-            int x = panel.rowSize * ItemSlot.SIZE + getThickness();
+            int x = panel.getUsableRowSize() * ItemSlot.SIZE + getThickness();
             int y = 0;
 
             int w = getThickness();
@@ -59,7 +59,7 @@ public class StorageList extends ListWidget<Column, StorageList> {
             IDrawable texture) {
             boolean isOtherActive = isOtherScrollBarActive(area, true);
             int l = this.getScrollBarLength(area);
-            int x = panel.rowSize * ItemSlot.SIZE + getThickness();
+            int x = panel.getUsableRowSize() * ItemSlot.SIZE + getThickness();
             int y = 0;
             int w = getThickness();
             int h = area.height;

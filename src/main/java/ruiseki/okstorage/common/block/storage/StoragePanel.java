@@ -16,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.cleanroommc.modularui.api.IPanelHandler;
 import com.cleanroommc.modularui.api.drawable.IKey;
+import com.cleanroommc.modularui.api.widget.IWidget;
 import com.cleanroommc.modularui.api.widget.Interactable;
 import com.cleanroommc.modularui.drawable.AdaptableUITexture;
 import com.cleanroommc.modularui.drawable.GuiDraw;
@@ -30,6 +31,7 @@ import com.cleanroommc.modularui.theme.WidgetTheme;
 import com.cleanroommc.modularui.utils.GlStateManager;
 import com.cleanroommc.modularui.utils.item.PlayerMainInvWrapper;
 import com.cleanroommc.modularui.value.sync.PanelSyncManager;
+import com.cleanroommc.modularui.widget.Widget;
 import com.cleanroommc.modularui.widgets.layout.Column;
 import com.cleanroommc.modularui.widgets.layout.Row;
 import com.cleanroommc.modularui.widgets.slot.ItemSlot;
@@ -40,6 +42,7 @@ import ruiseki.okcore.helper.LangHelpers;
 import ruiseki.okstorage.api.IStorageContainer;
 import ruiseki.okstorage.api.IStoragePanel;
 import ruiseki.okstorage.api.IStorageWrapper;
+import ruiseki.okstorage.api.upgrade.IUpgradeItem;
 import ruiseki.okstorage.api.upgrade.UpgradeSlotChangeResult;
 import ruiseki.okstorage.api.wrapper.IDirtable;
 import ruiseki.okstorage.api.wrapper.IToggleable;
@@ -69,7 +72,6 @@ import ruiseki.okstorage.client.gui.widget.updateGroup.UpgradeSlotUpdateGroup;
 import ruiseki.okstorage.client.gui.widget.upgrade.ExpandedTabWidget;
 import ruiseki.okstorage.common.SortType;
 import ruiseki.okstorage.common.helpers.StorageInventoryHelpers;
-import ruiseki.okstorage.common.item.ItemUpgrade;
 import ruiseki.okstorage.common.item.crafting.CraftingUpgradeWrapper;
 
 public class StoragePanel extends ModularPanel implements IStoragePanel<StoragePanel> {
@@ -112,8 +114,11 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
     public final ItemStack[] lastUpgradeStacks;
 
     public int rowSize;
-    public Column storageInvCol;
+    public int slotsHeight;
+    public Row slotRow;
     public StorageList storageList;
+    public Column storageInvCol;
+    public List<Column> slotWidgets;
     public SearchBarWidget searchBarWidget;
 
     public final IPanelHandler settingPanel;
@@ -189,6 +194,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
 
                 activeError = null;
 
+                updateSlotWidgets();
                 updateUpgradeWidgets();
             });
         }
@@ -231,9 +237,18 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
         height(visibleRows * slotSize + 118);
 
         // set list height
-        int storageSlotsHeight = visibleRows * slotSize;
-        storageList.maxSize(storageSlotsHeight);
+        slotsHeight = visibleRows * slotSize;
+        storageList.maxSize(slotsHeight);
         storageList.scheduleResize();
+
+        for (Column column : slotWidgets) {
+            if (column != null) {
+                column.height(slotsHeight);
+                column.getChildren()
+                    .forEach(IWidget::scheduleResize);
+                column.scheduleResize();
+            }
+        }
 
         this.scheduleResize();
     }
@@ -359,19 +374,43 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
         child(transferToPlayerButton).child(transferToStorageButton);
     }
 
-    public void addStorageInventorySlots() {
-        Row storageInvRow = (Row) new Row().coverChildren()
+    public void addMainWidget() {
+        slotRow = (Row) new Row().coverChildren()
             .alignX(0.5f)
-            .top(18)
-            .childPadding(4);
+            .top(18);
 
+        rebuildInventorySlots();
+        this.child(slotRow);
+    }
+
+    public void rebuildInventorySlots() {
+        slotRow.removeAll();
         storageList = new StorageList(this).name("storage_slots");
+        addInventorySlots();
+        slotRow.child(storageList);
 
+        slotWidgets = new ArrayList<>();
+        for (int i = 0; i < wrapper.getUpgradeHandler()
+            .getSlots(); i++) {
+            Column colWidget = new Column();
+            colWidget.name("slot_widget_colum_" + i)
+                .size(0);
+            slotWidgets.add(colWidget);
+            slotRow.child(colWidget);
+        }
+        if (searchBarWidget != null) {
+            searchBarWidget.cacheOriginalOrder();
+            searchBarWidget.research();
+        }
+    }
+
+    public void addInventorySlots() {
+        int usableRowSize = getUsableRowSize();
         storageInvCol = (Column) new Column().coverChildren();
 
         for (int i = 0; i < wrapper.getSlots(); i++) {
-            int col = i % rowSize;
-            int row = i / rowSize;
+            int col = i % usableRowSize;
+            int row = i / usableRowSize;
 
             StorageSlot slot = (StorageSlot) new StorageSlot(this, wrapper).syncHandler("storage", i)
                 .size(ItemSlot.SIZE)
@@ -384,9 +423,35 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
 
         storageList.maxSizeRel(1f)
             .child(storageInvCol);
-        storageInvRow.child(storageList);
+    }
 
-        this.child(storageInvRow);
+    public int getActiveOverlayCount() {
+        int count = 0;
+        int maxOverlayColumns = Math.max(rowSize - 4, 0);
+
+        for (int i = 0; i < wrapper.getUpgradeHandler()
+            .getSlots(); i++) {
+            ItemStack stack = wrapper.getUpgradeHandler()
+                .getStackInSlot(i);
+            if (stack == null) continue;
+
+            Item item = stack.getItem();
+            if (!(item instanceof IUpgradeItem upgrade)) continue;
+
+            if (upgrade.hasSlotWidget()) {
+                count++;
+                if (count * 2 >= maxOverlayColumns) {
+                    break;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    public int getUsableRowSize() {
+        int overlayColumns = getActiveOverlayCount() * 2;
+        return rowSize - overlayColumns;
     }
 
     public void addSearchBar() {
@@ -457,7 +522,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
             if (slotWidget.getSlot() == null) continue;
             ItemStack stack = slotWidget.getSlot()
                 .getStack();
-            if (!(stack != null && stack.getItem() instanceof ItemUpgrade<?>item)) continue;
+            if (!(stack != null && stack.getItem() instanceof IUpgradeItem<?>item)) continue;
             if (!item.hasTab()) continue;
 
             IUpgradeWrapper wrapper = this.wrapper.getUpgradeHandler()
@@ -485,7 +550,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
             if (stack == null) continue;
 
             Item item = stack.getItem();
-            if (!(item instanceof ItemUpgrade upgrade) || !upgrade.hasTab()) continue;
+            if (!(item instanceof IUpgradeItem upgrade) || !upgrade.hasTab()) continue;
 
             TabWidget tabWidget = tabWidgets.get(tabIndex);
             UpgradeSlotUpdateGroup upgradeSlotGroup = upgradeSlotGroups[slotIndex];
@@ -538,6 +603,47 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
         syncToggles();
         disableUnusedTabWidgets(tabIndex);
         this.scheduleResize();
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public void updateSlotWidgets() {
+        rebuildInventorySlots();
+
+        for (int slotIndex = 0; slotIndex < wrapper.getUpgradeHandler()
+            .getSlots(); slotIndex++) {
+            ItemSlot slotWidget = upgradeSlotWidgets.get(slotIndex);
+            if (slotWidget.getSlot() == null) continue;
+
+            ItemStack stack = slotWidget.getSlot()
+                .getStack();
+            Column column = slotWidgets.get(slotIndex);
+
+            column.removeAll();
+
+            if (stack == null || !(stack.getItem() instanceof IUpgradeItem upgrade)) {
+                column.size(0);
+                continue;
+            }
+
+            if (!upgrade.hasSlotWidget()) {
+                column.size(0);
+                continue;
+            }
+
+            IUpgradeWrapper wrapper = this.wrapper.upgradeHandler.getWrapperInSlot(slotIndex);
+            if (wrapper == null) continue;
+
+            column.size(36, slotsHeight);
+
+            UpgradeSlotUpdateGroup upgradeSlotGroup = upgradeSlotGroups[slotIndex];
+            Widget widget = upgrade.getSlotWidget(slotIndex, wrapper, stack, this, wrapper.getSettingLangKey());
+
+            upgrade.updateSlotWidgetDelegates(wrapper, upgradeSlotGroup);
+
+            if (widget != null) {
+                column.child(widget);
+            }
+        }
     }
 
     private void resetTabState() {
@@ -594,7 +700,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
                 ItemSlot slotWidget = upgradeSlotWidgets.get(i);
                 ItemStack stack = slotWidget.getSlot()
                     .getStack();
-                if (stack == null || !(stack.getItem() instanceof ItemUpgrade<?>item) || !item.hasTab()) continue;
+                if (stack == null || !(stack.getItem() instanceof IUpgradeItem<?>item) || !item.hasTab()) continue;
 
                 IUpgradeWrapper wrapper = this.wrapper.getUpgradeHandler()
                     .getWrapperInSlot(i);
@@ -629,7 +735,7 @@ public class StoragePanel extends ModularPanel implements IStoragePanel<StorageP
             if (stack == null) continue;
             Item item = stack.getItem();
 
-            if (!(item instanceof ItemUpgrade<?> && ((ItemUpgrade<?>) item).hasTab())) {
+            if (!(item instanceof IUpgradeItem<?> && ((IUpgradeItem<?>) item).hasTab())) {
                 continue;
             }
 

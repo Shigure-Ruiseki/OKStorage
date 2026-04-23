@@ -98,7 +98,7 @@ public class ItemStackUpgrade extends ItemUpgrade<StackUpgradeWrapper> {
         return new StackUpgradeWrapper(stack, storage, upgradeConsumer);
     }
 
-    public static int multiplier(ItemStack stack) {
+    public static double multiplier(ItemStack stack) {
         return switch (stack.getItemDamage()) {
             case 1 -> ModConfig.stackUpgradeTier2Mul;
             case 2 -> ModConfig.stackUpgradeTier3Mul;

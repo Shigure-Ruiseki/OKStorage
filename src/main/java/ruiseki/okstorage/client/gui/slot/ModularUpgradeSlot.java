@@ -12,8 +12,8 @@ import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import lombok.Getter;
 import lombok.Setter;
 import ruiseki.okstorage.api.IStorageWrapper;
+import ruiseki.okstorage.api.upgrade.IUpgradeItem;
 import ruiseki.okstorage.api.upgrade.UpgradeSlotChangeResult;
-import ruiseki.okstorage.common.item.ItemUpgrade;
 import ruiseki.okstorage.common.item.infinity.InfinityUpgradeWrapper;
 import ruiseki.okstorage.common.item.infinity.ItemInfinityUpgrade;
 import ruiseki.okstorage.common.item.infinity.ItemSurvivalInfinityUpgrade;
@@ -83,7 +83,7 @@ public class ModularUpgradeSlot extends ModularSlot {
         Item item = stack.getItem();
         int slot = getSlotIndex();
 
-        if (!(item instanceof ItemUpgrade<?>upgradeItem)) {
+        if (!(item instanceof IUpgradeItem<?>upgradeItem)) {
             return false;
         }
 

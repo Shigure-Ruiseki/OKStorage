@@ -35,12 +35,10 @@ public interface IControllerBoundable {
 
     boolean canConnectStorages();
 
-    default void runOnController(World level, Consumer<TEController> toRun) {
+    default void runOnController(World world, Consumer<TEController> toRun) {
         getControllerPos().ifPresent(pos -> {
-            TEController te = TileHelpers.getSafeTile(level, pos, TEController.class);
-            if (te != null) {
-                toRun.accept(te);
-            }
+            TileHelpers.getTileEntity(world, pos, TEController.class)
+                .ifPresent(toRun);
         });
     }
 
@@ -65,18 +63,13 @@ public interface IControllerBoundable {
             BlockPos pos = getStorageBlockPos();
             for (ForgeDirection dir : ForgeDirection.values()) {
                 BlockPos offsetPos = pos.offset(dir);
-                IControllerBoundable boundable = TileHelpers.getSafeTile(world, offsetPos, IControllerBoundable.class);
-                if (boundable != null) {
-                    if (boundable.canConnectStorages()) {
-                        boundable.getControllerPos()
-                            .ifPresent(controllerPos -> addToController(world, pos, controllerPos));
-                    }
-                } else {
-                    addToController(world, pos, offsetPos);
-                }
-                if (getControllerPos().isPresent()) {
-                    break;
-                }
+                TileHelpers.getTileEntity(world, offsetPos, IControllerBoundable.class)
+                    .ifPresentOrElse(boundable -> {
+                        if (boundable.canConnectStorages()) {
+                            boundable.getControllerPos()
+                                .ifPresent(controllerPos -> addToController(world, pos, controllerPos));
+                        }
+                    }, () -> addToController(world, pos, offsetPos));
             }
         }
     }
